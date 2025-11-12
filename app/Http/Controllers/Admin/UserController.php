@@ -44,7 +44,7 @@ class UserController extends Controller
             'email' => ['required', 'email', 'unique:users,email'],
             'role' => ['required', 'string'],
             'functions' => ['nullable', 'array'],
-            'visible_company' => ['required', 'array', 'min:1'],
+            'visible_company' => ['array', 'min:1'],
             'admin_functions' => ['required', 'array'],
         ], [
             'email.required' => 'Email address is required.',
@@ -107,7 +107,7 @@ class UserController extends Controller
             'email' => ['required', 'email', 'unique:users,email,' . $id],
             'role' => ['required', 'string'],
             'functions' => ['nullable', 'array'],
-            'visible_company' => ['required', 'array', 'min:1'],
+            'visible_company' => ['array', 'min:1'],
             'admin_functions' => ['nullable', 'array'],
         ], [
             'email.required' => 'Email address is required.',

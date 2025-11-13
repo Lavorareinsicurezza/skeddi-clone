@@ -15,7 +15,74 @@
         <div class="mb-8">
             <h1 class="text-lg font-bold text-[#0C3183]">Management Software</h1>
         </div>
-        <ul class="space-y-2 font-medium">
+
+        <!-- Company Management Section (only shown when company is selected) -->
+        @if(session('selectedCompanyId'))
+        <div class="mb-6">
+            <h2 class="px-2 mb-3 text-xs font-bold text-gray-400 uppercase tracking-wider">Company Management</h2>
+            <ul class="space-y-2 font-medium">
+                <li>
+                    <a href="{{ route('admin.selected-company.detail') }}" class="flex items-center p-2 rounded-[20px] {{ request()->routeIs('admin.selected-company.detail') ? 'text-[#0C3183] bg-blue-50': 'text-gray-500' }} hover:text-[#0C3183] hover:bg-blue-50 group">
+                        <i class="fas fa-briefcase w-5 h-5 {{ request()->routeIs('admin.selected-company.detail') ? 'text-[#0C3183]': 'text-gray-500'}} transition duration-75 group-hover:text-[#0C3183]"></i>
+                        <span class="ms-3">Company Details</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-2 rounded-[20px] text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 group">
+                        <i class="fas fa-clock w-5 h-5 text-gray-500 transition duration-75 group-hover:text-[#0C3183]"></i>
+                        <span class="ms-3">Deadlines</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-2 rounded-[20px] text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 group">
+                        <i class="fas fa-sitemap w-5 h-5 text-gray-500 transition duration-75 group-hover:text-[#0C3183]"></i>
+                        <span class="ms-3">Organizational Chart</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-2 rounded-[20px] text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 group">
+                        <i class="fas fa-users w-5 h-5 text-gray-500 transition duration-75 group-hover:text-[#0C3183]"></i>
+                        <span class="ms-3">Workers</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-2 rounded-[20px] text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 group">
+                        <i class="fas fa-file-alt w-5 h-5 text-gray-500 transition duration-75 group-hover:text-[#0C3183]"></i>
+                        <span class="ms-3">Documents</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-2 rounded-[20px] text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 group">
+                        <i class="fas fa-graduation-cap w-5 h-5 text-gray-500 transition duration-75 group-hover:text-[#0C3183]"></i>
+                        <span class="ms-3">Course Types</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-2 rounded-[20px] text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 group">
+                        <i class="fas fa-clipboard-list w-5 h-5 text-gray-500 transition duration-75 group-hover:text-[#0C3183]"></i>
+                        <span class="ms-3">Training plan</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-2 rounded-[20px] text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 group">
+                        <i class="fas fa-map-marker-alt w-5 h-5 text-gray-500 transition duration-75 group-hover:text-[#0C3183]"></i>
+                        <span class="ms-3">Types of Visit</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-2 rounded-[20px] text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 group">
+                        <i class="fas fa-sync-alt w-5 h-5 text-gray-500 transition duration-75 group-hover:text-[#0C3183]"></i>
+                        <span class="ms-3">Renewals</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        @endif
+
+        <!-- Content Management Section -->
+        <div class="mb-6">
+            <h2 class="px-2 mb-3 text-xs font-bold text-gray-400 uppercase tracking-wider">Content Management</h2>
+            <ul class="space-y-2 font-medium">
             <li>
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center p-2 rounded-[20px] {{ request()->routeIs('admin.dashboard')? 'text-[#0C3183] bg-blue-50': 'text-gray-500' }} hover:text-[#0C3183] hover:bg-blue-50 group">
                     <i class="fas fa-tachometer-alt w-5 h-5 {{ request()->routeIs('admin.dashboard')? 'text-[#0C3183]': 'text-gray-500'}} group-hover:text-[#0C3183]"></i>
@@ -67,6 +134,7 @@
                     </button>
                 </form>
             </li>
-        </ul>
+            </ul>
+        </div>
     </div>
 </aside>

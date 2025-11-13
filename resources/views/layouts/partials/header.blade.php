@@ -10,8 +10,12 @@
             </button>
             <div class="relative">
                 <button id="openCompanyModal" type="button"
-                    class="px-3 py-2 text-1sm text-gray-900 bg-white border border-gray-200 font-medium rounded-lg focus:ring-blue-500 focus:border-blue-500 appearance-none w-[100px] sm:w-[200px] hover:bg-blue-50 hover:text-[#0C3183]">
-                    Select Company
+                    class="px-3 py-2 text-1sm text-gray-900 bg-white border border-gray-200 font-medium rounded-lg focus:ring-blue-500 focus:border-blue-500 appearance-none w-[100px] sm:w-[200px] hover:bg-blue-50 hover:text-[#0C3183] truncate">
+                    @if(session('selectedCompanyName'))
+                        {{ session('selectedCompanyName') }}
+                    @else
+                        Select Company
+                    @endif
                 </button>
             </div>
         </div>

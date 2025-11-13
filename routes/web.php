@@ -58,7 +58,12 @@ Route::middleware('auth')->name('admin.')->group(function () {
     Route::post('/settings/test', [SettingController::class, 'testSmtp'])->name('settings.test');
 
     Route::resource('users', UserController::class);
-    // API route for fetching companies
+
+    // API routes for company selection
     Route::get('/api/companies', [DashboardController::class, 'getCompanies'])->name('api.companies');
+    Route::post('/api/select-company', [DashboardController::class, 'selectCompany'])->name('api.select-company');
+
+    // Selected company detail route
+    Route::get('/selected-company/detail', [CompanyController::class, 'showSelectedCompany'])->name('selected-company.detail');
 });
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

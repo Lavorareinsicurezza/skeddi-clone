@@ -247,7 +247,7 @@
                     <div>
                         <label class="border @error('contacts') border-red-500 @else border-gray-300 @enderror rounded-lg px-4 py-3 flex items-center justify-between cursor-pointer hover:bg-gray-50 has-[:checked]:border-[#0C3183] has-[:checked]:bg-blue-50">
                             <span class="text-sm text-gray-800">{{ $email}}</span>
-                            <input type="checkbox" name="contacts[]" value="{{ $email}}" {{ in_array("$email", old('contacts', $company->contacts ?? [])) ? 'checked' : '' }} class="w-6 h-6 appearance-none bg-white border-2 border-gray-400 rounded-full cursor-pointer checked:border-[5px] checked:border-[#0C3183] focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:ring-offset-2">
+                            <input type="checkbox" name="contacts[]" value="{{ $email}}" {{ in_array($email, old('contacts') ?: (is_array($company->contacts) ? $company->contacts : [])) ? 'checked' : '' }} class="w-6 h-6 appearance-none bg-white border-2 border-gray-400 rounded-full cursor-pointer checked:border-[5px] checked:border-[#0C3183] focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:ring-offset-2">
                         </label>
                     </div>
                     @endforeach

@@ -39,4 +39,29 @@ class DashboardController extends Controller
             'companies' => $companies
         ]);
     }
+
+    /**
+     * Select a company and store it in session.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function selectCompany(Request $request)
+    {
+        $validated = $request->validate([
+            'company_id' => 'required|exists:companies,id',
+            'company_name' => 'required|string'
+        ]);
+
+        // Store in session
+        session([
+            'selectedCompanyId' => $validated['company_id'],
+            'selectedCompanyName' => $validated['company_name']
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Company selected successfully'
+        ]);
+    }
 }

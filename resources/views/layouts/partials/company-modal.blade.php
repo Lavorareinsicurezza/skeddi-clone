@@ -58,7 +58,7 @@ function loadCompanies() {
 
             if (data.companies && data.companies.length > 0) {
                 companiesList.innerHTML = data.companies.map(company => `
-                    <li class="border-b border-gray-200" data-name="${company.name.toLowerCase()}" data-phone="${company.phone}">
+                    <li class="border-b border-gray-200" data-name="${company.name.toLowerCase()}" data-display-name="${company.name}" data-phone="${company.phone}">
                         <input type="radio" id="company-${company.id}" name="company" value="${company.id}" class="hidden peer" />
                         <label for="company-${company.id}" class="flex items-center justify-between w-full p-4 text-gray-900 bg-white cursor-pointer hover:bg-gray-50 peer-checked:bg-blue-50 peer-checked:text-blue-600">
                             <div class="flex sm:gap-8 gap-2 w-full">
@@ -97,11 +97,47 @@ function filterCompanies() {
     });
 }
 
+function selectCompany(companyId, companyName) {
+    // Store selected company in localStorage
+    localStorage.setItem('selectedCompanyId', companyId);
+    localStorage.setItem('selectedCompanyName', companyName);
+
+    // Also store in session via AJAX
+    fetch('/api/select-company', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
+        },
+        body: JSON.stringify({ company_id: companyId, company_name: companyName })
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Close modal
+        closeCompanyModal();
+
+        // Reload page to show updated sidebar
+        window.location.reload();
+    })
+    .catch(error => {
+        console.error('Error selecting company:', error);
+    });
+}
+
 // Attach event listener when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     const openButton = document.getElementById('openCompanyModal');
     if (openButton) {
         openButton.addEventListener('click', openCompanyModal);
     }
+
+    // Add event delegation for company selection
+    document.getElementById('companiesList').addEventListener('change', function(e) {
+        if (e.target.name === 'company') {
+            const selectedLi = e.target.closest('li');
+            const companyName = selectedLi.getAttribute('data-display-name');
+            selectCompany(e.target.value, companyName);
+        }
+    });
 });
 </script>

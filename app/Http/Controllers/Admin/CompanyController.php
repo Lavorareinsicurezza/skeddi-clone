@@ -121,6 +121,21 @@ class CompanyController extends Controller
     }
 
     /**
+     * Display the selected company details.
+     */
+    public function showSelectedCompany()
+    {
+        $companyId = session('selectedCompanyId');
+
+        if (!$companyId) {
+            return redirect()->route('admin.dashboard')->with('error', 'Please select a company first.');
+        }
+
+        $company = Company::findOrFail($companyId);
+        return view('admin.company.show', compact('company'));
+    }
+
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)

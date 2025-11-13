@@ -4,11 +4,11 @@
 
 @section('content')
     <div class="w-full max-w-xl items-center">
-        <h1 class="text-5xl font-bold text-[#0C3183] pb-8 text-center">Management Software</h1>
+        <h1 class="text-5xl font-bold text-[#0C3183] pb-8 text-center">{{ __('lang.management_software' )}}</h1>
 
         <div class="bg-white rounded-2xl max-w-lg ml-[30px] shadow-lg p-8">
-            <h2 class="text-4xl font-bold text-gray-900 mb-2 text-center">Login to your account!</h2>
-            <p class="text-gray-600 text-sm text-center mb-8">Enter your registered email address and password to login!</p>
+            <h2 class="text-4xl font-bold text-gray-900 mb-2 text-center">{{ __('lang.login_to_your_account' )}}</h2>
+            <p class="text-gray-600 text-sm text-center mb-8">{{ __('lang.login_instructions') }}</p>
 
             @if ($errors->any())
                 <div class="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
@@ -39,7 +39,7 @@
                                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                             </svg>
                         </span>
-                        <input type="email" name="email" value="{{ old('email') }}" placeholder="Email Address"
+                        <input type="email" name="email" value="{{ old('email') }}" placeholder="{{ __('lang.email_address') }}"
                             class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('email') border-red-500 @enderror"
                             required autofocus>
                     </div>
@@ -55,7 +55,7 @@
                                     d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                             </svg>
                         </span>
-                        <input type="password" name="password" id="password" placeholder="Password"
+                        <input type="password" name="password" id="password" placeholder="{{ __('lang.password') }}"
                             class="w-full pl-12 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('password') border-red-500 @enderror"
                             required>
                         <button type="button" onclick="togglePassword()"
@@ -81,28 +81,28 @@
                     <label class="flex items-center">
                         <input type="checkbox" name="remember"
                             class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-                        <span class="ml-2 text-sm text-gray-600">Remember me</span>
+                        <span class="ml-2 text-sm text-gray-600">{{ __('lang.remember_me') }}</span>
                     </label>
                     <a href="{{ route('password.request') }}"
-                        class="text-sm text-blue-600 hover:text-blue-800 font-medium">Forgot password?</a>
+                        class="text-sm text-blue-600 hover:text-blue-800 font-medium">{{ __('lang.forgot_password') }}</a>
                 </div>
 
                 <!-- Login Button -->
                 <button type="submit"
                     class="w-full bg-blue-900 text-white py-3 rounded-lg font-semibold hover:bg-blue-800 transition duration-200 shadow-md">
-                    Login
+                    {{ __('lang.login') }}
                 </button>
 
                 <!-- Sign Up & Contact Links -->
                 <div class="mt-6 text-center space-y-2">
                     <p class="text-sm text-gray-600">
-                        Don't have an account for your company?
+                        {{ __('lang.dont_have_an_account_for_your_company') }}
                         <a href="{{ route('register') }}"
-                            class="text-blue-600 hover:text-blue-800 font-medium">Sign up!</a>
+                            class="text-blue-600 hover:text-blue-800 font-medium">{{ __('lang.register') }}</a>
                     </p>
                     <p class="text-sm text-gray-600">
-                        Are you a consultant or freelancer?
-                        <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">Contact us!</a>
+                        {{ __('lang.are_you_a_consultant_or_freelancer') }}
+                        <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">{{ __('lang.contact_us') }}</a>
                     </p>
                 </div>
             </form>

@@ -26,8 +26,8 @@
             style="background-image: url('{{ asset('assets/images/login.svg') }}'); background-size: cover; background-position: fixed;">
             <div class="text-center z-10 px-8">
                 <h2 class="text-5xl font-bold mb-8 mt-[60px]">
-                    <span class="text-white">Work better, </span>
-                    <span class="text-red-500">Anywhere</span>
+                    <span class="text-white">{{ __('lang.work_better') }}, </span>
+                    <span class="text-red-500">{{ __('lang.anywhere') }}</span>
                 </h2>
             </div>
         </div>

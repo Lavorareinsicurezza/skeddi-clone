@@ -2,7 +2,7 @@
 <button data-drawer-target="cta-button-sidebar" data-drawer-toggle="cta-button-sidebar"
     aria-controls="cta-button-sidebar" type="button"
     class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-gray-200">
-    <span class="sr-only">Open sidebar</span>
+    <span class="sr-only">{{ __('lang.open_sidebar') }}</span>
     <i class="fas fa-bars w-6 h-6"></i>
 </button>
 
@@ -13,66 +13,66 @@
     <div class="h-full px-3 py-8 overflow-y-auto bg-white border-r border-gray-200">
         <!-- Logo Text -->
         <div class="mb-8">
-            <h1 class="text-lg font-bold text-[#0C3183]">Management Software</h1>
+            <h1 class="text-lg font-bold text-[#0C3183]">{{ __('lang.management_software') }}</h1>
         </div>
 
         <!-- Company Management Section (only shown when company is selected) -->
         @if(session('selectedCompanyId'))
         <div class="mb-6">
-            <h2 class="px-2 mb-3 text-xs font-bold text-gray-400 uppercase tracking-wider">Company Management</h2>
+            <h2 class="px-2 mb-3 text-xs font-bold text-gray-400 uppercase tracking-wider">{{ __('lang.company_management') }}</h2>
             <ul class="space-y-2 font-medium">
                 <li>
                     <a href="{{ route('admin.selected-company.detail') }}" class="flex items-center p-2 rounded-[20px] {{ request()->routeIs('admin.selected-company.detail') ? 'text-[#0C3183] bg-blue-50': 'text-gray-500' }} hover:text-[#0C3183] hover:bg-blue-50 group">
                         <i class="fas fa-briefcase w-5 h-5 {{ request()->routeIs('admin.selected-company.detail') ? 'text-[#0C3183]': 'text-gray-500'}} transition duration-75 group-hover:text-[#0C3183]"></i>
-                        <span class="ms-3">Company Details</span>
+                        <span class="ms-3">{{ __('lang.company_details') }}</span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="flex items-center p-2 rounded-[20px] text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 group">
                         <i class="fas fa-clock w-5 h-5 text-gray-500 transition duration-75 group-hover:text-[#0C3183]"></i>
-                        <span class="ms-3">Deadlines</span>
+                        <span class="ms-3">{{ __('lang.deadlines') }}</span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="flex items-center p-2 rounded-[20px] text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 group">
                         <i class="fas fa-sitemap w-5 h-5 text-gray-500 transition duration-75 group-hover:text-[#0C3183]"></i>
-                        <span class="ms-3">Organizational Chart</span>
+                        <span class="ms-3">{{ __('lang.organizational_chart') }}</span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="flex items-center p-2 rounded-[20px] text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 group">
                         <i class="fas fa-users w-5 h-5 text-gray-500 transition duration-75 group-hover:text-[#0C3183]"></i>
-                        <span class="ms-3">Workers</span>
+                        <span class="ms-3">{{ __('lang.workers') }}</span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="flex items-center p-2 rounded-[20px] text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 group">
                         <i class="fas fa-file-alt w-5 h-5 text-gray-500 transition duration-75 group-hover:text-[#0C3183]"></i>
-                        <span class="ms-3">Documents</span>
+                        <span class="ms-3">{{ __('lang.documents') }}</span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="flex items-center p-2 rounded-[20px] text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 group">
                         <i class="fas fa-graduation-cap w-5 h-5 text-gray-500 transition duration-75 group-hover:text-[#0C3183]"></i>
-                        <span class="ms-3">Course Types</span>
+                        <span class="ms-3">{{ __('lang.course_types') }}</span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="flex items-center p-2 rounded-[20px] text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 group">
                         <i class="fas fa-clipboard-list w-5 h-5 text-gray-500 transition duration-75 group-hover:text-[#0C3183]"></i>
-                        <span class="ms-3">Training plan</span>
+                        <span class="ms-3">{{ __('lang.training_plan') }}</span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="flex items-center p-2 rounded-[20px] text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 group">
                         <i class="fas fa-map-marker-alt w-5 h-5 text-gray-500 transition duration-75 group-hover:text-[#0C3183]"></i>
-                        <span class="ms-3">Types of Visit</span>
+                        <span class="ms-3">{{ __('lang.types_of_visit') }}</span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="flex items-center p-2 rounded-[20px] text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 group">
                         <i class="fas fa-sync-alt w-5 h-5 text-gray-500 transition duration-75 group-hover:text-[#0C3183]"></i>
-                        <span class="ms-3">Renewals</span>
+                        <span class="ms-3">{{ __('lang.renewals') }}</span>
                     </a>
                 </li>
             </ul>
@@ -81,48 +81,48 @@
 
         <!-- Content Management Section -->
         <div class="mb-6">
-            <h2 class="px-2 mb-3 text-xs font-bold text-gray-400 uppercase tracking-wider">Content Management</h2>
+            <h2 class="px-2 mb-3 text-xs font-bold text-gray-400 uppercase tracking-wider">{{ __('lang.content_management') }}</h2>
             <ul class="space-y-2 font-medium">
             <li>
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center p-2 rounded-[20px] {{ request()->routeIs('admin.dashboard')? 'text-[#0C3183] bg-blue-50': 'text-gray-500' }} hover:text-[#0C3183] hover:bg-blue-50 group">
                     <i class="fas fa-tachometer-alt w-5 h-5 {{ request()->routeIs('admin.dashboard')? 'text-[#0C3183]': 'text-gray-500'}} group-hover:text-[#0C3183]"></i>
-                    <span class="ms-3">Dashboard</span>
+                    <span class="ms-3">{{ __('lang.dashboard') }}</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('admin.companies.index') }}" class="flex items-center p-2 rounded-[20px] {{ request()->routeIs('admin.companies.*')? 'text-[#0C3183] bg-blue-50': 'text-gray-500' }} hover:text-[#0C3183] hover:bg-blue-50 group">
                     <i class="fas fa-building w-5 h-5 {{ request()->routeIs('admin.companies.*')? 'text-[#0C3183]': 'text-gray-500'}} transition duration-75 group-hover:text-[#0C3183]"></i>
-                    <span class="ms-3">Companies</span>
+                    <span class="ms-3">{{ __('lang.companies') }}</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('admin.users.index') }}" class="flex items-center p-2 rounded-[20px] {{ request()->routeIs('admin.users.*')? 'text-[#0C3183] bg-blue-50': 'text-gray-500' }} hover:text-[#0C3183] hover:bg-blue-50 group">
                     <i class="fas fa-users w-5 h-5 {{ request()->routeIs('admin.users.*')? 'text-[#0C3183]': 'text-gray-500'}} transition duration-75 group-hover:text-[#0C3183]"></i>
-                    <span class="ms-3">Users</span>
+                    <span class="ms-3">{{ __('lang.users') }}</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('admin.course-types.index') }}" class="flex items-center p-2 rounded-[20px] {{ request()->routeIs('admin.course-types.*')? 'text-[#0C3183] bg-blue-50': 'text-gray-500' }} hover:text-[#0C3183] hover:bg-blue-50 group">
                     <i class="fas fa-book w-5 h-5 {{ request()->routeIs('admin.course-types.*')? 'text-[#0C3183]': 'text-gray-500'}} transition duration-75 group-hover:text-[#0C3183]"></i>
-                    <span class="ms-3">Courses</span>
+                    <span class="ms-3">{{ __('lang.courses') }}</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('admin.document-types.index') }}" class="flex items-center p-2 rounded-[20px] {{ request()->routeIs('admin.document-types.*')? 'text-[#0C3183] bg-blue-50': 'text-gray-500' }} hover:text-[#0C3183] hover:bg-blue-50 group">
                     <i class="fas fa-file-alt w-5 h-5 {{ request()->routeIs('admin.document-types.*')? 'text-[#0C3183]': 'text-gray-500'}} transition duration-75 group-hover:text-[#0C3183]"></i>
-                    <span class="ms-3">Document Types</span>
+                    <span class="ms-3">{{ __('lang.document_types') }}</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('admin.visit-types.index') }}" class="flex items-center p-2 rounded-[20px] {{ request()->routeIs('admin.visit-types.*')? 'text-[#0C3183] bg-blue-50': 'text-gray-500' }} hover:text-[#0C3183] hover:bg-blue-50 group">
                     <i class="fas fa-map-marker-alt w-5 h-5 {{ request()->routeIs('admin.visit-types.*')? 'text-[#0C3183]': 'text-gray-500'}} transition duration-75 group-hover:text-[#0C3183]"></i>
-                    <span class="ms-3">Types of visit</span>
+                    <span class="ms-3">{{ __('lang.types_of_visit') }}</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('admin.settings.index') }}" class="flex items-center p-2 rounded-[20px] {{ request()->routeIs('admin.settings.*')? 'text-[#0C3183] bg-blue-50': 'text-gray-500' }} hover:text-[#0C3183] hover:bg-blue-50 group">
                     <i class="fas fa-cog w-5 h-5 {{ request()->routeIs('admin.settings.*')? 'text-[#0C3183]': 'text-gray-500'}} transition duration-75 group-hover:text-[#0C3183]"></i>
-                    <span class="ms-3">Settings</span>
+                    <span class="ms-3">{{ __('lang.settings') }}</span>
                 </a>
             </li>
             <li>
@@ -130,7 +130,7 @@
                     @csrf
                     <button type="submit" class="w-full flex items-center p-2 text-gray-500 rounded-[20px] hover:text-red-600 hover:bg-red-50 group">
                         <i class="fas fa-sign-out-alt w-5 h-5 text-gray-500 transition duration-75 group-hover:text-red-600"></i>
-                        <span class="ms-3">Logout</span>
+                        <span class="ms-3">{{ __('lang.logout') }}</span>
                     </button>
                 </form>
             </li>

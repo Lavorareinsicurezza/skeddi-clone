@@ -54,4 +54,27 @@ return [
     'cancel' => 'Cancel',
     'submit_registration' => 'Submit Registration',
 
+    // --------------------------------------------------------------------------------------------------
+    //                                 Sidebar
+    // --------------------------------------------------------------------------------------------------
+    'open_sidebar' => 'Open sidebar',
+    'company_management' => 'Company Management',
+    'company_details' => 'Company Details',
+    'deadlines' => 'Deadlines',
+    'organizational_chart' => 'Organizational Chart',
+    'workers' => 'Workers',
+    'documents' => 'Documents',
+    'course_types' => 'Course Types',
+    'training_plan' => 'Training plan',
+    'types_of_visit' => 'Types of Visit',
+    'renewals' => 'Renewals',
+    'content_management' => 'Content Management',
+    'dashboard' => 'Dashboard',
+    'companies' => 'Companies',
+    'users' => 'Users',
+    'courses' => 'Courses',
+    'document_types' => 'Document Types',
+    'settings' => 'Settings',
+    'logout' => 'Logout',
+
   ];

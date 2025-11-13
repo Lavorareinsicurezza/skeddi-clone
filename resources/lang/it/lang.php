@@ -54,4 +54,27 @@ return [
     'cancel' => 'Cancellare',
     'submit_registration' => 'Invia registrazione',
 
+    // --------------------------------------------------------------------------------------------------
+    //                                 Sidebar
+    // --------------------------------------------------------------------------------------------------
+    'open_sidebar' => 'Apri barra laterale',
+    'company_management' => 'Gestione Aziendale',
+    'company_details' => 'Dettagli Azienda',
+    'deadlines' => 'Scadenze',
+    'organizational_chart' => 'Organigramma',
+    'workers' => 'Lavoratori',
+    'documents' => 'Documenti',
+    'course_types' => 'Tipi di Corso',
+    'training_plan' => 'Piano di formazione',
+    'types_of_visit' => 'Tipi di Visita',
+    'renewals' => 'Rinnovi',
+    'content_management' => 'Gestione Contenuti',
+    'dashboard' => 'Dashboard',
+    'companies' => 'Aziende',
+    'users' => 'Utenti',
+    'courses' => 'Corsi',
+    'document_types' => 'Tipi di Documento',
+    'settings' => 'Impostazioni',
+    'logout' => 'Disconnetti',
+
 ];

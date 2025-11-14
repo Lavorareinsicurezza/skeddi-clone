@@ -15,19 +15,19 @@
     @endif
 
     <div class="mb-6 flex items-center justify-between">
-        <h1 class="text-3xl font-bold text-gray-900">Companies</h1>
+        <h1 class="text-3xl font-bold text-gray-900">{{ __('lang.companies') }}</h1>
 
         <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden shadow-sm">
             <a href="{{ route('admin.companies.export') }}"
-                class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm border-r border-gray-200 flex" title="Export Data">
+                class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm border-r border-gray-200 flex" title="{{ __('lang.export_data') }}">
                 <i class="text-gray-500 fa fa-download"></i>
             </a>
             <button onclick="document.getElementById('importModal').classList.remove('hidden')"
-                class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm border-r border-gray-200 flex" title="Import Data">
+                class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm border-r border-gray-200 flex" title="{{ __('lang.import_data') }}">
                 <i class="text-gray-500 fa fa-upload"></i>
             </button>
             <a href="{{ route('admin.companies.create') }}"
-                class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm flex" title="Create Company">
+                class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm flex" title="{{ __('lang.create_company') }}">
                 <i class="text-gray-500 fa fa-plus"></i>
             </a>
         </div>
@@ -37,7 +37,7 @@
     <div id="importModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
         <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-semibold text-gray-900">Import Companies</h3>
+                <h3 class="text-lg font-semibold text-gray-900">{{ __('lang.import_companies') }}</h3>
                 <button onclick="document.getElementById('importModal').classList.add('hidden')"
                     class="text-gray-400 hover:text-gray-600">
                     <i class="fa fa-times"></i>
@@ -47,28 +47,28 @@
             <form action="{{ route('admin.companies.import') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Select Excel File</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.select_excel_file') }}</label>
                     <input type="file" name="file" accept=".xlsx,.xls,.csv" required
                         class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183]">
-                    <p class="text-xs text-gray-500 mt-2">Supported formats: Excel (.xlsx, .xls) and CSV</p>
+                    <p class="text-xs text-gray-500 mt-2">{{ __('lang.supported_formats') }}</p>
                 </div>
 
                 <div class="mb-4">
                     <a href="{{ route('admin.companies.template') }}"
                         class="text-[#0C3183] hover:underline text-sm flex items-center gap-2">
                         <i class="fa fa-download"></i>
-                        Download Import Template
+                        {{ __('lang.download_import_template') }}
                     </a>
                 </div>
 
                 <div class="flex gap-3 justify-end">
                     <button type="button" onclick="document.getElementById('importModal').classList.add('hidden')"
                         class="bg-gray-500 text-white px-6 py-2.5 rounded-lg hover:bg-gray-600">
-                        Cancel
+                        {{ __('lang.cancel') }}
                     </button>
                     <button type="submit"
                         class="bg-[#0C3183] text-white px-6 py-2.5 rounded-lg hover:bg-[#0a2766]">
-                        Import
+                        {{ __('lang.import') }}
                     </button>
                 </div>
             </form>
@@ -80,19 +80,19 @@
             <thead class="text-xs text-gray-900 uppercase bg-white border-b">
                 <tr>
                     <th scope="col" class="px-6 py-3">
-                        ID
+                        {{ __('lang.id') }}
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        COMPANY NAME
+                        {{ strtoupper(__('lang.company_name')) }}
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        VAT NUMBER
+                        {{ strtoupper(__('lang.vat_number')) }}
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        TAX ID CODE
+                        {{ strtoupper(__('lang.tax_id_code')) }}
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        ACTIONS
+                        {{ strtoupper(__('lang.actions')) }}
                     </th>
                 </tr>
             </thead>
@@ -115,12 +115,12 @@
                             <td class="px-6 py-4">
                                 <a href="{{ route('admin.companies.show', $company->id) }}"
                                     class="font-medium text-gray-500 p-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
-                                    title="View">
+                                    title="{{ __('lang.view') }}">
                                     <i class="fa-regular fa-eye"></i>
                                 </a>
                                 <a href="{{ route('admin.companies.edit', $company->id) }}"
                                     class="font-medium text-gray-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
-                                    title="Edit">
+                                    title="{{ __('lang.edit') }}">
                                     <i class="fa fa-edit"></i>
                                 </a>
                                 {{-- <a href="#"
@@ -133,7 +133,7 @@
                 @else
                     <tr class="bg-white border-b border-gray-200">
                         <td colspan="5" class="px-6 py-4 text-center text-gray-500">
-                            No data available
+                            {{ __('lang.no_data_available') }}
                         </td>
                     </tr>
                 @endif

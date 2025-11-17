@@ -15,12 +15,12 @@
     @endif
 
     <div class="mb-6 flex items-center justify-between">
-        <h1 class="text-3xl font-bold text-gray-900">Course Types</h1>
+        <h1 class="text-3xl font-bold text-gray-900">{{ __('lang.course_types_management') }}</h1>
 
         <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden shadow-sm">
 
             <a href="{{ route('admin.course-types.create') }}"
-                class="px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm flex" title="Create Course Type">
+                class="px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm flex" title="{{ __('lang.create_course_type') }}">
                 <i class="text-gray-500 fa fa-plus"></i>
             </a>
         </div>
@@ -31,13 +31,13 @@
             <thead class="text-xs text-gray-900 uppercase bg-white border-b">
                 <tr>
                     <th scope="col" class="px-6 py-3">
-                        COURSE TYPE
+                        {{ __('lang.course_type') }}
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        YEARS OF VALIDITY
+                        {{ __('lang.years_of_validity') }}
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        ACTIONS
+                        {{ __('lang.actions') }}
                     </th>
                 </tr>
             </thead>
@@ -54,20 +54,20 @@
                             <td class="px-6 py-4">
                                 <a href="{{ route('admin.course-types.show', $courseType->id) }}"
                                     class="font-medium text-gray-500 p-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
-                                    title="View">
+                                    title="{{ __('lang.view') }}">
                                     <i class="fa-regular fa-eye"></i>
                                 </a>
                                 <a href="{{ route('admin.course-types.edit', $courseType->id) }}"
                                     class="font-medium text-gray-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
-                                    title="Edit">
+                                    title="{{ __('lang.edit') }}">
                                     <i class="fa fa-edit"></i>
                                 </a>
-                                <form action="{{ route('admin.course-types.destroy', $courseType->id) }}" method="POST" class="inline-block ml-2" onsubmit="return confirm('Are you sure you want to delete this course type?');">
+                                <form action="{{ route('admin.course-types.destroy', $courseType->id) }}" method="POST" class="inline-block ml-2" onsubmit="return confirm('{{ __('lang.delete_course_type_confirm') }}');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
                                         class="font-medium text-red-500 p-2 hover:bg-red-50 border border-gray-200 rounded-[10px]"
-                                        title="Delete">
+                                        title="{{ __('lang.actions') }}">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </form>
@@ -77,7 +77,7 @@
                 @else
                     <tr class="bg-white border-b border-gray-200">
                         <td colspan="3" class="px-6 py-4 text-center text-gray-500">
-                            No data available
+                            {{ __('lang.no_data_available') }}
                         </td>
                     </tr>
                 @endif

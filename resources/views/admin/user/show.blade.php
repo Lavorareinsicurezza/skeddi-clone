@@ -9,19 +9,19 @@
                     <h1 class="text-4xl font-bold text-gray-900 mb-2">{{ $user->name }}</h1>
                     <p class="text-gray-500 flex items-center gap-2">
                         <i class="fa fa-user text-[#0C3183]"></i>
-                        <span>User Information</span>
+                        <span>{{ __('lang.user_information') }}</span>
                     </p>
                 </div>
                 <div class="flex gap-3">
                     <a href="{{ route('admin.users.edit', $user->id) }}"
                         class="bg-[#0C3183] text-white px-6 py-3 rounded-lg hover:bg-blue-800 shadow-sm transition-all flex items-center gap-2">
                         <i class="fa fa-edit"></i>
-                        <span>Edit</span>
+                        <span>{{ __('lang.edit') }}</span>
                     </a>
                     <a href="{{ route('admin.users.index') }}"
                         class="bg-white text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-50 shadow-sm border border-gray-200 transition-all flex items-center gap-2">
                         <i class="fa fa-arrow-left"></i>
-                        <span>Back</span>
+                        <span>{{ __('lang.back') }}</span>
                     </a>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                     <div class="bg-gradient-to-r from-[#0C3183] to-blue-700 px-6 py-4">
                         <h2 class="text-lg font-semibold flex items-center gap-2">
                             <i class="fa fa-info-circle"></i>
-                            Basic Information
+                            {{ __('lang.basic_information') }}
                         </h2>
                     </div>
                     <div class="p-6">
@@ -56,7 +56,7 @@
                                     <i class="fa fa-envelope text-[#0C3183]"></i>
                                 </div>
                                 <div>
-                                    <p class="text-xs text-gray-500 uppercase font-medium mb-1">Email Address</p>
+                                    <p class="text-xs text-gray-500 uppercase font-medium mb-1">{{ __('lang.email_address') }}</p>
                                     <p class="text-gray-900 font-semibold break-all">{{ $user->email }}</p>
                                 </div>
                             </div>
@@ -66,7 +66,7 @@
                                     <i class="fa fa-user-tie text-[#0C3183]"></i>
                                 </div>
                                 <div>
-                                    <p class="text-xs text-gray-500 uppercase font-medium mb-1">Role</p>
+                                    <p class="text-xs text-gray-500 uppercase font-medium mb-1">{{ __('lang.role') }}</p>
                                     <p class="text-gray-900 font-semibold">{{ ucfirst($user->role) }}</p>
                                 </div>
                             </div>
@@ -76,7 +76,7 @@
                                     <i class="fa fa-building text-[#0C3183]"></i>
                                 </div>
                                 <div>
-                                    <p class="text-xs text-gray-500 uppercase font-medium mb-1">Company</p>
+                                    <p class="text-xs text-gray-500 uppercase font-medium mb-1">{{ __('lang.company_name') }}</p>
                                     <p class="text-gray-900 font-semibold">{{ $user->company->name ?? '-' }}</p>
                                 </div>
                             </div>
@@ -86,7 +86,7 @@
                                     <i class="fa fa-calendar text-[#0C3183]"></i>
                                 </div>
                                 <div>
-                                    <p class="text-xs text-gray-500 uppercase font-medium mb-1">Created At</p>
+                                    <p class="text-xs text-gray-500 uppercase font-medium mb-1">{{ __('lang.created_at') }}</p>
                                     <p class="text-gray-900 font-semibold">{{ $user->created_at->format('M d, Y') }}</p>
                                 </div>
                             </div>
@@ -99,7 +99,7 @@
                     <div class="bg-gradient-to-r from-[#0C3183] to-blue-700 px-6 py-4">
                         <h2 class="text-lg font-semibold flex items-center gap-2">
                             <i class="fa fa-tasks"></i>
-                            Functions & Permissions
+                            {{ __('lang.functions_permissions') }}
                         </h2>
                     </div>
                     <div class="p-6">
@@ -115,7 +115,7 @@
                         @else
                             <div class="text-center py-8">
                                 <i class="fa fa-inbox text-4xl text-gray-300 mb-3"></i>
-                                <p class="text-gray-500 text-sm">No functions assigned</p>
+                                <p class="text-gray-500 text-sm">{{ __('lang.no_functions_assigned') }}</p>
                             </div>
                         @endif
                     </div>
@@ -127,7 +127,7 @@
                     <div class="bg-gradient-to-r from-orange-600 to-orange-700 px-6 py-4">
                         <h2 class="text-lg font-semibold flex items-center gap-2">
                             <i class="fa fa-shield-alt"></i>
-                            Administration Functions
+                            {{ __('lang.administration_functions') }}
                         </h2>
                     </div>
                     <div class="p-6">
@@ -153,7 +153,7 @@
                     <div class="bg-gradient-to-r from-indigo-600 to-indigo-700 px-6 py-4">
                         <h2 class="text-lg font-semibold flex items-center gap-2">
                             <i class="fa fa-eye"></i>
-                            Visible Companies
+                            {{ __('lang.visible_companies') }}
                         </h2>
                     </div>
                     <div class="p-6">
@@ -174,7 +174,7 @@
                         @else
                             <div class="text-center py-8">
                                 <i class="fa fa-inbox text-4xl text-gray-300 mb-3"></i>
-                                <p class="text-gray-500 text-sm">No companies assigned</p>
+                                <p class="text-gray-500 text-sm">{{ __('lang.no_companies_assigned') }}</p>
                             </div>
                         @endif
                     </div>

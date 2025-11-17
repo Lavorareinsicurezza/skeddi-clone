@@ -15,7 +15,7 @@
     @endif
 
     <div class="mb-6 flex items-center justify-between">
-        <h1 class="text-3xl font-bold text-gray-900">Users</h1>
+        <h1 class="text-3xl font-bold text-gray-900">{{ __('lang.users') }}</h1>
 
         <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden shadow-sm">
             <a href="{{ route('admin.users.export') }}"
@@ -37,7 +37,7 @@
     <div id="importModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
         <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-semibold text-gray-900">Import Users</h3>
+                <h3 class="text-lg font-semibold text-gray-900">{{ __('lang.import_users') }}</h3>
                 <button onclick="document.getElementById('importModal').classList.add('hidden')"
                     class="text-gray-400 hover:text-gray-600">
                     <i class="fa fa-times"></i>
@@ -47,25 +47,25 @@
             <form action="{{ route('admin.users.import') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Select Excel File</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.select_excel_file') }}</label>
                     <input type="file" name="file" accept=".xlsx,.xls,.csv" required
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
 
                 <div class="mb-4">
                     <a href="{{ route('admin.users.template') }}" class="text-sm text-blue-600 hover:underline">
-                        <i class="fa fa-download mr-1"></i>Download Import Template
+                        <i class="fa fa-download mr-1"></i>{{ __('lang.download_import_template') }}
                     </a>
                 </div>
 
                 <div class="flex justify-end gap-2">
                     <button type="button" onclick="document.getElementById('importModal').classList.add('hidden')"
                         class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">
-                        Cancel
+                        {{ __('lang.cancel') }}
                     </button>
                     <button type="submit"
                         class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-                        Import
+                        {{ __('lang.import') }}
                     </button>
                 </div>
             </form>
@@ -77,13 +77,13 @@
             <thead class="text-xs text-gray-900 uppercase bg-white border-b">
                 <tr>
                     <th scope="col" class="px-6 py-3">
-                        EMAIL ADDRESS
+                        {{ __('lang.email_address') }}
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        ROLE
+                        {{ __('lang.role_list') }}
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        ACTIONS
+                        {{ __('lang.actions') }}
                     </th>
                 </tr>
             </thead>
@@ -118,7 +118,7 @@
                 @else
                     <tr class="bg-white border-b border-gray-200">
                         <td colspan="5" class="px-6 py-4 text-center text-gray-500">
-                            No data available
+                            {{ __('lang.no_data_available') }}
                         </td>
                     </tr>
                 @endif

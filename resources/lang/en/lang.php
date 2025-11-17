@@ -161,5 +161,126 @@ return [
     //                                 Company Management
     // --------------------------------------------------------------------------------------------------
 
-    'role' => 'ROLE',
+    'role_list' => 'ROLE',
+    'role' => 'Role',
+
+    // --------------------------------------------------------------------------------------------------
+    //                                 User Management
+    // --------------------------------------------------------------------------------------------------
+    'import_users' => 'Import Users',
+    'export' => 'Export',
+    'upload' => 'Upload',
+    'create_user' => 'Create User',
+    'edit_user' => 'Edit User',
+    'edit_details' => 'Edit Details',
+    'back_to_list' => 'Back to List',
+    'please_fix_following_errors' => 'Please fix the following errors:',
+    'enter_email' => 'Enter email',
+    'select_role' => 'Select Role',
+    'supervisor' => 'Supervisor',
+    'functions' => 'Functions',
+    'company_rsvp' => 'Company & RSVP',
+    'permission_modify_company_rsvp' => 'Permission to modify the company profile and RSVP data',
+    'ppe' => 'PPE',
+    'ppe_requires_workers_right' => "To access PPE, it is also necessary to grant the Workers' right",
+    'training_plan_access' => 'To access the training plan',
+    'health_surveillance' => 'Health Surveillance',
+    'health_surveillance_access' => 'To access health surveillance',
+    'inspections' => 'Inspections',
+    'maintenance' => 'Maintenance',
+    'visible_companies' => 'Visible Companies',
+    'near' => 'Near',
+    'administration_functions' => 'Administration Functions',
+    'user_information' => 'User Information',
+    'functions_permissions' => 'Functions & Permissions',
+    'no_functions_assigned' => 'No functions assigned',
+    'no_companies_assigned' => 'No companies assigned',
+    'created_at' => 'Created At',
+
+    // --------------------------------------------------------------------------------------------------
+    //                                 Course Types
+    // --------------------------------------------------------------------------------------------------
+    'course_type' => 'Course Type',
+    'course_types_management' => 'Course Types',
+    'years_of_validity' => 'Years of Validity',
+    'course_name' => 'Course Name',
+    'validity_year' => 'Validity Year',
+    'generic' => 'Generic',
+    'expiration' => 'Expiration',
+    'enter_course_name' => 'Enter course name',
+    'enter_validity_years' => 'Enter validity years',
+    'enter_generic' => 'Enter generic',
+    'enter_notes' => 'Enter notes',
+    'create' => 'Create',
+    'create_course_type' => 'Create Course Type',
+    'edit_course_type' => 'Edit Course Type',
+    'delete_course_type_confirm' => 'Are you sure you want to delete this course type?',
+    'course_type_details' => 'Course Type Details',
+
+    // --------------------------------------------------------------------------------------------------
+    //                                 Document Types
+    // --------------------------------------------------------------------------------------------------
+    'document_type' => 'Document Type',
+    'document_types_management' => 'Document Types',
+    'document_name' => 'Document Name',
+    'create_document_type' => 'Create Document Type',
+    'edit_document_type' => 'Edit Document Type',
+    'delete_document_type_confirm' => 'Are you sure you want to delete this document type?',
+    'document_type_details' => 'Document Type Details',
+    'enter_document_name' => 'Enter document name',
+
+    // --------------------------------------------------------------------------------------------------
+    //                                 Visit Types
+    // --------------------------------------------------------------------------------------------------
+    'visit_type' => 'Visit Type',
+    'visit_types_management' => 'Types of Visit',
+    'visit_name' => 'Visit Name',
+    'create_visit_type' => 'Create Visit Type',
+    'edit_visit_type' => 'Edit Visit Type',
+    'delete_visit_type_confirm' => 'Are you sure you want to delete this visit type?',
+    'visit_type_details' => 'Visit Type Details',
+    'enter_visit_name' => 'Enter visit name',
+
+    // --------------------------------------------------------------------------------------------------
+    //                                 Settings
+    // --------------------------------------------------------------------------------------------------
+    'system_settings' => 'System Settings',
+    'update_history' => 'Update History',
+    'ui_version' => 'UI Version',
+    'alert_notifications_settings' => 'Alert Notifications Settings',
+    'days_prior_course_deadline' => 'Days prior to course deadline',
+    'days_prior_health_insurance' => 'Days prior to health insurance',
+    'days_prior_maintenance_deadline' => 'Days prior to maintenance deadline',
+    'smtp_configuration' => 'SMTP Configuration',
+    'address_notification_sent' => 'Address to which notification will be sent',
+    'alias_notification_sent' => 'Alias under which notification will be sent',
+    'replyto_address' => 'ReplyTo Address to which replies will be sent',
+    'smtp_host' => 'SMTP Host',
+    'smtp_port' => 'SMTP Port',
+    'smtp_username' => 'SMTP Username',
+    'smtp_password' => 'SMTP Password',
+    'email_notifications' => 'Email Notifications',
+    'email_auto_generated' => 'Email auto-generated for deadline notification',
+    'whatsapp_notification' => 'WhatsApp notification',
+    'template_subject_body' => 'Template, subject and body of automatic notification',
+    'email_template' => 'Email Template',
+    'notification_subject' => 'Notification Subject',
+    'notification_body' => 'Notification Body',
+    'whatsapp_settings' => 'WhatsApp Settings',
+    'whatsapp_smtp_address' => 'WhatsApp SMTP Address',
+    'whatsapp_smtp_alias' => 'WhatsApp SMTP Alias',
+    'whatsapp_smtp_reply_to' => 'WhatsApp SMTP Reply To',
+    'test_smtp' => 'Test',
+    'save_settings' => 'Save Settings',
+    'notification_settings' => 'Notification Settings',
+    'email_automatically_generated' => 'Email automatically generated',
+    'by_the_system' => 'by the system',
+    'do_not_reply_to_this_email' => 'Do not reply to this email',
+    'whatsapp_notification_label' => 'WhatsApp Notification',
+    'subject_of_the_notification' => 'Subject of the notification',
+    'notification_body_label' => 'Notification body',
+    'enter_notification_subject' => 'Enter notification subject',
+    'company_name_placeholder' => 'Company Name',
+    'day_of_descending' => 'Day of Descending',
+    'list_of_deadlines_for_that_day' => 'List of deadlines for that day',
   ];

@@ -31,10 +31,10 @@
     </div>
 
     <div class="mb-6 flex items-center justify-between">
-        <h1 class="text-3xl font-bold text-gray-900">System Settings</h1>
+        <h1 class="text-3xl font-bold text-gray-900">{{ __('lang.system_settings') }}</h1>
         <button type="button" id="updateHistoryBtn"
             class="px-5 py-3 bg-[#0C9488] hover:bg-[#0a7d73] text-white font-semibold rounded-lg shadow-sm">
-            Update History
+            {{ __('lang.update_history') }}
         </button>
     </div>
 
@@ -44,29 +44,29 @@
 
         <!-- UI Version -->
         <div class="px-6 py-3">
-            <h2 class="text-sm font-semibold text-gray-700 mb-3">UI Version</h2>
+            <h2 class="text-sm font-semibold text-gray-700 mb-3">{{ __('lang.ui_version') }}</h2>
             <input type="text" value="{{ $uiVersion }}" readonly
                 class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-600 text-sm">
         </div>
 
         <!-- Alert Notifications Settings -->
         <div class="px-6 py-3">
-            <h2 class="text-sm font-semibold text-gray-700 mb-4">Alert Notifications Settings</h2>
+            <h2 class="text-sm font-semibold text-gray-700 mb-4">{{ __('lang.alert_notifications_settings') }}</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                    <label class="block text-xs text-gray-500 mb-2">Days prior to course deadline</label>
+                    <label class="block text-xs text-gray-500 mb-2">{{ __('lang.days_prior_course_deadline') }}</label>
                     <input type="number" name="days_prior_course_deadline"
                         value="{{ old('days_prior_course_deadline', $setting->days_prior_course_deadline) }}" min="0"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-500 mb-2">Days prior to health insurance</label>
+                    <label class="block text-xs text-gray-500 mb-2">{{ __('lang.days_prior_health_insurance') }}</label>
                     <input type="number" name="days_prior_health_insurance"
                         value="{{ old('days_prior_health_insurance', $setting->days_prior_health_insurance) }}" min="0"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-500 mb-2">Days prior to maintenance deadline</label>
+                    <label class="block text-xs text-gray-500 mb-2">{{ __('lang.days_prior_maintenance_deadline') }}</label>
                     <input type="number" name="days_prior_maintenance_deadline"
                         value="{{ old('days_prior_maintenance_deadline', $setting->days_prior_maintenance_deadline) }}"
                         min="0"
@@ -77,42 +77,42 @@
 
         <!-- SMTP Configuration -->
         <div class="px-6 py-3">
-            <h2 class="text-sm font-semibold text-gray-700 mb-4"> SMTP Configuration</h2>
+            <h2 class="text-sm font-semibold text-gray-700 mb-4">{{ __('lang.smtp_configuration') }}</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                 <div>
-                    <label class="block text-xs text-gray-500 mb-2">Address to which notification will be sent</label>
+                    <label class="block text-xs text-gray-500 mb-2">{{ __('lang.address_notification_sent') }}</label>
                     <input type="text" name="smtp_address" value="{{ old('smtp_address', $setting->smtp_address) }}"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-500 mb-2">Alias under which notification will be sent</label>
+                    <label class="block text-xs text-gray-500 mb-2">{{ __('lang.alias_notification_sent') }}</label>
                     <input type="text" name="smtp_alias" value="{{ old('smtp_alias', $setting->smtp_alias) }}"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-500 mb-2">ReplyTo Address to which replies will be sent</label>
+                    <label class="block text-xs text-gray-500 mb-2">{{ __('lang.replyto_address') }}</label>
                     <input type="text" name="smtp_reply_to" value="{{ old('smtp_reply_to', $setting->smtp_reply_to) }}"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-500 mb-2">SMTP Host</label>
+                    <label class="block text-xs text-gray-500 mb-2">{{ __('lang.smtp_host') }}</label>
                     <input type="text" name="smtp_host" value="{{ old('smtp_host', $setting->smtp_host) }}"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                 <div>
-                    <label class="block text-xs text-gray-500 mb-2">SMTP Port</label>
+                    <label class="block text-xs text-gray-500 mb-2">{{ __('lang.smtp_port') }}</label>
                     <input type="text" name="smtp_port" value="{{ old('smtp_port', $setting->smtp_port) }}"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-500 mb-2">SMTP Username</label>
+                    <label class="block text-xs text-gray-500 mb-2">{{ __('lang.smtp_username') }}</label>
                     <input type="text" name="smtp_username" value="{{ old('smtp_username', $setting->smtp_username) }}"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-500 mb-2">SMTP Password</label>
+                    <label class="block text-xs text-gray-500 mb-2">{{ __('lang.smtp_password') }}</label>
                     <input type="password" name="smtp_password" value="{{ old('smtp_password', $setting->smtp_password) }}"
                         placeholder="**********"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -120,7 +120,7 @@
             </div>
             <button type="button" id="testSmtpBtn"
                 class="px-6 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 font-medium text-sm">
-                Test
+                {{ __('lang.test_smtp') }}
             </button>
             <div id="smtp-test-message-box" class="mt-4 w-[50%]"></div>
         </div>
@@ -156,22 +156,22 @@
 
         <!-- WhatsApp SMTP Configuration -->
         <div class="px-6 py-3">
-            <h2 class="text-sm font-semibold text-gray-700 mb-4">WhatsApp SMTP</h2>
+            <h2 class="text-sm font-semibold text-gray-700 mb-4">{{ __('lang.whatsapp_settings') }}</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                 <div>
-                    <label class="block text-xs text-gray-500 mb-2">Address to which notification will be sent</label>
+                    <label class="block text-xs text-gray-500 mb-2">{{ __('lang.address_notification_sent') }}</label>
                     <input type="text" name="whatsapp_smtp_address"
                         value="{{ old('whatsapp_smtp_address', $setting->whatsapp_smtp_address) }}"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-500 mb-2">Alias under which notification will be sent</label>
+                    <label class="block text-xs text-gray-500 mb-2">{{ __('lang.alias_notification_sent') }}</label>
                     <input type="text" name="whatsapp_smtp_alias"
                         value="{{ old('whatsapp_smtp_alias', $setting->whatsapp_smtp_alias) }}"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-500 mb-2">ReplyTo Address to which replies will be sent</label>
+                    <label class="block text-xs text-gray-500 mb-2">{{ __('lang.replyto_address') }}</label>
                     <input type="text" name="whatsapp_smtp_reply_to"
                         value="{{ old('whatsapp_smtp_reply_to', $setting->whatsapp_smtp_reply_to) }}"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -179,7 +179,7 @@
             </div>
             <button type="button" id="testWhatsAppSmtpBtn"
                 class="px-6 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 font-medium text-sm">
-                Test
+                {{ __('lang.test_smtp') }}
             </button>
         </div>
 
@@ -384,7 +384,7 @@
         <div class="p-6 bg-gray-50 rounded-b-lg">
             <button type="submit"
                 class="px-6 py-3 bg-[#0C9488] hover:bg-[#0a7d73] text-white font-semibold rounded-lg shadow-sm">
-                Save Settings
+                {{ __('lang.save_settings') }}
             </button>
         </div>
     </form>
@@ -526,7 +526,7 @@
 
             // Disable button and show loading
             btn.disabled = true;
-            btn.innerHTML = '<svg class="animate-spin h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Testing...';
+            btn.innerHTML = '<svg class="animate-spin h-5 w-5 text-[#0C9488] inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Testing...';
 
             fetch('{{ route('admin.settings.test') }}', {
                 method: 'POST',

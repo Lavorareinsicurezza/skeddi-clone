@@ -4,7 +4,7 @@
     <div class="container mx-auto px-6 py-8">
         <!-- Page Header -->
         <div class="mb-6 flex items-center justify-between">
-            <h1 class="text-3xl font-bold text-gray-900">Edit Course Type</h1>
+            <h1 class="text-3xl font-bold text-gray-900">{{ __('lang.edit_course_type') }}</h1>
         </div>
 
         @if ($errors->any())
@@ -25,13 +25,13 @@
                 <!-- Row 1 -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Course Name <span class="text-red-500">*</span></label>
-                        <input type="text" name="course_name" placeholder="Enter course name" value="{{ old('course_name', $courseType->course_name) }}" required
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.course_name') }} <span class="text-red-500">*</span></label>
+                        <input type="text" name="course_name" placeholder="{{ __('lang.enter_course_name') }}" value="{{ old('course_name', $courseType->course_name) }}" required
                             class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Validity Year <span class="text-red-500">*</span></label>
-                        <input type="number" name="validity_year" placeholder="Enter validity years" value="{{ old('validity_year', $courseType->validity_year) }}" min="1" required
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.validity_year') }} <span class="text-red-500">*</span></label>
+                        <input type="number" name="validity_year" placeholder="{{ __('lang.enter_validity_years') }}" value="{{ old('validity_year', $courseType->validity_year) }}" min="1" required
                             class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                     </div>
                 </div>
@@ -39,12 +39,12 @@
                 <!-- Row 2 -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Generic</label>
-                        <input type="text" name="generic" placeholder="Enter generic" value="{{ old('generic', $courseType->generic) }}"
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.generic') }}</label>
+                        <input type="text" name="generic" placeholder="{{ __('lang.enter_generic') }}" value="{{ old('generic', $courseType->generic) }}"
                             class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Expiration</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.expiration') }}</label>
                         <input type="date" name="expiration" value="{{ old('expiration', $courseType->expiration ? $courseType->expiration->format('Y-m-d') : '') }}"
                             class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                     </div>
@@ -52,8 +52,8 @@
 
                 <!-- Row 3 -->
                 <div class="mb-6">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Notes</label>
-                    <textarea name="notes" placeholder="Enter notes" rows="4"
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.notes') }}</label>
+                    <textarea name="notes" placeholder="{{ __('lang.enter_notes') }}" rows="4"
                         class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">{{ old('notes', $courseType->notes) }}</textarea>
                 </div>
 
@@ -61,11 +61,11 @@
                 <div class="flex gap-3 justify-end">
                     <a href="{{ route('admin.course-types.index') }}"
                         class="bg-gray-500 text-white px-6 py-2.5 rounded-lg hover:bg-gray-600">
-                        Cancel
+                        {{ __('lang.cancel') }}
                     </a>
                     <button type="submit"
                         class="bg-[#0C3183] text-white px-6 py-2.5 rounded-lg hover:bg-[#0a2766]">
-                        Update
+                        {{ __('lang.update') }}
                     </button>
                 </div>
             </div>

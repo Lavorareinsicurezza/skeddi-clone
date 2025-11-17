@@ -96,20 +96,22 @@ return [
     'head_of_prevention' => 'Responsabile della Prevenzione',
     'workers_safety_representative' => 'Rappresentante dei Lavoratori per la Sicurezza',
     'safety_representative' => 'Rappresentante della Sicurezza',
-    'company_doctor' => 'Medico aziendale',
+    'company_doctor' => 'Medico competente',
     'workplace_safety_risk' => 'Rischio per la Sicurezza sul Lavoro',
     'subject_to_cpi' => 'Soggetto a CPI',
     'rischio_antincendio' => 'Rischio Antincendio',
-    'external_professional_contacts' => 'Contatti Professionali Esterni',
+    'external_professional_contacts' => 'Commercialista',
     'accountant' => 'Commercialista',
-    'accountant_name' => 'Commercialista: nome',
+    'accountant_name' => 'Commercialista: nominativo',
     'labor_consultant' => 'Consulente del Lavoro',
     'name' => 'Nome',
+    'labot_consultant_name' => 'Consulente del lavoro: nominativo',
     'email' => 'Email',
-    'notes' => 'Note',
-    'send_deadline_notification' => 'Invia Notifica Scadenza',
-    'freeze_company' => 'Congela Azienda',
-    'contacts_select_at_least_one' => 'Contatti Seleziona almeno uno',
+    'e-mail' => 'E-mail',
+    'notes' => 'Nota',
+    'send_deadline_notification' => 'Invia Notifica di Scadenza',
+    'freeze_company' => 'Congelare la compagnia',
+    'contacts_select_at_least_one' => 'Selezionare almeno uno',
     'save' => 'Salva',
     'update' => 'Aggiorna',
     'edit' => 'Modifica',
@@ -155,4 +157,9 @@ return [
     'option_2' => 'Opzione 2',
     'option_3' => 'Opzione 3',
 
+    // --------------------------------------------------------------------------------------------------
+    //                                 Company Management
+    // --------------------------------------------------------------------------------------------------
+
+    'role' => 'RUOLO',
 ];

@@ -105,7 +105,9 @@ return [
     'accountant_name' => 'Accountant: name',
     'labor_consultant' => 'Labor Consultant',
     'name' => 'Name',
+    'labot_consultant_name' => 'Name',
     'email' => 'Email',
+    'e-mail' => 'E-mail',
     'notes' => 'Notes',
     'send_deadline_notification' => 'Send Deadline Notification',
     'freeze_company' => 'Freeze Company',
@@ -155,4 +157,9 @@ return [
     'option_2' => 'Option 2',
     'option_3' => 'Option 3',
 
+     // --------------------------------------------------------------------------------------------------
+    //                                 Company Management
+    // --------------------------------------------------------------------------------------------------
+
+    'role' => 'ROLE',
   ];

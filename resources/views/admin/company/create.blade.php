@@ -4,7 +4,7 @@
     <div class="container mx-auto px-6 py-8">
         <!-- Page Header -->
         <div class="mb-6 flex items-center justify-between">
-            <h1 class="text-3xl font-bold text-gray-900">{{ __('lang.companies') }}</h1>
+            <h1 class="text-3xl font-bold text-gray-900">{{ __('lang.company_information') }}</h1>
         </div>
 
         <form action="{{ route('admin.companies.store') }}" method="POST">
@@ -187,7 +187,7 @@
                                 class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                         </div>
                         <div>
-                            <input type="email" name="accountant_email" value="{{ old('accountant_email') }}" placeholder="{{ __('lang.email') }}"
+                            <input type="email" name="accountant_email" value="{{ old('accountant_email') }}" placeholder="{{ __('lang.e-mail') }}"
                                 class="w-full border @error('accountant_email') border-red-500 @else border-gray-300 @enderror rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                             @error('accountant_email')
                                 <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
@@ -201,7 +201,7 @@
                     <h3 class="text-sm font-semibold text-gray-800 mb-4">{{ __('lang.labor_consultant') }}</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
-                            <input type="text" name="labor_consultant_name" value="{{ old('labor_consultant_name') }}" placeholder="{{ __('lang.name') }}"
+                            <input type="text" name="labor_consultant_name" value="{{ old('labor_consultant_name') }}" placeholder="{{ __('lang.labot_consultant_name') }}"
                                 class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                         </div>
                         <div>
@@ -209,7 +209,7 @@
                                 class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                         </div>
                         <div>
-                            <input type="email" name="labor_consultant_email" value="{{ old('labor_consultant_email') }}" placeholder="{{ __('lang.email') }}"
+                            <input type="email" name="labor_consultant_email" value="{{ old('labor_consultant_email') }}" placeholder="{{ __('lang.e-mail') }}"
                                 class="w-full border @error('labor_consultant_email') border-red-500 @else border-gray-300 @enderror rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                             @error('labor_consultant_email')
                                 <p class="mt-1 text-xs text-red-500">{{ $message }}</p>

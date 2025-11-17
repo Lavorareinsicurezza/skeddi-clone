@@ -13,7 +13,7 @@ class DocumentTypeController extends Controller
      */
     public function index()
     {
-        $documentTypes = DocumentType::paginate(20);
+        $documentTypes = DocumentType::where('company_id', auth()->user()->company_id)->paginate(20);
         return view('admin.document-types.index', compact('documentTypes'));
     }
 
@@ -36,6 +36,9 @@ class DocumentTypeController extends Controller
             'notes' => 'nullable|string',
         ]);
 
+        // Add company_id from authenticated user
+        $validated['company_id'] = auth()->user()->company_id;
+
         DocumentType::create($validated);
 
         return redirect()->route('admin.document-types.index')->with('success', 'Document type created successfully');
@@ -46,7 +49,7 @@ class DocumentTypeController extends Controller
      */
     public function show(string $id)
     {
-        $documentType = DocumentType::findOrFail($id);
+        $documentType = DocumentType::where('company_id', auth()->user()->company_id)->findOrFail($id);
         return view('admin.document-types.show', compact('documentType'));
     }
 
@@ -55,7 +58,7 @@ class DocumentTypeController extends Controller
      */
     public function edit(string $id)
     {
-        $documentType = DocumentType::findOrFail($id);
+        $documentType = DocumentType::where('company_id', auth()->user()->company_id)->findOrFail($id);
         return view('admin.document-types.edit', compact('documentType'));
     }
 
@@ -64,7 +67,7 @@ class DocumentTypeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $documentType = DocumentType::findOrFail($id);
+        $documentType = DocumentType::where('company_id', auth()->user()->company_id)->findOrFail($id);
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -82,7 +85,7 @@ class DocumentTypeController extends Controller
      */
     public function destroy(string $id)
     {
-        $documentType = DocumentType::findOrFail($id);
+        $documentType = DocumentType::where('company_id', auth()->user()->company_id)->findOrFail($id);
         $documentType->delete();
 
         return redirect()->route('admin.document-types.index')->with('success', 'Document type deleted successfully');

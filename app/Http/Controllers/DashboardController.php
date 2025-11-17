@@ -17,7 +17,7 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         $company = $user->company;
-        $companies = Company::all();
+        $companies = Company::with('users')->company()->get();
 
         return view('welcome', [
             'currentCompany' => $company,

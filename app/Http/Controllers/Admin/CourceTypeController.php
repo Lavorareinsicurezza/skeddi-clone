@@ -14,7 +14,7 @@ class CourceTypeController extends Controller
      */
     public function index()
     {
-        $courseTypes = CourseType::paginate(20);
+        $courseTypes = CourseType::where('company_id', auth()->user()->company_id)->paginate(20);
         return view('admin.course-types.index', compact('courseTypes'));
     }
 
@@ -44,6 +44,9 @@ class CourceTypeController extends Controller
             $validated['expiration'] = Carbon::parse($validated['expiration'])->format('Y-m-d');
         }
 
+        // Add company_id from authenticated user
+        $validated['company_id'] = auth()->user()->company_id;
+
         CourseType::create($validated);
 
         return redirect()->route('admin.course-types.index')->with('success', 'Course type created successfully');
@@ -54,7 +57,7 @@ class CourceTypeController extends Controller
      */
     public function show(string $id)
     {
-        $courseType = CourseType::findOrFail($id);
+        $courseType = CourseType::where('company_id', auth()->user()->company_id)->findOrFail($id);
         return view('admin.course-types.show', compact('courseType'));
     }
 
@@ -63,7 +66,7 @@ class CourceTypeController extends Controller
      */
     public function edit(string $id)
     {
-        $courseType = CourseType::findOrFail($id);
+        $courseType = CourseType::where('company_id', auth()->user()->company_id)->findOrFail($id);
         return view('admin.course-types.edit', compact('courseType'));
     }
 
@@ -72,7 +75,7 @@ class CourceTypeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $courseType = CourseType::findOrFail($id);
+        $courseType = CourseType::where('company_id', auth()->user()->company_id)->findOrFail($id);
 
         $validated = $request->validate([
             'course_name' => 'required|string|max:255',
@@ -97,7 +100,7 @@ class CourceTypeController extends Controller
      */
     public function destroy(string $id)
     {
-        $courseType = CourseType::findOrFail($id);
+        $courseType = CourseType::where('company_id', auth()->user()->company_id)->findOrFail($id);
         $courseType->delete();
 
         return redirect()->route('admin.course-types.index')->with('success', 'Course type deleted successfully');

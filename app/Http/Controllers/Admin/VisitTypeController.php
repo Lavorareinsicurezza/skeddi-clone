@@ -13,7 +13,7 @@ class VisitTypeController extends Controller
      */
     public function index()
     {
-        $visitTypes = VisitType::paginate(20);
+        $visitTypes = VisitType::where('company_id', auth()->user()->company_id)->paginate(20);
         return view('admin.visit-types.index', compact('visitTypes'));
     }
 
@@ -36,6 +36,9 @@ class VisitTypeController extends Controller
             'notes' => 'nullable|string',
         ]);
 
+        // Add company_id from authenticated user
+        $validated['company_id'] = auth()->user()->company_id;
+
         VisitType::create($validated);
 
         return redirect()->route('admin.visit-types.index')->with('success', 'Visit type created successfully');
@@ -46,7 +49,7 @@ class VisitTypeController extends Controller
      */
     public function show(string $id)
     {
-        $visitType = VisitType::findOrFail($id);
+        $visitType = VisitType::where('company_id', auth()->user()->company_id)->findOrFail($id);
         return view('admin.visit-types.show', compact('visitType'));
     }
 
@@ -55,7 +58,7 @@ class VisitTypeController extends Controller
      */
     public function edit(string $id)
     {
-        $visitType = VisitType::findOrFail($id);
+        $visitType = VisitType::where('company_id', auth()->user()->company_id)->findOrFail($id);
         return view('admin.visit-types.edit', compact('visitType'));
     }
 
@@ -64,7 +67,7 @@ class VisitTypeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $visitType = VisitType::findOrFail($id);
+        $visitType = VisitType::where('company_id', auth()->user()->company_id)->findOrFail($id);
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -82,7 +85,7 @@ class VisitTypeController extends Controller
      */
     public function destroy(string $id)
     {
-        $visitType = VisitType::findOrFail($id);
+        $visitType = VisitType::where('company_id', auth()->user()->company_id)->findOrFail($id);
         $visitType->delete();
 
         return redirect()->route('admin.visit-types.index')->with('success', 'Visit type deleted successfully');

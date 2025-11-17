@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Auth;
 
 class CourseType extends Model
 {
@@ -12,6 +14,7 @@ class CourseType extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'company_id',
         'course_name',
         'validity_year',
         'generic',
@@ -27,4 +30,20 @@ class CourseType extends Model
     protected $casts = [
         'expiration' => 'date',
     ];
+
+    /**
+     * Get the company that owns the course type.
+     */
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class);
+    }
+
+    /**
+     * Scope to filter by company.
+     */
+    public function scopeCompany($query)
+    {
+        return $query->where('company_id', Auth::user()->company_id);
+    }
 }

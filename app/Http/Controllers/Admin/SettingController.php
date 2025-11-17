@@ -19,11 +19,12 @@ class SettingController extends Controller
      */
     public function index()
     {
-        // Get the first setting record or create one if it doesn't exist
-        $setting = Setting::first();
+        // Get the first setting record for this company or create one if it doesn't exist
+        $setting = Setting::where('company_id', auth()->user()->company_id)->first();
 
         if (!$setting) {
             $setting = Setting::create([
+                'company_id' => auth()->user()->company_id,
                 'days_prior_course_deadline' => 1,
                 'days_prior_health_insurance' => 1,
                 'days_prior_maintenance_deadline' => 1,
@@ -66,11 +67,12 @@ class SettingController extends Controller
         $validated['email_auto_generated'] = $request->has('email_auto_generated');
         $validated['whatsapp_notification'] = $request->has('whatsapp_notification');
 
-        $setting = Setting::first();
+        $setting = Setting::where('company_id', auth()->user()->company_id)->first();
 
         if ($setting) {
             $setting->update($validated);
         } else {
+            $validated['company_id'] = auth()->user()->company_id;
             Setting::create($validated);
         }
 
@@ -83,8 +85,8 @@ class SettingController extends Controller
     public function testSmtp(Request $request)
     {
         try {
-            // Get current settings from database
-            $setting = Setting::first();
+            // Get current settings from database for this company
+            $setting = Setting::where('company_id', auth()->user()->company_id)->first();
 
             if (!$setting || !$setting->smtp_host) {
                 return response()->json([

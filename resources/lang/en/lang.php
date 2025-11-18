@@ -99,7 +99,7 @@ return [
     'company_doctor' => 'Company doctor',
     'workplace_safety_risk' => 'Workplace Safety Risk',
     'subject_to_cpi' => 'Subject to CPI',
-    'rischio_antincendio' => 'Rischio Antincendio',
+    'rischio_antincendio' => 'Fire risk',
     'external_professional_contacts' => 'External Professional Contacts',
     'accountant' => 'Accountant',
     'accountant_name' => 'Accountant: name',
@@ -157,7 +157,7 @@ return [
     'option_2' => 'Option 2',
     'option_3' => 'Option 3',
 
-     // --------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------
     //                                 Company Management
     // --------------------------------------------------------------------------------------------------
 
@@ -283,4 +283,16 @@ return [
     'company_name_placeholder' => 'Company Name',
     'day_of_descending' => 'Day of Descending',
     'list_of_deadlines_for_that_day' => 'List of deadlines for that day',
-  ];
+
+    // --------------------------------------------------------------------------------------------------
+    //                                 Company Documents
+    // --------------------------------------------------------------------------------------------------
+    'scheduling_note'     => 'Scheduling Note',
+    'expiration_date'     => 'Document Expiration Date',
+    'to_schedule'         => 'To be Scheduled',
+    'edit_document'       => 'Edit Document',
+    'create_document'     => 'Create Document',
+    'save_changes'        => 'Save Changes',
+    'next_deadline'       => 'Next deadline',
+    'delete_document_confirm' => 'Are you sure you want to delete this document?',
+];

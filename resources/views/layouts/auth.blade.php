@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="{{ asset('assets/styles/tailwind-all.min.css') }}">
+    {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
     @yield('styles')
 </head>
 
@@ -22,10 +23,10 @@
         </div>
 
         <!-- Right Section - Image/Illustration -->
-        <div class="hidden lg:flex w-1/2 mt-[7px] justify-center relative overflow-hidden"
-            style="background-image: url('{{ asset('assets/images/login.svg') }}'); background-size: cover; background-position: fixed;">
+        <div class="hidden lg:flex w-1/2 justify-center relative overflow-hidden"
+            style="background-image: url('{{ asset('assets/images/login.svg') }}'); background-size: cover; background-position: fixed; margin-top:7px">
             <div class="text-center z-10 px-8">
-                <h2 class="text-5xl font-bold mb-8 mt-[60px]">
+                <h2 class="text-5xl font-bold mb-8 " style="margin-top: 70px">
                     <span class="text-white">{{ __('lang.work_better') }}, </span>
                     <span class="text-red-500">{{ __('lang.anywhere') }}</span>
                 </h2>

@@ -32,7 +32,7 @@
                 <!-- Email Input -->
                 <div class="mb-4">
                     <div class="relative">
-                        <span class="absolute left-4 top-2/3 -translate-y-1/2 text-gray-400">
+                        <span class="absolute left-5 top-6 -translate-y-1/2 text-gray-400">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -48,7 +48,7 @@
                 <!-- Password Input -->
                 <div class="mb-4">
                     <div class="relative">
-                        <span class="absolute left-4 top-2/3 -translate-y-1/2 text-gray-400">
+                        <span class="absolute left-5 top-6 -translate-y-1/2 text-gray-400">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -59,7 +59,7 @@
                             class="w-full pl-12 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('password') border-red-500 @enderror"
                             required>
                         <button type="button" onclick="togglePassword()"
-                            class="absolute right-4 top-2/3 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                            class="absolute right-5 top-6 -translate-y-1/2 text-gray-400 hover:text-gray-600">
                             <svg id="eye-open" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                 viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

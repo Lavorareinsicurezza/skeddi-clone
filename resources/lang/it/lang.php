@@ -283,4 +283,18 @@ return [
     'company_name_placeholder' => 'Nome dell\'Azienda',
     'day_of_descending' => 'Giorno di Scadenza',
     'list_of_deadlines_for_that_day' => 'Elenco delle scadenze per quel giorno',
+
+    // --------------------------------------------------------------------------------------------------
+    //                                 Company Documents
+    // --------------------------------------------------------------------------------------------------
+    // 'document_type'       => 'Tipo di documento',
+    'scheduling_note' => 'Nota di programmazione',
+    'expiration_date' => 'Data di scadenza del documento',
+    'to_schedule' => 'Da programmare',
+    'edit_document' => 'Modifica documento',
+    'create_document' => 'Crea documento',
+    'save_changes' => 'Salva modifiche',
+    'next_deadline' => 'Prossima scadenza',
+    'delete_document_confirm' => 'Sei sicuro di voler eliminare questo documento?',
+
 ];

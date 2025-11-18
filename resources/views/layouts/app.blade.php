@@ -13,7 +13,8 @@
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="{{ asset('assets/styles/tailwind-all.min.css') }}">
+    {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
@@ -45,6 +46,8 @@
         }
     </style>
 
+    @yield('styles')
+
 </head>
 
 <body class="bg-gray-50">
@@ -54,7 +57,7 @@
     @include('layouts.partials.header')
 
     <!-- Main content -->
-    <div class="p-4 pt-20 sm:ml-64">
+    <div class="p-4 pt-20 lg:ml-64">
         <div class="rounded-lg p-4 ">
             @yield('content')
         </div>

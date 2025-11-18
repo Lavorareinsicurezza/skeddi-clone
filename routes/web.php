@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CompanyController;
+use App\Http\Controllers\Admin\CompanyDocumentController;
 use App\Http\Controllers\Admin\CourceTypeController;
 use App\Http\Controllers\Admin\DocumentTypeController;
 use App\Http\Controllers\Admin\UserController;
@@ -65,5 +66,8 @@ Route::middleware('auth')->name('admin.')->group(function () {
 
     // Selected company detail route
     Route::get('/selected-company/detail', [CompanyController::class, 'showSelectedCompany'])->name('selected-company.detail');
+
+    // Company documents route
+    Route::resource('/company-documents', CompanyDocumentController::class);
 });
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

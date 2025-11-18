@@ -29,7 +29,7 @@
         <!-- Email Input -->
         <div class="mb-6">
             <div class="relative">
-                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                <span class="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>

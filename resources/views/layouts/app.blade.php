@@ -13,8 +13,9 @@
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-        <link rel="stylesheet" href="{{ asset('assets/styles/tailwind-all.min.css') }}">
-    {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
+    <link rel="stylesheet" href="{{ asset('assets/styles/tailwind-all.min.css') }}">
+    {{--
+    <script src="https://cdn.tailwindcss.com"></script> --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
@@ -75,6 +76,30 @@
         setTimeout(function () {
             $('.flash-message-box').hide();
         }, 5000);
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebar = document.getElementById('cta-button-sidebar');
+            if (!sidebar) return;
+            const observer = new MutationObserver(function (mutations) {
+                mutations.forEach(function (mutation) {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                        if (sidebar.classList.contains('-translate-x-full')) {
+                            document.querySelectorAll('[drawer-backdrop]').forEach(backdrop => {
+                                backdrop.remove();
+                            });
+                        }
+                    }
+                });
+            });
+
+            // Start observing the sidebar's class changes
+            observer.observe(sidebar, {
+                attributes: true,
+                attributeFilter: ['class']
+            });
+        });
     </script>
 
 </body>

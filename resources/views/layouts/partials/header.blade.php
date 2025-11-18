@@ -4,9 +4,9 @@
         <div class="flex items-center space-x-4 px-3">
             <button data-drawer-target="cta-button-sidebar" data-drawer-toggle="cta-button-sidebar"
                 aria-controls="cta-button-sidebar" type="button"
-                class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-gray-200">
-                <span class="sr-only">Open sidebar</span>
-                <i class="fas fa-bars w-6 h-6 mt-2"></i>
+                class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-gray-200">
+                <span class="sr-only">{{ __('lang.open_sidebar') }}</span>
+                <i class="fas fa-bars w-6 h-6"></i>
             </button>
             <div class="relative">
                 <button id="openCompanyModal" type="button"

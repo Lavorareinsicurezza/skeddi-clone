@@ -8,7 +8,7 @@ use App\Models\Document;
 use App\Models\DocumentType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Maatwebsite\Excel\Excel;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CompanyDocumentController extends Controller
 {
@@ -49,8 +49,10 @@ class CompanyDocumentController extends Controller
             'notes' => 'nullable|string',
         ]);
 
+            $companyId = session('selectedCompanyId');
+
         Document::create([
-            'company_id' => Auth::user()->company_id,
+            'company_id' => $companyId,
             'document_type_id' => $request->input('document_type_id'),
             'name' => $request->input('name'),
             'scheduling_note' => $request->input('scheduling_note'),

@@ -32,18 +32,18 @@
         <h1 class="text-3xl font-bold text-gray-900">{{ __('lang.documents') }}</h1>
 
         <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden shadow-sm">
-            {{-- <a href="{{ route('admin.companies.export') }}"
-                class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm border-r border-gray-200 flex"
+             <a href="{{ route('admin.company-documents.export') }}"
+                class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-[#EBF1FF] text-sm border-r border-gray-200 flex"
                 title="{{ __('lang.export_data') }}">
                 <i class="text-gray-500 fa fa-download"></i>
             </a>
-            <button onclick="document.getElementById('importModal').classList.remove('hidden')"
-                class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm border-r border-gray-200 flex"
+           {{-- <button onclick="document.getElementById('importModal').classList.remove('hidden')"
+                class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-[#EBF1FF] text-sm border-r border-gray-200 flex"
                 title="{{ __('lang.import_data') }}">
                 <i class="text-gray-500 fa fa-upload"></i>
             </button> --}}
             <a href="{{ route('admin.company-documents.create') }}"
-                class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm flex"
+                class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-[#EBF1FF] text-sm flex"
                 title="{{ __('lang.create') .' '. __('lang.documents') }}">
                 <i class="text-gray-500 fa fa-plus"></i>
             </a>
@@ -59,7 +59,7 @@
                 class="w-45 bg-white shadow-lg rounded-2xl p-5 relative flex flex-col items-center border border-gray-100 hover:shadow-xl transition-all duration-300">
                 <!-- Edit / Delete Icons -->
                 <div class="absolute top-3 right-3 flex space-x-0">
-                    <a href="{{ route('admin.company-documents.edit', $document->id) }}" class="text-blue-500 hover:text-blue-600"> <i class="fa fa-pencil"></i> </a>
+                    <a href="{{ route('admin.company-documents.edit', $document->id) }}" class="text-[#0C3183] hover:text-[#0A2869]"> <i class="fa fa-pencil"></i> </a>
                      <form action="{{ route('admin.company-documents.destroy', $document->id) }}" method="POST" class="inline-block ml-2" onsubmit="return confirm('{{ __('lang.delete_document_confirm') }}');">
                                     @csrf
                                     @method('DELETE')
@@ -69,7 +69,6 @@
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </form>
-                    {{-- <button class="text-red-500 hover:text-red-600"> <i class="fa fa-trash"></i> </button> --}}
                 </div>
                 <!-- Icon -->
                 <div class="mt-4 mb-3 border border-2 border-gray-200 rounded-lg p-3">
@@ -81,7 +80,7 @@
                 </h3>
                 <!-- Expiry Date -->
                 <p class="text-xs text-[#DC2626] font-medium mt-1 text-center">
-                    {{ __('lang.next_deadline') }}: {{ date('d M Y',strtotime($document->expiration_date)) }}
+                    {{ __('lang.next_deadline') }}: {{ \Carbon\Carbon::parse($document->expiration_date)->format('d M Y') }}
                 </p>
             </div>
             @endforeach

@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DocumentTypeController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VisitTypeController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\WorkerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -67,7 +68,12 @@ Route::middleware('auth')->name('admin.')->group(function () {
     // Selected company detail route
     Route::get('/selected-company/detail', [CompanyController::class, 'showSelectedCompany'])->name('selected-company.detail');
 
-    // Company documents route
+    // Company documents routes
+    Route::get('/company-documents/export', [CompanyDocumentController::class, 'export'])->name('company-documents.export');
     Route::resource('/company-documents', CompanyDocumentController::class);
+
+    // Company workers routes
+    Route::post('/company-workers/import', [WorkerController::class, 'import'])->name('company-workers.import');
+    Route::resource('/company-workers', WorkerController::class);
 });
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

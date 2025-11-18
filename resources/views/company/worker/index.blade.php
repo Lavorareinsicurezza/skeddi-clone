@@ -22,15 +22,15 @@
         <div class="flex items-center gap-3">
             <!-- Filter Dropdown -->
             <div class="relative">
-                <button id="filterDropdown" data-dropdown-toggle="filterDropdownMenu"
+                {{-- <button id="filterDropdown" data-dropdown-toggle="filterDropdownMenu"
                     class="px-4 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#0C3183] flex items-center gap-2"
                     type="button">
                     <i class="fa fa-filter text-gray-500"></i>
                     {{ __('lang.in_force') }}
                     <i class="fa fa-chevron-down text-xs text-gray-500"></i>
-                </button>
+                </button> --}}
 
-                <div id="filterDropdownMenu" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-lg w-44">
+                {{-- <div id="filterDropdownMenu" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-lg w-44">
                     <ul class="py-2 text-sm text-gray-700">
                         <li>
                             <a href="#" class="block px-4 py-2 hover:bg-gray-100">{{ __('lang.all') }}</a>
@@ -42,16 +42,16 @@
                             <a href="#" class="block px-4 py-2 hover:bg-gray-100">{{ __('lang.inactive') }}</a>
                         </li>
                     </ul>
-                </div>
+                </div> --}}
             </div>
 
             <!-- Action Buttons -->
             <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden shadow-sm">
-                <button onclick="document.getElementById('importModal').classList.remove('hidden')"
+                {{-- <button onclick="document.getElementById('importModal').classList.remove('hidden')"
                     class="px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-[#EBF1FF] text-sm border-r border-gray-200 flex"
                     title="{{ __('lang.import_data') }}">
                     <i class="text-gray-500 fa fa-upload"></i>
-                </button>
+                </button> --}}
                 <a href="{{ route('admin.company-workers.create') }}"
                     class="px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-[#EBF1FF] text-sm flex"
                     title="{{ __('lang.create') .' '. __('lang.worker') }}">

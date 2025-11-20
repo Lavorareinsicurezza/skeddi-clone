@@ -94,9 +94,11 @@
                             {{ $worker->first_name }}
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-500">
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 border border-gray-200">
+                            <input type="text" value="{{ $worker->job_title }}" readonly
+                                class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg w-full cursor-not-allowed">
+                            {{-- <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-7/00 border border-gray-200">
                                 {{ $worker->job_title ?? '-' }}
-                            </span>
+                            </span> --}}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <div class="flex items-center justify-end gap-3">

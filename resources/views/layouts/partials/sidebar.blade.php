@@ -28,8 +28,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="flex items-center p-2 rounded-[20px] text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 group">
-                        <i class="fas fa-clock w-5 h-5 text-gray-500 transition duration-75 group-hover:text-[#0C3183]"></i>
+                    <a href="{{ route('admin.deadlines') }}" class="flex items-center p-2 rounded-[20px] {{ request()->routeIs('admin.deadlines') ? 'text-[#0C3183] bg-blue-50': 'text-gray-500' }} hover:text-[#0C3183] hover:bg-blue-50 group">
+                        <i class="fas fa-clock w-5 h-5 {{ request()->routeIs('admin.deadlines') ? 'text-[#0C3183]': 'text-gray-500'}} transition duration-75 group-hover:text-[#0C3183]"></i>
                         <span class="ms-3">{{ __('lang.deadlines') }}</span>
                     </a>
                 </li>
@@ -52,14 +52,14 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="flex items-center p-2 rounded-[20px] text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 group">
-                        <i class="fas fa-graduation-cap w-5 h-5 text-gray-500 transition duration-75 group-hover:text-[#0C3183]"></i>
+                    <a href="{{ route('admin.company-course-types.index') }}" class="flex items-center p-2 rounded-[20px] {{ request()->routeIs('admin.company-course-types.*')? 'text-[#0C3183] bg-blue-50': 'text-gray-500' }} hover:text-[#0C3183] hover:bg-blue-50 group">
+                        <i class="fas fa-graduation-cap w-5 h-5 {{ request()->routeIs('admin.company-course-types.*')? 'text-[#0C3183]': 'text-gray-500'}} transition duration-75 group-hover:text-[#0C3183]"></i>
                         <span class="ms-3">{{ __('lang.course_types') }}</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="flex items-center p-2 rounded-[20px] text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 group">
-                        <i class="fas fa-clipboard-list w-5 h-5 text-gray-500 transition duration-75 group-hover:text-[#0C3183]"></i>
+                    <a href="{{ route('admin.training-plan.index') }}" class="flex items-center p-2 rounded-[20px] {{ request()->routeIs('admin.training-plan.*')? 'text-[#0C3183] bg-blue-50': 'text-gray-500' }} hover:text-[#0C3183] hover:bg-blue-50 group">
+                        <i class="fas fa-clipboard-list w-5 h-5 {{ request()->routeIs('admin.training-plan.*')? 'text-[#0C3183]': 'text-gray-500'}} transition duration-75 group-hover:text-[#0C3183]"></i>
                         <span class="ms-3">{{ __('lang.training_plan') }}</span>
                     </a>
                 </li>

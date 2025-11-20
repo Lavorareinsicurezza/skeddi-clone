@@ -21,7 +21,7 @@
 
     <form
         action="{{ isset($worker) ? route('admin.company-workers.update', $worker->id) : route('admin.company-workers.store') }}"
-        method="POST" class="bg-white rounded-lg shadow p-6">
+        method="POST" enctype="multipart/form-data" class="bg-white rounded-lg shadow p-6">
         @csrf
         @if (isset($worker))
             @method('PUT')
@@ -36,7 +36,7 @@
                 <input type="text" name="first_name" id="first_name"
                     value="{{ old('first_name', $worker->first_name ?? '') }}"
                     class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0C3183] text-sm"
-                    placeholder="Lorem ipsum" required>
+                    placeholder="{{ __('lang.first_name') }}" required>
             </div>
 
             <div>
@@ -45,7 +45,7 @@
                 </label>
                 <input type="text" name="surname" id="surname" value="{{ old('surname', $worker->surname ?? '') }}"
                     class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0C3183] text-sm"
-                    placeholder="Lorem ipsum" required>
+                    placeholder="{{ __('lang.surname') }}" required>
             </div>
         </div>
 
@@ -58,7 +58,7 @@
                 <input type="text" name="job_title" id="job_title"
                     value="{{ old('job_title', $worker->job_title ?? '') }}"
                     class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0C3183] text-sm"
-                    placeholder="Lorem ipsum">
+                    placeholder="{{ __('lang.job_title') }}">
             </div>
 
             <div>
@@ -68,7 +68,7 @@
                 <input type="text" name="department" id="department"
                     value="{{ old('department', $worker->department ?? '') }}"
                     class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0C3183] text-sm"
-                    placeholder="Lorem ipsum">
+                    placeholder="{{ __('lang.department') }}">
             </div>
         </div>
 
@@ -90,7 +90,7 @@
                 </label>
                 <textarea name="additional_information" id="additional_information" rows="3"
                     class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0C3183] text-sm"
-                    placeholder="Lorem ipsum">{{ old('additional_information', $worker->additional_information ?? '') }}</textarea>
+                    placeholder="{{ __('lang.additional_information') }}">{{ old('additional_information', $worker->additional_information ?? '') }}</textarea>
             </div>
 
             <div>
@@ -99,7 +99,7 @@
                 </label>
                 <textarea name="worker_documentation" id="worker_documentation" rows="3"
                     class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0C3183] text-sm"
-                    placeholder="Lorem ipsum">{{ old('worker_documentation', $worker->worker_documentation ?? '') }}</textarea>
+                    placeholder="{{ __('lang.worker_documentation') }}">{{ old('worker_documentation', $worker->worker_documentation ?? '') }}</textarea>
             </div>
         </div>
 
@@ -111,7 +111,7 @@
                 </label>
                 <textarea name="ppe" id="ppe" rows="3"
                     class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0C3183] text-sm"
-                    placeholder="Lorem ipsum">{{ old('ppe', $worker->ppe ?? '') }}</textarea>
+                    placeholder="{{ __('lang.ppe') }}">{{ old('ppe', $worker->ppe ?? '') }}</textarea>
             </div>
 
             <div>
@@ -120,7 +120,7 @@
                 </label>
                 <textarea name="movement_history" id="movement_history" rows="3"
                     class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0C3183] text-sm"
-                    placeholder="Lorem ipsum">{{ old('movement_history', $worker->movement_history ?? '') }}</textarea>
+                    placeholder="{{ __('lang.movement_history') }}">{{ old('movement_history', $worker->movement_history ?? '') }}</textarea>
             </div>
         </div>
 
@@ -131,9 +131,10 @@
                     {{ __('lang.training_experience') }}
                 </label>
                 <div class="relative">
-                    <input type="text" name="training_experience" id="training_experience"
+                    <input type="text" readonly name="training_experience" id="training_experience"
                         value="{{ old('training_experience', $worker->training_experience ?? '') }}"
                         class="w-full px-4 py-2.5 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0C3183] text-sm"
+                        onclick="openTrainingModal()"
                         placeholder="01/07/2020(Exp. 01/07/2020)">
                     <button type="button" onclick="openTrainingModal()"
                         class="absolute right-3 top-9 -translate-y-1/2 text-[#0C3183] hover:text-[#0A2869]">
@@ -144,15 +145,19 @@
 
             <div>
                 <label for="workplace_safety_risk" class="block text-sm font-medium text-gray-700 mb-2">
-                    &nbsp;
+                    {{ __('lang.workplace_safety_risk') }}
                 </label>
-                  <label
-                class="border border-gray-300 rounded-lg px-4 py-3 flex items-center justify-between cursor-pointer hover:bg-gray-50 has-[:checked]:border-[#0C3183] has-[:checked]:bg-[#EBF1FF] max-w-md">
-                <span class="text-sm font-medium text-gray-800">{{ __('lang.workplace_safety_risk') }}</span>
-                <input type="checkbox" name="workplace_safety_risk" id="workplace_safety_risk" value="1"
-                        {{ old('workplace_safety_risk', isset($worker) && $worker->workplace_safety_risk ? true : false) ? 'checked' : '' }}
-                    class="w-6 h-6 appearance-none bg-white border-2 border-gray-400 rounded-full cursor-pointer checked:border-[5px] checked:border-[#0C3183] focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:ring-offset-2">
-            </label>
+                <button type="button" onclick="openSafetyRiskModal()"
+                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-left text-sm text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#0C3183]">
+                    {{ __('lang.document_management_for_deadline') }}
+                </button>
+                <!-- Hidden fields to store safety risk data -->
+                <input type="hidden" name="workplace_safety_risk" id="workplace_safety_risk" value="1">
+                <textarea name="workplace_safety_risk_note" id="workplace_safety_risk_note" class="hidden">{{ old('workplace_safety_risk_note', $worker->workplace_safety_risk_note ?? '') }}</textarea>
+                <input type="file" name="workplace_safety_risk_document_file" id="workplace_safety_risk_document_file" class="hidden">
+                @if(isset($worker) && $worker->workplace_safety_risk_document)
+                    <input type="hidden" name="existing_document" value="{{ $worker->workplace_safety_risk_document }}">
+                @endif
             </div>
         </div>
 
@@ -163,7 +168,7 @@
             </label>
             <textarea name="medical_visits" id="medical_visits" rows="3"
                 class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0C3183] text-sm"
-                placeholder="Lorem ipsum">{{ old('medical_visits', $worker->medical_visits ?? '') }}</textarea>
+                placeholder="{{ __('lang.medical_visits') }}">{{ old('medical_visits', $worker->medical_visits ?? '') }}</textarea>
         </div>
 
         <!-- Action Buttons -->
@@ -207,6 +212,51 @@
         </div>
     </div>
 
+    <!-- Workplace Safety Risk Modal -->
+    <div id="safetyRiskModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-20 mx-auto p-6 border w-full max-w-lg shadow-lg rounded-lg bg-white">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-semibold text-gray-900">{{ __('lang.document_management_for_deadline') }}</h3>
+                <button type="button" onclick="closeSafetyRiskModal()"
+                    class="text-gray-400 hover:text-gray-600 text-2xl leading-none">
+                    &times;
+                </button>
+            </div>
+
+            <div class="mt-4">
+                <label class="block text-sm font-medium text-gray-900 mb-2">{{ __('lang.add_note') }}</label>
+                <textarea id="modal_safety_note" rows="3"
+                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0C3183] text-sm"
+                    placeholder="{{ __('lang.add_note') }}"></textarea>
+            </div>
+
+            <div class="mt-4">
+                <label class="block text-sm font-medium text-gray-900 mb-2">{{ __('lang.add_new_document') }}</label>
+                <div class="relative">
+                    <input type="text" id="modal_safety_document" readonly
+                        class="w-full px-4 py-2.5 pr-20 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0C3183] text-sm"
+                        placeholder="{{ __('lang.add_new_document') }}">
+                    <button type="button" onclick="document.getElementById('safety_file_input').click()"
+                        class="absolute right-2 top-1/2 mt-4 -translate-y-1/2 px-4 py-1.5 bg-gray-200 text-[#0C3183] rounded-md hover:bg-gray-300 text-sm font-medium">
+                        {{ __('lang.browse') }}
+                    </button>
+                    <input type="file" id="safety_file_input" class="hidden" onchange="updateSafetyFileName(this)">
+                </div>
+            </div>
+
+            <div class="flex gap-3 mt-6">
+                <button type="button" onclick="cancelSafetyRiskModal()"
+                    class="flex-1 px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium">
+                    {{ __('lang.cancel') }}
+                </button>
+                <button type="button" onclick="applySafetyRiskData()"
+                    class="flex-1 px-6 py-3 bg-[#0C3183] text-white rounded-lg hover:bg-[#0A2869] font-medium">
+                    {{ __('lang.save') }}
+                </button>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @section('scripts')
@@ -234,6 +284,65 @@
             }
 
             closeTrainingModal();
+        }
+
+        // Safety Risk Modal Functions
+        let selectedFile = null;
+
+        function openSafetyRiskModal() {
+            // Restore current values to modal if they exist
+            const currentNote = document.getElementById('workplace_safety_risk_note').value;
+
+            document.getElementById('modal_safety_note').value = currentNote;
+
+            // Check if there's an existing document
+            const existingDocInput = document.querySelector('input[name="existing_document"]');
+            if (existingDocInput && existingDocInput.value) {
+                document.getElementById('modal_safety_document').value = existingDocInput.value.split('/').pop();
+            } else {
+                document.getElementById('modal_safety_document').value = '';
+            }
+
+            document.getElementById('safetyRiskModal').classList.remove('hidden');
+        }
+
+        function closeSafetyRiskModal() {
+            document.getElementById('safetyRiskModal').classList.add('hidden');
+            // Clear the modal file input
+            document.getElementById('safety_file_input').value = '';
+        }
+
+        function cancelSafetyRiskModal() {
+            // Don't save any changes, just close the modal
+            selectedFile = null;
+            closeSafetyRiskModal();
+        }
+
+        function applySafetyRiskData() {
+            const note = document.getElementById('modal_safety_note').value;
+
+            // Store the note in hidden textarea
+            document.getElementById('workplace_safety_risk_note').value = note;
+
+            // Transfer the selected file to the actual hidden file input
+            const modalFileInput = document.getElementById('safety_file_input');
+            const actualFileInput = document.getElementById('workplace_safety_risk_document_file');
+
+            if (modalFileInput.files.length > 0) {
+                // Create a new DataTransfer object to transfer the file
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(modalFileInput.files[0]);
+                actualFileInput.files = dataTransfer.files;
+            }
+
+            closeSafetyRiskModal();
+        }
+
+        function updateSafetyFileName(input) {
+            if (input.files && input.files[0]) {
+                document.getElementById('modal_safety_document').value = input.files[0].name;
+                selectedFile = input.files[0];
+            }
         }
     </script>
 @endsection

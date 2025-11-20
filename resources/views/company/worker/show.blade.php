@@ -61,6 +61,32 @@
             </p>
         </div>
 
+        @if($worker->workplace_safety_risk)
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <!-- Workplace Safety Risk Note -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-500 mb-1">{{ __('lang.add_note') }}</label>
+                    <p class="text-gray-900 whitespace-pre-wrap">{{ $worker->workplace_safety_risk_note ?? '-' }}</p>
+                </div>
+
+                <!-- Workplace Safety Risk Document -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-500 mb-1">{{ __('lang.add_new_document') }}</label>
+                    @if($worker->workplace_safety_risk_document)
+                        <a href="{{ asset('storage/' . $worker->workplace_safety_risk_document) }}"
+                           target="_blank"
+                           class="inline-flex items-center gap-2 text-[#0C3183] hover:text-[#0A2869] font-medium">
+                            <i class="fa fa-file-pdf"></i>
+                            {{ basename($worker->workplace_safety_risk_document) }}
+                            <i class="fa fa-external-link text-xs"></i>
+                        </a>
+                    @else
+                        <p class="text-gray-900">-</p>
+                    @endif
+                </div>
+            </div>
+        @endif
+
         <!-- Status -->
         <div class="mb-6">
             <label class="block text-sm font-medium text-gray-500 mb-1">{{ __('lang.active') }}</label>

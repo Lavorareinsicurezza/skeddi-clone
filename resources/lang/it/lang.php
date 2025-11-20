@@ -337,4 +337,36 @@ return [
     'expiry_date' => 'Data Scadenza',
     'add_training' => 'Aggiungi Formazione',
     'at_least_one_training_required' => 'È richiesta almeno una voce di formazione',
+    'document_management_for_deadline' => 'Gestione documenti per scadenza',
+    'add_note' => 'Aggiungi nota',
+    'add_new_document' => 'Aggiungi nuovo documento',
+    'browse' => 'Sfoglia',
+    'download_document' => 'Scarica documento',
+    'company_course_types' => 'Tipi di corso',
+    'select_course_type' => 'Seleziona tipo di corso',
+    'generic_column_name' => 'Nome colonna "Generico"',
+    'expiration_column_name' => 'Nome colonna "Scadenza"',
+    'upcoming_deadlines' => 'Prossime scadenze',
+    'employee_name' => 'Nome del dipendente',
+    'course_type_created_successfully' => 'Tipo di corso creato con successo',
+    'course_type_updated_successfully' => 'Tipo di corso aggiornato con successo',
+    'course_type_deleted_successfully' => 'Tipo di corso eliminato con successo',
+    'data_exported_successfully' => 'Dati esportati con successo',
+
+    // --------------------------------------------------------------------------------------------------
+    //                                 Training Plan
+    // --------------------------------------------------------------------------------------------------
+    'employee' => 'Dipendente',
+    'training' => 'Formazione',
+    'to_be_scheduled' => 'Da programmare',
+    'save_training_plan_confirm' => 'Sei sicuro di voler salvare il piano di formazione?',
+
+    // --------------------------------------------------------------------------------------------------
+    //                                 Deadlines
+    // --------------------------------------------------------------------------------------------------
+    'from' => 'Da',
+    'to' => 'A',
+    'reset' => 'Ripristina',
+    'renew' => 'Rinnova',
+
 ];

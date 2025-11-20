@@ -37,6 +37,8 @@ class WorkerController extends Controller
             'job_title' => 'nullable|string|max:255',
             'department' => 'nullable|string|max:255',
             'workplace_safety_risk' => 'sometimes|boolean',
+            'workplace_safety_risk_note' => 'nullable|string',
+            'workplace_safety_risk_document_file' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
             'is_active' => 'sometimes|boolean',
             'additional_information' => 'nullable|string',
             'worker_documentation' => 'nullable|string',
@@ -48,6 +50,14 @@ class WorkerController extends Controller
 
         $companyId = session('selectedCompanyId');
 
+        // Handle file upload
+        $documentPath = null;
+        if ($request->hasFile('workplace_safety_risk_document_file')) {
+            $file = $request->file('workplace_safety_risk_document_file');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $documentPath = $file->storeAs('workers/safety_documents', $fileName, 'public');
+        }
+
         Worker::create([
             'company_id' => $companyId,
             'first_name' => $request->input('first_name'),
@@ -55,6 +65,8 @@ class WorkerController extends Controller
             'job_title' => $request->input('job_title'),
             'department' => $request->input('department'),
             'workplace_safety_risk' => $request->has('workplace_safety_risk') ? 1 : 0,
+            'workplace_safety_risk_note' => $request->input('workplace_safety_risk_note'),
+            'workplace_safety_risk_document' => $documentPath,
             'is_active' => $request->has('is_active') ? !$request->input('is_active') : true,
             'additional_information' => $request->input('additional_information'),
             'worker_documentation' => $request->input('worker_documentation'),
@@ -96,6 +108,8 @@ class WorkerController extends Controller
             'job_title' => 'nullable|string|max:255',
             'department' => 'nullable|string|max:255',
             'workplace_safety_risk' => 'sometimes|boolean',
+            'workplace_safety_risk_note' => 'nullable|string',
+            'workplace_safety_risk_document_file' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
             'is_active' => 'sometimes|boolean',
             'additional_information' => 'nullable|string',
             'worker_documentation' => 'nullable|string',
@@ -106,12 +120,29 @@ class WorkerController extends Controller
         ]);
 
         $worker = Worker::query()->company()->findOrFail($id);
+
+        // Handle file upload
+        $documentPath = $worker->workplace_safety_risk_document;
+        if ($request->hasFile('workplace_safety_risk_document_file')) {
+            // Delete old file if exists
+            if ($worker->workplace_safety_risk_document && \Storage::disk('public')->exists($worker->workplace_safety_risk_document)) {
+                \Storage::disk('public')->delete($worker->workplace_safety_risk_document);
+            }
+
+            // Upload new file
+            $file = $request->file('workplace_safety_risk_document_file');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $documentPath = $file->storeAs('workers/safety_documents', $fileName, 'public');
+        }
+
         $worker->update([
             'first_name' => $request->input('first_name'),
             'surname' => $request->input('surname'),
             'job_title' => $request->input('job_title'),
             'department' => $request->input('department'),
             'workplace_safety_risk' => $request->has('workplace_safety_risk') ? 1 : 0,
+            'workplace_safety_risk_note' => $request->input('workplace_safety_risk_note'),
+            'workplace_safety_risk_document' => $documentPath,
             'is_active' => $request->has('is_active') ? !$request->input('is_active') : true,
             'additional_information' => $request->input('additional_information'),
             'worker_documentation' => $request->input('worker_documentation'),

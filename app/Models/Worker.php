@@ -13,6 +13,8 @@ class Worker extends Model
         'job_title',
         'department',
         'workplace_safety_risk',
+        'workplace_safety_risk_note',
+        'workplace_safety_risk_document',
         'is_active',
         'additional_information',
         'worker_documentation',

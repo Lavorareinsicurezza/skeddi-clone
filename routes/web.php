@@ -2,12 +2,14 @@
 
 use App\Http\Controllers\Admin\CompanyController;
 use App\Http\Controllers\Admin\CompanyDocumentController;
+use App\Http\Controllers\Admin\CompanyCourseTypeController;
 use App\Http\Controllers\Admin\CourceTypeController;
 use App\Http\Controllers\Admin\DocumentTypeController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VisitTypeController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\WorkerController;
+use App\Http\Controllers\Admin\TrainingPlanController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -32,6 +34,7 @@ Route::middleware('guest')->group(function () {
 // Protected routes
 Route::middleware('auth')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/deadlines', [DashboardController::class, 'deadlines'])->name('deadlines');
 
     // Company import/export routes
     Route::get('/companies/export', [CompanyController::class, 'export'])->name('companies.export');
@@ -75,5 +78,13 @@ Route::middleware('auth')->name('admin.')->group(function () {
     // Company workers routes
     Route::post('/company-workers/import', [WorkerController::class, 'import'])->name('company-workers.import');
     Route::resource('/company-workers', WorkerController::class);
+
+    // Company course types routes
+    Route::get('/company-course-types/export', [CompanyCourseTypeController::class, 'export'])->name('company-course-types.export');
+    Route::resource('/company-course-types', CompanyCourseTypeController::class);
+
+    // Training plan routes
+    Route::get('/training-plan', [TrainingPlanController::class, 'index'])->name('training-plan.index');
+    Route::post('/training-plan/save', [TrainingPlanController::class, 'save'])->name('training-plan.save');
 });
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

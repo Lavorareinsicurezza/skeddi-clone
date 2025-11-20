@@ -336,4 +336,35 @@ return [
     'expiry_date' => 'Expiry Date',
     'add_training' => 'Add Training',
     'at_least_one_training_required' => 'At least one training entry is required',
+    'document_management_for_deadline' => 'Document management for deadline',
+    'add_note' => 'Add note',
+    'add_new_document' => 'Add new document',
+    'browse' => 'Browse',
+    'download_document' => 'Download document',
+    'company_course_types' => 'Course Types',
+    'select_course_type' => 'Select course type',
+    'generic_column_name' => 'Generic column name',
+    'expiration_column_name' => 'Expiration column name',
+    'upcoming_deadlines' => 'Upcoming deadlines',
+    'employee_name' => 'Employee name',
+    'course_type_created_successfully' => 'Course type created successfully',
+    'course_type_updated_successfully' => 'Course type updated successfully',
+    'course_type_deleted_successfully' => 'Course type deleted successfully',
+    'data_exported_successfully' => 'Data exported successfully',
+
+    // --------------------------------------------------------------------------------------------------
+    //                                 Training Plan
+    // --------------------------------------------------------------------------------------------------
+    'employee' => 'Employee',
+    'training' => 'Training',
+    'to_be_scheduled' => 'To be Scheduled',
+    'save_training_plan_confirm' => 'Are you sure you want to save the training plan?',
+
+    // --------------------------------------------------------------------------------------------------
+    //                                 Deadlines
+    // --------------------------------------------------------------------------------------------------
+    'from' => 'From',
+    'to' => 'To',
+    'reset' => 'Reset',
+    'renew' => 'Renew',
 ];

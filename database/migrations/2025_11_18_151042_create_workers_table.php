@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('job_title')->nullable();
             $table->string('department')->nullable();
             $table->tinyInteger('workplace_safety_risk')->default(0); // 0 = unchecked, 1 = checked
+            $table->text('workplace_safety_risk_note')->nullable();
+            $table->string('workplace_safety_risk_document')->nullable();
             $table->boolean('is_active')->default(true);
             $table->text('additional_information')->nullable();
             $table->text('worker_documentation')->nullable();

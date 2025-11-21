@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\CourseRenewalLog;
 use App\Models\Worker;
 use App\Models\CompanyCourseType;
 use App\Models\TrainingPlanRecord;
 use App\Models\TrainingPlanDocument;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class TrainingPlanController extends Controller
@@ -54,7 +56,7 @@ class TrainingPlanController extends Controller
         ]);
 
         foreach ($request->input('records') as $record) {
-            if($record['training_date'] === null && $record['expiration_date'] === null && !isset($record['to_be_scheduled'])) {
+            if ($record['training_date'] === null && $record['expiration_date'] === null && !isset($record['to_be_scheduled'])) {
                 // If no data is provided, skip this record
                 continue;
             }
@@ -209,9 +211,14 @@ class TrainingPlanController extends Controller
             ], 404);
         }
 
-       // Calculate expiration date based on course validity
+        // Update the training date and calculate new expiration date
+        $trainingPlan->training_date = $request->renewal_date;
+
+        // Calculate expiration date based on course validity
         // First check if companyCourseType has validity_years, then courseType, default to 1 year
         $validityYears = 1;
+
+        $previousExpiryDate = $trainingPlan->expiration_date;
 
         if ($trainingPlan->companyCourseType) {
             if ($trainingPlan->companyCourseType->validity_years) {
@@ -224,6 +231,23 @@ class TrainingPlanController extends Controller
         $trainingPlan->expiration_date = \Carbon\Carbon::parse($request->renewal_date)->addYears($validityYears);
         $trainingPlan->to_be_scheduled = false;
         $trainingPlan->save();
+
+        CourseRenewalLog::create([
+            'company_id'              => $companyId,
+            'training_plan_record_id' => $trainingPlan->id,
+            'worker_id'               => $trainingPlan->worker_id,
+            'company_course_type_id'  => $trainingPlan->company_course_type_id,
+
+            'managed_by'              => Auth::user()->name, // or responsible person
+            'subject'                 => $trainingPlan->companyCourseType->specific_name
+                ?? $trainingPlan->companyCourseType->name,
+
+            'previous_expiry_date'    => $previousExpiryDate,
+            'course_update_date'      => $request->renewal_date,
+            'new_expiry_date'         => $trainingPlan->expiration_date,
+            'renewal_operation_date'  => now()->toDateString(),
+            'renewed_by'              => Auth::id(),
+        ]);
 
         return response()->json([
             'success' => true,

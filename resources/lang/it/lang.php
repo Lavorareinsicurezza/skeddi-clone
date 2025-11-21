@@ -386,4 +386,30 @@ return [
     'reset' => 'Ripristina',
     'renew' => 'Rinnova',
 
+
+    'specific_name' => 'NOME SPECIFICO',
+
+    // --------------------------------------------------------------------------------------------------
+    //                                 Company Visit Types
+    // --------------------------------------------------------------------------------------------------
+
+    'visit_types'                     => 'Tipi Visita',
+    'select_visit_type'               => '— Seleziona Tipo Visita —',
+    'company_visit_type'              => 'Tipo Visita Aziendale',
+    'company_visit_types'             => 'Tipi Visita Aziendali',
+
+    'visit_type_created_successfully' => 'Tipo visita creato con successo.',
+    'visit_type_updated_successfully' => 'Tipo visita aggiornato con successo.',
+    'visit_type_deleted_successfully' => 'Tipo visita eliminato con successo',
+
+    // --------------------------------------------------------------------------------------------------
+    //                                 Company Renewals
+    // --------------------------------------------------------------------------------------------------
+
+    'managed_by'                       => 'A CURA DI',
+    'subject'                          => 'oggetto',
+    'previous_expiry_date'             => 'Scadenza precedente',
+    'course_update_date'               => 'Data di aggiornamento del corso',
+    'new_expiry_date'                  => 'NUOVA SCADENZA',
+    'renewal_operation_date'           => "DATA DELL'OPERAZIONE DI RINNOVO",
 ];

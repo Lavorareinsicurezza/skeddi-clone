@@ -67,7 +67,7 @@ class WorkerController extends Controller
             'workplace_safety_risk' => $request->has('workplace_safety_risk') ? 1 : 0,
             'workplace_safety_risk_note' => $request->input('workplace_safety_risk_note'),
             'workplace_safety_risk_document' => $documentPath,
-            'is_active' => $request->has('is_active') ? !$request->input('is_active') : true,
+            'is_active' => true,
             'additional_information' => $request->input('additional_information'),
             'worker_documentation' => $request->input('worker_documentation'),
             'ppe' => $request->input('ppe'),

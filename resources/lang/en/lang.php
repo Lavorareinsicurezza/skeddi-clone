@@ -384,4 +384,29 @@ return [
     'to' => 'To',
     'reset' => 'Reset',
     'renew' => 'Renew',
+
+    'specific_name' => 'Specific Name',
+
+
+    // --------------------------------------------------------------------------------------------------
+    //                                 Company Visit Types
+    // --------------------------------------------------------------------------------------------------
+    // Visit Types - Admin
+    'visit_types'                    => 'Visit Types',
+    'select_visit_type'              => '— Select Visit Type —',
+    'company_visit_type'             => 'Company Visit Type',
+    'company_visit_types'            => 'Company Visit Types',
+    'visit_type_created_successfully' => 'Visit type created successfully.',
+    'visit_type_updated_successfully' => 'Visit type updated successfully updated.',
+    'visit_type_deleted_successfully' => 'Visit type deleted successfully',
+
+    // --------------------------------------------------------------------------------------------------
+    //                                 Company Renewals
+    // --------------------------------------------------------------------------------------------------
+    'managed_by'                       => 'Managed by',
+    'subject'                          => 'Subject',
+    'previous_expiry_date'             => 'Previous Expiry Date',
+    'course_update_date'               => 'Course Update Date',
+    'new_expiry_date'                  => 'New Expiry Date',
+    'renewal_operation_date'           => 'Renewal Operation Date',
 ];

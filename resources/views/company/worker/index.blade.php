@@ -79,7 +79,7 @@
                         {{ __('lang.position') }}
                     </th>
                     <th scope="col"
-                        class="px-6 py-4 text-right text-xs font-bold text-gray-700 uppercase tracking-wider">
+                        class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
                         {{ __('lang.actions') }}
                     </th>
                 </tr>
@@ -100,26 +100,27 @@
                                 {{ $worker->job_title ?? '-' }}
                             </span> --}}
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <div class="flex items-center justify-end gap-3">
+                         <td class="px-6 py-4">
                                 <a href="{{ route('admin.company-workers.show', $worker->id) }}"
-                                    class="text-gray-400 hover:text-[#0C3183] transition-colors"
+                                    class="font-medium text-gray-500 p-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
                                     title="{{ __('lang.view') }}">
-                                    <i class="fa fa-eye text-lg"></i>
+                                    <i class="fa-regular fa-eye"></i>
                                 </a>
-                                <form action="{{ route('admin.company-workers.destroy', $worker->id) }}" method="POST"
-                                    class="inline-block"
-                                    onsubmit="return confirm('{{ __('lang.delete_worker_confirm') }}');">
+                                <a href="{{ route('admin.company-workers.edit', $worker->id) }}"
+                                    class="font-medium text-gray-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
+                                    title="{{ __('lang.edit') }}">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <form action="{{ route('admin.company-workers.destroy', $worker->id) }}" method="POST" class="inline-block ml-2" onsubmit="return confirm('{{ __('lang.delete_worker_confirm') }}');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
-                                        class="text-gray-400 hover:text-red-600 transition-colors"
-                                        title="{{ __('lang.delete') }}">
-                                        <i class="fa fa-trash text-lg"></i>
+                                        class="font-medium text-red-500 p-2 hover:bg-red-50 border border-gray-200 rounded-[10px]"
+                                        title="{{ __('lang.actions') }}">
+                                        <i class="fa fa-trash"></i>
                                     </button>
                                 </form>
-                            </div>
-                        </td>
+                            </td>
                     </tr>
                 @empty
                     <tr>

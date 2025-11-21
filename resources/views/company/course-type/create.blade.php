@@ -17,11 +17,7 @@
         <h1 class="text-3xl font-bold text-gray-900">
             {{ isset($companyCourseType) ? $companyCourseType->name : __('lang.create_course_type') }}
         </h1>
-        <a href="{{ route('admin.company-course-types.export') }}"
-            class="px-5 py-3 font-semibold text-[#0C3183] hover:bg-[#EBF1FF] text-sm border border-gray-300 rounded-lg flex items-center gap-2">
-            <i class="fa fa-download"></i>
-            {{ __('lang.export_data') }}
-        </a>
+
     </div>
 
     <form

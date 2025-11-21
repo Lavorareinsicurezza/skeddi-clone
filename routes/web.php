@@ -10,10 +10,12 @@ use App\Http\Controllers\Admin\VisitTypeController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\WorkerController;
 use App\Http\Controllers\Admin\TrainingPlanController;
+use App\Http\Controllers\CompanyRenewalController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\CompanyVisitController;
 use App\Http\Controllers\DashboardController;
 
 // Public routes
@@ -91,5 +93,12 @@ Route::middleware('auth')->name('admin.')->group(function () {
     Route::post('/training-plan/documents/store', [TrainingPlanController::class, 'storeDocument'])->name('training-plan.documents.store');
     Route::delete('/training-plan/documents/{id}', [TrainingPlanController::class, 'deleteDocument'])->name('training-plan.documents.delete');
     Route::get('/training-plan/documents/{id}/download', [TrainingPlanController::class, 'downloadDocument'])->name('training-plan.documents.download');
+
+    //company-visit-type routes
+    // Route::get('/company-visit-types/export', [CompanyVisitController::class, 'export'])->name('company-visit-types.export');
+    Route::resource('/company-visit-types', CompanyVisitController::class);
+
+    // Company renewal routes
+    Route::get('/company-renewals', [CompanyRenewalController::class, 'index'])->name('company-renewals.index');
 });
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

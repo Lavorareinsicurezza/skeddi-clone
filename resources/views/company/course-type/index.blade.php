@@ -19,13 +19,11 @@
     <div class="mb-6 flex items-center justify-between">
         <h1 class="text-3xl font-bold text-gray-900">{{ __('lang.company_course_types') }}</h1>
 
-        <div class="flex items-center gap-3">
-            <!-- Action Buttons -->
-            <a href="{{ route('admin.company-course-types.export') }}"
-                class="px-5 py-3 font-semibold text-[#0C3183] hover:bg-[#EBF1FF] text-sm border border-gray-300 rounded-lg flex items-center gap-2"
-                title="{{ __('lang.export_data') }}">
-                <i class="fa fa-download"></i>
-                {{ __('lang.export_data') }}
+        <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+            <a href="{{ route('admin.company-course-types.create') }}"
+                class="px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-[#EBF1FF] text-sm flex"
+                title="{{ __('lang.create') . ' ' . __('lang.worker') }}">
+                <i class="text-gray-500 fa fa-plus"></i>
             </a>
         </div>
     </div>
@@ -35,16 +33,13 @@
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
-                    <th scope="col"
-                        class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
                         {{ __('lang.course_type') }}
                     </th>
-                    <th scope="col"
-                        class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
                         {{ __('lang.years_of_validity') }}
                     </th>
-                    <th scope="col"
-                        class="px-6 py-4 text-center text-xs font-bold text-gray-700 uppercase tracking-wider">
+                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
                         {{ __('lang.actions') }}
                     </th>
                 </tr>
@@ -58,26 +53,28 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                             {{ $companyCourseType->validity_years ?? '-' }}
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
-                            <div class="flex items-center justify-center gap-3">
-                                <!-- View Button -->
-                                <a href="{{ route('admin.company-course-types.show', $companyCourseType->id) }}"
-                                    class="text-gray-500 hover:text-[#0C3183]" title="{{ __('lang.view') }}">
-                                    <i class="fa fa-eye text-lg"></i>
-                                </a>
-
-                                <!-- Delete Button -->
-                                <form action="{{ route('admin.company-course-types.destroy', $companyCourseType->id) }}"
-                                    method="POST" class="inline"
-                                    onsubmit="return confirm('{{ __('lang.delete_course_type_confirm') }}')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-gray-500 hover:text-red-600"
-                                        title="{{ __('lang.delete') }}">
-                                        <i class="fa fa-trash text-lg"></i>
-                                    </button>
-                                </form>
-                            </div>
+                        <td class="px-6 py-4">
+                            <a href="{{ route('admin.company-course-types.show', $companyCourseType->id) }}"
+                                class="font-medium text-gray-500 p-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
+                                title="{{ __('lang.view') }}">
+                                <i class="fa-regular fa-eye"></i>
+                            </a>
+                            <a href="{{ route('admin.company-course-types.edit', $companyCourseType->id) }}"
+                                class="font-medium text-gray-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
+                                title="{{ __('lang.edit') }}">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <form action="{{ route('admin.company-course-types.destroy', $companyCourseType->id) }}"
+                                method="POST" class="inline-block ml-2"
+                                onsubmit="return confirm('{{ __('lang.delete_course_type_confirm') }}');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    class="font-medium text-red-500 p-2 hover:bg-red-50 border border-gray-200 rounded-[10px]"
+                                    title="{{ __('lang.actions') }}">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 @empty
@@ -98,11 +95,5 @@
         @endif
     </div>
 
-    <!-- Floating Add Button -->
-    <a href="{{ route('admin.company-course-types.create') }}"
-        class="fixed bottom-8 right-8 w-14 h-14 bg-[#0C3183] hover:bg-[#0A2869] text-white rounded-full flex items-center justify-center shadow-lg transition-all hover:shadow-xl"
-        title="{{ __('lang.create_course_type') }}">
-        <i class="fa fa-plus text-xl"></i>
-    </a>
 
 @endsection

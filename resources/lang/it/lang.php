@@ -360,6 +360,23 @@ return [
     'training' => 'Formazione',
     'to_be_scheduled' => 'Da programmare',
     'save_training_plan_confirm' => 'Sei sicuro di voler salvare il piano di formazione?',
+    'training_plan_saved_successfully' => 'Piano di formazione salvato con successo',
+    'document_management_for_deadline' => 'Gestione documenti per scadenza',
+    'add_note' => 'Aggiungi nota',
+    'add_new_document' => 'Aggiungi nuovo documento',
+    'browse' => 'Sfoglia',
+    'document_saved_successfully' => 'Documento salvato con successo',
+    'document_deleted_successfully' => 'Documento eliminato con successo',
+    'document_not_found' => 'Documento non trovato',
+    'no_documents_available' => 'Nessun documento disponibile',
+    'uploaded_on' => 'Caricato il',
+    'download' => 'Scarica',
+    'error' => 'Si è verificato un errore',
+    'renewal_date' => 'Data di rinnovo',
+    'course_renewed_successfully' => 'Corso rinnovato con successo',
+    'close' => 'Chiudi',
+    'renews' => 'Rinnova',
+    'training_plan_not_found' => 'Piano di formazione non trovato',
 
     // --------------------------------------------------------------------------------------------------
     //                                 Deadlines

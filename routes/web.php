@@ -86,5 +86,10 @@ Route::middleware('auth')->name('admin.')->group(function () {
     // Training plan routes
     Route::get('/training-plan', [TrainingPlanController::class, 'index'])->name('training-plan.index');
     Route::post('/training-plan/save', [TrainingPlanController::class, 'save'])->name('training-plan.save');
+    Route::post('/training-plan/renew', [TrainingPlanController::class, 'renew'])->name('training-plan.renew');
+    Route::post('/training-plan/documents/get', [TrainingPlanController::class, 'getDocuments'])->name('training-plan.documents.get');
+    Route::post('/training-plan/documents/store', [TrainingPlanController::class, 'storeDocument'])->name('training-plan.documents.store');
+    Route::delete('/training-plan/documents/{id}', [TrainingPlanController::class, 'deleteDocument'])->name('training-plan.documents.delete');
+    Route::get('/training-plan/documents/{id}/download', [TrainingPlanController::class, 'downloadDocument'])->name('training-plan.documents.download');
 });
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

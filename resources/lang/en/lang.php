@@ -359,6 +359,23 @@ return [
     'training' => 'Training',
     'to_be_scheduled' => 'To be Scheduled',
     'save_training_plan_confirm' => 'Are you sure you want to save the training plan?',
+    'training_plan_saved_successfully' => 'Training plan saved successfully',
+    'document_management_for_deadline' => 'Document management for deadline',
+    'add_note' => 'Add note',
+    'add_new_document' => 'Add new document',
+    'browse' => 'Browse',
+    'document_saved_successfully' => 'Document saved successfully',
+    'document_deleted_successfully' => 'Document deleted successfully',
+    'document_not_found' => 'Document not found',
+    'no_documents_available' => 'No documents available',
+    'uploaded_on' => 'Uploaded on',
+    'download' => 'Download',
+    'error' => 'An error occurred',
+    'renewal_date' => 'Renewal date',
+    'course_renewed_successfully' => 'Course renewed successfully',
+    'close' => 'Close',
+    'renews' => 'Renews',
+    'training_plan_not_found' => 'Training plan not found',
 
     // --------------------------------------------------------------------------------------------------
     //                                 Deadlines

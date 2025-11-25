@@ -360,10 +360,6 @@ return [
     'to_be_scheduled' => 'To be Scheduled',
     'save_training_plan_confirm' => 'Are you sure you want to save the training plan?',
     'training_plan_saved_successfully' => 'Training plan saved successfully',
-    'document_management_for_deadline' => 'Document management for deadline',
-    'add_note' => 'Add note',
-    'add_new_document' => 'Add new document',
-    'browse' => 'Browse',
     'document_saved_successfully' => 'Document saved successfully',
     'document_deleted_successfully' => 'Document deleted successfully',
     'document_not_found' => 'Document not found',
@@ -409,4 +405,12 @@ return [
     'course_update_date'               => 'Course Update Date',
     'new_expiry_date'                  => 'New Expiry Date',
     'renewal_operation_date'           => 'Renewal Operation Date',
+
+    'select_company'                   => 'Select Company',
+    'hello'                             => 'Hello',
+    'workplace_safety_medium_risk'    => 'Workplace Safety-Medium Risk',
+    'search'                           => 'Search',
+    'level_1'                           => 'Level 1',
+    'level_2'                           => 'Level 2',
+    'level_3'                           => 'Level 3',
 ];

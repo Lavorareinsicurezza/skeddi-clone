@@ -37,7 +37,7 @@ class CompaniesImport implements ToModel, WithHeadingRow, WithValidation
             'head_of_prevention' => $row['head_of_prevention'] ?? null,
             'workers_safety_representative' => $row['workers_safety_representative'] ?? null,
             'company_doctor' => $row['company_doctor'] ?? null,
-            'workplace_safety_risk' => $this->convertToBoolean($row['workplace_safety_risk'] ?? 'No'),
+            'workplace_safety_risk' => $row['workplace_safety_risk'] ?? null,
             'subject_to_cpi' => $this->convertToBoolean($row['subject_to_cpi'] ?? 'No'),
             'rischio_antincendio' => $row['rischio_antincendio'] ?? null,
             'accountant_name' => $row['accountant_name'] ?? null,

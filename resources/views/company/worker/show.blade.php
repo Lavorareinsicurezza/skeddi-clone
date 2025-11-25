@@ -39,10 +39,10 @@
             </div>
 
             <!-- Department -->
-            <div>
+            {{-- <div>
                 <label class="block text-sm font-medium text-gray-500 mb-1">{{ __('lang.department') }}</label>
                 <p class="text-gray-900">{{ $worker->department ?? '-' }}</p>
-            </div>
+            </div> --}}
         </div>
 
         <!-- Workplace Safety Risk -->
@@ -119,10 +119,10 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <!-- PPE -->
-            <div>
+            {{-- <div>
                 <label class="block text-sm font-medium text-gray-500 mb-1">{{ __('lang.ppe') }}</label>
                 <p class="text-gray-900 whitespace-pre-wrap">{{ $worker->ppe ?? '-' }}</p>
-            </div>
+            </div> --}}
 
             <!-- Movement History -->
             <div>

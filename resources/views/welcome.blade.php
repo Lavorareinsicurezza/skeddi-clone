@@ -7,7 +7,7 @@
 
         <!-- Heading -->
         <h1 class="text-lg md:text-xl font-semibold text-gray-900 whitespace-nowrap">
-            Hello, {{ $currentCompany->name ?? 'Guest' }}
+            {{ __('lang.hello') }}, {{ $currentCompany->name ?? 'Guest' }}
         </h1>
 
         <!-- Filter Form -->
@@ -19,7 +19,7 @@
                 <!-- Left Section -->
                 <div class="p-1.5 sm:border-r border-b sm:border-b-0 border-gray-200 bg-blue-100">
                     <div class="cursor-pointer font-semibold text-[#0C3183] rounded px-3 py-2 text-xs">
-                        DEADLINES
+                        {{ __('lang.deadlines') }}
                     </div>
                 </div>
 
@@ -27,7 +27,7 @@
                 <div class="p-1.5 sm:border-r border-b sm:border-b-0 border-gray-200">
                     <div id="statusFilter"
                         class="cursor-pointer {{ request('scheduled') != 'false' ? 'bg-blue-50 text-[#0C3183]' : 'text-gray-500' }} rounded px-3 py-2 font-semibold text-xs">
-                        To Be Scheduled
+                        {{ __('lang.to_be_scheduled') }}
                         <input type="hidden" name="scheduled" id="scheduledInput" value="{{ request('scheduled') }}">
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                 <!-- From Date -->
                 <div
                     class="px-3 py-2 flex items-center space-x-2 sm:border-r border-b sm:border-b-0 border-gray-200 text-xs">
-                    <label for="fromDate" class="text-gray-600 font-medium whitespace-nowrap">From:</label>
+                    <label for="fromDate" class="text-gray-600 font-medium whitespace-nowrap">{{ __('lang.from') }}:</label>
                     <input type="date" name="from_date" id="fromDate" value="{{ request('from_date') }}"
                         class="bg-transparent border-0 border-b border-gray-300 px-1 py-0.5 text-gray-600 font-medium focus:outline-none w-full sm:w-auto text-xs" />
                 </div>
@@ -43,7 +43,7 @@
                 <!-- To Date -->
                 <div
                     class="px-3 py-2 flex items-center space-x-2 sm:border-r border-b sm:border-b-0 border-gray-200 text-xs">
-                    <label for="toDate" class="text-gray-600 font-medium whitespace-nowrap">To:</label>
+                    <label for="toDate" class="text-gray-600 font-medium whitespace-nowrap">{{ __('lang.to') }}:</label>
                     <input type="date" name="to_date" id="toDate" value="{{ request('to_date') }}"
                         class="bg-transparent border-0 border-b border-gray-300 px-1 py-0.5 text-gray-600 font-medium focus:outline-none w-full sm:w-auto text-xs" />
                 </div>
@@ -53,7 +53,7 @@
                     <button type="button" id="resetFilter"
                         class="flex items-center text-red-600 cursor-pointer hover:text-red-700 text-xs font-medium space-x-1">
                         <i class="fas fa-rotate-left w-3 h-3"></i>
-                        <span>Reset</span>
+                        <span>{{ __('lang.reset') }}</span>
                     </button>
                 </div>
 
@@ -127,7 +127,7 @@
                 @empty
                     <tr class="bg-white border-b border-gray-200">
                         <td colspan="5" class="px-3 md:px-6 py-4 text-center text-gray-500">
-                            No data available
+                            {{ __('lang.no_data_available') }}
                         </td>
                     </tr>
                 @endforelse

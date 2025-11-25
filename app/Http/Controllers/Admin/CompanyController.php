@@ -58,7 +58,7 @@ class CompanyController extends Controller
             'head_of_prevention' => 'required|string|max:255',
             'workers_safety_representative' => 'required|string|max:255',
             'company_doctor' => 'required|string|max:255',
-            'workplace_safety_risk' => 'nullable|boolean',
+            'workplace_safety_risk' => 'nullable|string|max:255',
             'subject_to_cpi' => 'nullable|boolean',
             'rischio_antincendio' => 'nullable|string|max:255',
             'accountant_name' => 'nullable|string|max:255',
@@ -98,7 +98,7 @@ class CompanyController extends Controller
         unset($data['company_name']);
 
         // Convert checkboxes to boolean (unchecked checkboxes don't submit, so we check for their presence)
-        $data['workplace_safety_risk'] = $request->has('workplace_safety_risk');
+        $data['workplace_safety_risk'] = $request->workplace_safety_risk;
         $data['subject_to_cpi'] = $request->has('subject_to_cpi');
         $data['send_deadline_notification'] = $request->has('send_deadline_notification');
         $data['freeze_company'] = $request->has('freeze_company');
@@ -172,7 +172,7 @@ class CompanyController extends Controller
             'head_of_prevention' => 'required|string|max:255',
             'workers_safety_representative' => 'required|string|max:255',
             'company_doctor' => 'required|string|max:255',
-            'workplace_safety_risk' => 'nullable|boolean',
+            'workplace_safety_risk' => 'nullable|string|max:255',
             'subject_to_cpi' => 'nullable|boolean',
             'rischio_antincendio' => 'nullable|string|max:255',
             'accountant_name' => 'nullable|string|max:255',
@@ -212,7 +212,7 @@ class CompanyController extends Controller
         unset($data['company_name']);
 
         // Convert checkboxes to boolean (unchecked checkboxes don't submit, so we check for their presence)
-        $data['workplace_safety_risk'] = $request->has('workplace_safety_risk');
+        $data['workplace_safety_risk'] = $request->workplace_safety_risk;
         $data['subject_to_cpi'] = $request->has('subject_to_cpi');
         $data['send_deadline_notification'] = $request->has('send_deadline_notification');
         $data['freeze_company'] = $request->has('freeze_company');

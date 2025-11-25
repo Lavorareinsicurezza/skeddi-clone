@@ -9,7 +9,7 @@
             <!-- Modal Header -->
             <div class="flex items-center justify-between p-5">
                 <h3 class="text-2xl font-semibold pt-[50px] text-gray-900 w-full text-center">
-                    Workplace Safety-Medium Risk
+                    {{ __('lang.workplace_safety_medium_risk') }}
                 </h3>
                 <button type="button" onclick="closeCompanyModal()" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm h-8 w-8 inline-flex justify-center items-center">
                     <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -22,7 +22,7 @@
             <div class="px-12 pb-6">
                 <!-- Search Input -->
                 <div class="border-b border-gray-200">
-                    <input type="text" id="companySearch" placeholder="Search companies..."
+                    <input type="text" id="companySearch" placeholder="{{ __('lang.search') }} {{ __('lang.companies') }}..."
                         class="w-full px-4 py-3 text-gray-600 focus:outline-none"
                         onkeyup="filterCompanies()">
                 </div>

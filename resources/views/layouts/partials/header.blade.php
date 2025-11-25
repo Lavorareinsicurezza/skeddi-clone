@@ -14,7 +14,7 @@
                     @if(session('selectedCompanyName'))
                         {{ session('selectedCompanyName') }}
                     @else
-                        Select Company
+                        {{ __('lang.select_company') }}
                     @endif
                 </button>
             </div>

@@ -82,7 +82,7 @@ class CompaniesExport implements FromCollection, WithHeadings, WithMapping, With
             $company->head_of_prevention,
             $company->workers_safety_representative,
             $company->company_doctor,
-            $company->workplace_safety_risk ? 'Yes' : 'No',
+            str_replace('_', ' ', $company->workplace_safety_risk),
             $company->subject_to_cpi ? 'Yes' : 'No',
             $company->rischio_antincendio,
             $company->accountant_name,

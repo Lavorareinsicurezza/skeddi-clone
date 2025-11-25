@@ -61,7 +61,7 @@
                     placeholder="{{ __('lang.job_title') }}">
             </div>
 
-            <div>
+            {{-- <div>
                 <label for="department" class="block text-sm font-medium text-gray-700 mb-2">
                     {{ __('lang.department') }}
                 </label>
@@ -69,13 +69,14 @@
                     value="{{ old('department', $worker->department ?? '') }}"
                     class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0C3183] text-sm"
                     placeholder="{{ __('lang.department') }}">
-            </div>
-        </div>
+            </div> --}}
+        {{-- </div> --}}
 
         <!-- No longer in force checkbox -->
         <div class="mb-6">
+            <br>
             <label
-                class="border border-gray-300 rounded-lg px-4 py-3 flex items-center justify-between cursor-pointer hover:bg-gray-50 has-[:checked]:border-[#0C3183] has-[:checked]:bg-[#EBF1FF] max-w-md">
+                class="border border-gray-300 rounded-lg px-4 py-3 flex items-center justify-between cursor-pointer hover:bg-gray-50 has-[:checked]:border-[#0C3183] has-[:checked]:bg-[#EBF1FF] max-w-full">
                 <span class="text-sm font-medium text-gray-800">{{ __('lang.no_longer_in_force') }}</span>
                 <input type="checkbox" name="is_active" id="is_active" value="1"  {{ old('is_active', isset($worker) && !$worker->is_active ? true : false) ? 'checked' : '' }}
                     class="w-6 h-6 appearance-none bg-white border-2 border-gray-400 rounded-full cursor-pointer checked:border-[5px] checked:border-[#0C3183] focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:ring-offset-2">
@@ -88,7 +89,7 @@
                 <label for="additional_information" class="block text-sm font-medium text-gray-700 mb-2">
                     {{ __('lang.additional_information') }}
                 </label>
-                <textarea name="additional_information" id="additional_information" rows="3"
+                <textarea name="additional_information" id="additional_information" rows="1"
                     class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0C3183] text-sm"
                     placeholder="{{ __('lang.additional_information') }}">{{ old('additional_information', $worker->additional_information ?? '') }}</textarea>
             </div>
@@ -97,28 +98,28 @@
                 <label for="worker_documentation" class="block text-sm font-medium text-gray-700 mb-2">
                     {{ __('lang.worker_documentation') }}
                 </label>
-                <textarea name="worker_documentation" id="worker_documentation" rows="3"
+                <textarea name="worker_documentation" id="worker_documentation" rows="1"
                     class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0C3183] text-sm"
                     placeholder="{{ __('lang.worker_documentation') }}">{{ old('worker_documentation', $worker->worker_documentation ?? '') }}</textarea>
             </div>
         </div>
 
         <!-- PPE and Movement History -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div>
+        <div class="grid grid-cols-1 md:grid-cols-1 gap-6 mb-6">
+            {{-- <div>
                 <label for="ppe" class="block text-sm font-medium text-gray-700 mb-2">
                     {{ __('lang.ppe') }}
                 </label>
-                <textarea name="ppe" id="ppe" rows="3"
+                <textarea name="ppe" id="ppe" rows="1"
                     class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0C3183] text-sm"
                     placeholder="{{ __('lang.ppe') }}">{{ old('ppe', $worker->ppe ?? '') }}</textarea>
-            </div>
+            </div> --}}
 
             <div>
                 <label for="movement_history" class="block text-sm font-medium text-gray-700 mb-2">
                     {{ __('lang.movement_history') }}
                 </label>
-                <textarea name="movement_history" id="movement_history" rows="3"
+                <textarea name="movement_history" id="movement_history" rows="1"
                     class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0C3183] text-sm"
                     placeholder="{{ __('lang.movement_history') }}">{{ old('movement_history', $worker->movement_history ?? '') }}</textarea>
             </div>
@@ -166,11 +167,11 @@
             <label for="medical_visits" class="block text-sm font-medium text-gray-700 mb-2">
                 {{ __('lang.medical_visits') }}
             </label>
-            <textarea name="medical_visits" id="medical_visits" rows="3"
+            <textarea name="medical_visits" id="medical_visits" rows="1"
                 class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0C3183] text-sm"
                 placeholder="{{ __('lang.medical_visits') }}">{{ old('medical_visits', $worker->medical_visits ?? '') }}</textarea>
         </div>
-
+<div></div>
         <!-- Action Buttons -->
         <div class="flex justify-end gap-4">
             <a href="{{ route('admin.company-workers.index') }}"
@@ -225,7 +226,7 @@
 
             <div class="mt-4">
                 <label class="block text-sm font-medium text-gray-900 mb-2">{{ __('lang.add_note') }}</label>
-                <textarea id="modal_safety_note" rows="3"
+                <textarea id="modal_safety_note" rows="1"
                     class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0C3183] text-sm"
                     placeholder="{{ __('lang.add_note') }}"></textarea>
             </div>

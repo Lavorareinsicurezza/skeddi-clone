@@ -60,7 +60,6 @@ class Company extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'workplace_safety_risk' => 'boolean',
         'subject_to_cpi' => 'boolean',
         'send_deadline_notification' => 'boolean',
         'freeze_company' => 'boolean',

@@ -361,10 +361,6 @@ return [
     'to_be_scheduled' => 'Da programmare',
     'save_training_plan_confirm' => 'Sei sicuro di voler salvare il piano di formazione?',
     'training_plan_saved_successfully' => 'Piano di formazione salvato con successo',
-    'document_management_for_deadline' => 'Gestione documenti per scadenza',
-    'add_note' => 'Aggiungi nota',
-    'add_new_document' => 'Aggiungi nuovo documento',
-    'browse' => 'Sfoglia',
     'document_saved_successfully' => 'Documento salvato con successo',
     'document_deleted_successfully' => 'Documento eliminato con successo',
     'document_not_found' => 'Documento non trovato',
@@ -412,4 +408,12 @@ return [
     'course_update_date'               => 'Data di aggiornamento del corso',
     'new_expiry_date'                  => 'NUOVA SCADENZA',
     'renewal_operation_date'           => "DATA DELL'OPERAZIONE DI RINNOVO",
+
+    'select_company'                   => 'Seleziona Azienda',
+    'hello'                             => 'Ciao',
+    'workplace_safety_medium_risk'    => 'Sicurezza sul Lavoro-Rischio Medio',
+    'search'                           => 'Ricerca',
+    'level_1'                           => 'livello 1',
+    'level_2'                           => 'livello 2',
+    'level_3'                           => 'livello 3',
 ];

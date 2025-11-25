@@ -14,32 +14,40 @@
                 <!-- Row 1 -->
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.company_name') }} <span class="text-red-500">*</span></label>
-                        <input type="text" name="company_name" value="{{ old('company_name') }}" placeholder="{{ __('lang.enter_company_name') }}"
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.company_name') }} <span
+                                class="text-red-500">*</span></label>
+                        <input type="text" name="company_name" value="{{ old('company_name') }}"
+                            placeholder="{{ __('lang.enter_company_name') }}"
                             class="w-full border @error('company_name') border-red-500 @else border-gray-300 @enderror rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                         @error('company_name')
                             <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.vat_number') }} <span class="text-red-500">*</span></label>
-                        <input type="text" name="vat_number" value="{{ old('vat_number') }}" placeholder="{{ __('lang.enter_vat_number') }}"
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.vat_number') }} <span
+                                class="text-red-500">*</span></label>
+                        <input type="text" name="vat_number" value="{{ old('vat_number') }}"
+                            placeholder="{{ __('lang.enter_vat_number') }}"
                             class="w-full border @error('vat_number') border-red-500 @else border-gray-300 @enderror rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                         @error('vat_number')
                             <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.tax_code') }} <span class="text-red-500">*</span></label>
-                        <input type="text" name="tax_code" value="{{ old('tax_code') }}" placeholder="{{ __('lang.enter_tax_code') }}"
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.tax_code') }} <span
+                                class="text-red-500">*</span></label>
+                        <input type="text" name="tax_code" value="{{ old('tax_code') }}"
+                            placeholder="{{ __('lang.enter_tax_code') }}"
                             class="w-full border @error('tax_code') border-red-500 @else border-gray-300 @enderror rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                         @error('tax_code')
                             <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.ateco') }} <span class="text-red-500">*</span></label>
-                        <input type="text" name="ateco" value="{{ old('ateco') }}" placeholder="{{ __('lang.enter_ateco_code') }}"
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.ateco') }} <span
+                                class="text-red-500">*</span></label>
+                        <input type="text" name="ateco" value="{{ old('ateco') }}"
+                            placeholder="{{ __('lang.enter_ateco_code') }}"
                             class="w-full border @error('ateco') border-red-500 @else border-gray-300 @enderror rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                         @error('ateco')
                             <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
@@ -51,25 +59,32 @@
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.sdi') }}</label>
-                        <input type="text" name="sdi" value="{{ old('sdi') }}" placeholder="{{ __('lang.enter_sdi_code') }}"
+                        <input type="text" name="sdi" value="{{ old('sdi') }}"
+                            placeholder="{{ __('lang.enter_sdi_code') }}"
                             class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.registered_office') }} <span class="text-red-500">*</span></label>
-                        <input type="text" name="registered_office" value="{{ old('registered_office') }}" placeholder="{{ __('lang.enter_registered_office_address') }}"
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.registered_office') }}
+                            <span class="text-red-500">*</span></label>
+                        <input type="text" name="registered_office" value="{{ old('registered_office') }}"
+                            placeholder="{{ __('lang.enter_registered_office_address') }}"
                             class="w-full border @error('registered_office') border-red-500 @else border-gray-300 @enderror rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                         @error('registered_office')
                             <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.operating_office') }}</label>
-                        <input type="text" name="operating_office" value="{{ old('operating_office') }}" placeholder="{{ __('lang.enter_operating_office_address') }}"
+                        <label
+                            class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.operating_office') }}</label>
+                        <input type="text" name="operating_office" value="{{ old('operating_office') }}"
+                            placeholder="{{ __('lang.enter_operating_office_address') }}"
                             class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.main_email') }} <span class="text-red-500">*</span></label>
-                        <input type="email" name="main_email" value="{{ old('main_email') }}" placeholder="company@example.com"
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.main_email') }} <span
+                                class="text-red-500">*</span></label>
+                        <input type="email" name="main_email" value="{{ old('main_email') }}"
+                            placeholder="company@example.com"
                             class="w-full border @error('main_email') border-red-500 @else border-gray-300 @enderror rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                         @error('main_email')
                             <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
@@ -88,7 +103,8 @@
                         @enderror
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.phone') }} <span class="text-red-500">*</span></label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.phone') }} <span
+                                class="text-red-500">*</span></label>
                         <input type="tel" name="phone" value="{{ old('phone') }}" placeholder="+39 123 456 7890"
                             class="w-full border @error('phone') border-red-500 @else border-gray-300 @enderror rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                         @error('phone')
@@ -101,8 +117,10 @@
                             class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.company_contact_person') }} <span class="text-red-500">*</span></label>
-                        <input type="text" name="company_contact_person" value="{{ old('company_contact_person') }}" placeholder="{{ __('lang.enter_contact_person_name') }}"
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.company_contact_person') }}
+                            <span class="text-red-500">*</span></label>
+                        <input type="text" name="company_contact_person" value="{{ old('company_contact_person') }}"
+                            placeholder="{{ __('lang.enter_contact_person_name') }}"
                             class="w-full border @error('company_contact_person') border-red-500 @else border-gray-300 @enderror rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                         @error('company_contact_person')
                             <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
@@ -113,32 +131,43 @@
                 <!-- Row 4 -->
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.employer') }} <span class="text-red-500">*</span></label>
-                        <input type="text" name="employer" value="{{ old('employer') }}" placeholder="{{ __('lang.enter_employer_name') }}"
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.employer') }} <span
+                                class="text-red-500">*</span></label>
+                        <input type="text" name="employer" value="{{ old('employer') }}"
+                            placeholder="{{ __('lang.enter_employer_name') }}"
                             class="w-full border @error('employer') border-red-500 @else border-gray-300 @enderror rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                         @error('employer')
                             <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.head_of_prevention_service') }} <span class="text-red-500">*</span></label>
-                        <input type="text" name="head_of_prevention" value="{{ old('head_of_prevention') }}" placeholder="{{ __('lang.enter_head_of_prevention_name') }}"
+                        <label
+                            class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.head_of_prevention_service') }}
+                            <span class="text-red-500">*</span></label>
+                        <input type="text" name="head_of_prevention" value="{{ old('head_of_prevention') }}"
+                            placeholder="{{ __('lang.enter_head_of_prevention_name') }}"
                             class="w-full border @error('head_of_prevention') border-red-500 @else border-gray-300 @enderror rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                         @error('head_of_prevention')
                             <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.workers_safety_representative') }} <span class="text-red-500">*</span></label>
-                        <input type="text" name="workers_safety_representative" value="{{ old('workers_safety_representative') }}" placeholder="{{ __('lang.enter_safety_representative_name') }}"
+                        <label
+                            class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.workers_safety_representative') }}
+                            <span class="text-red-500">*</span></label>
+                        <input type="text" name="workers_safety_representative"
+                            value="{{ old('workers_safety_representative') }}"
+                            placeholder="{{ __('lang.enter_safety_representative_name') }}"
                             class="w-full border @error('workers_safety_representative') border-red-500 @else border-gray-300 @enderror rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                         @error('workers_safety_representative')
                             <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.company_doctor') }} <span class="text-red-500">*</span></label>
-                        <input type="text" name="company_doctor" value="{{ old('company_doctor') }}" placeholder="{{ __('lang.enter_company_doctor_name') }}"
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.company_doctor') }} <span
+                                class="text-red-500">*</span></label>
+                        <input type="text" name="company_doctor" value="{{ old('company_doctor') }}"
+                            placeholder="{{ __('lang.enter_company_doctor_name') }}"
                             class="w-full border @error('company_doctor') border-red-500 @else border-gray-300 @enderror rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                         @error('company_doctor')
                             <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
@@ -149,12 +178,13 @@
                 <!-- Row 5 - Toggles/Radio/Dropdown -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                     <div>
-                        <label
-                            class="border border-gray-300 rounded-lg px-4 py-3 flex items-center justify-between cursor-pointer hover:bg-gray-50 has-[:checked]:border-[#0C3183] has-[:checked]:bg-blue-50">
-                            <span class="text-sm font-medium text-gray-800">{{ __('lang.workplace_safety_risk') }}</span>
-                            <input type="checkbox" name="workplace_safety_risk" value="1"
-                                class="w-6 h-6 appearance-none bg-white border-2 border-gray-400 rounded-full cursor-pointer checked:border-[5px] checked:border-[#0C3183] focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:ring-offset-2">
-                        </label>
+                        <select name="workplace_safety_risk"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent appearance-none bg-white cursor-pointer">
+                            <option value="">{{ __('lang.workplace_safety_risk') }}</option>
+                            <option value="low">{{ __('lang.low_risk') }}</option>
+                            <option value="medium">{{ __('lang.medium_risk') }}</option>
+                            <option value="high">{{ __('lang.high_risk') }}</option>
+                        </select>
                     </div>
                     <div>
                         <label
@@ -167,27 +197,32 @@
                     <div>
                         <select name="rischio_antincendio"
                             class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent appearance-none bg-white cursor-pointer">
-                            <option>{{ __('lang.rischio_antincendio') }}</option>
-                            <option>{{ __('lang.option_2') }}</option>
-                            <option>{{ __('lang.option_3') }}</option>
+                            <option value="">{{ __('lang.rischio_antincendio') }}</option>
+                            <option value="level_1">{{ __('lang.level_1') }}</option>
+                            <option value="level_2">{{ __('lang.level_2') }}</option>
+                            <option value="level_3">{{ __('lang.level_3') }}</option>
                         </select>
                     </div>
                 </div>
 
                 <!-- External Professional Contacts -->
                 <div class="mb-6">
-                    <h3 class="text-sm font-semibold text-gray-800 mb-4">{{ __('lang.external_professional_contacts') }}*</h3>
+                    <h3 class="text-sm font-semibold text-gray-800 mb-4">{{ __('lang.external_professional_contacts') }}*
+                    </h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
-                            <input type="text" name="accountant_name" value="{{ old('accountant_name') }}" placeholder="{{ __('lang.accountant_name') }}"
+                            <input type="text" name="accountant_name" value="{{ old('accountant_name') }}"
+                                placeholder="{{ __('lang.accountant_name') }}"
                                 class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                         </div>
                         <div>
-                            <input type="tel" name="accountant_phone" value="{{ old('accountant_phone') }}" placeholder="{{ __('lang.phone') }}"
+                            <input type="tel" name="accountant_phone" value="{{ old('accountant_phone') }}"
+                                placeholder="{{ __('lang.phone') }}"
                                 class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                         </div>
                         <div>
-                            <input type="email" name="accountant_email" value="{{ old('accountant_email') }}" placeholder="{{ __('lang.e-mail') }}"
+                            <input type="email" name="accountant_email" value="{{ old('accountant_email') }}"
+                                placeholder="{{ __('lang.e-mail') }}"
                                 class="w-full border @error('accountant_email') border-red-500 @else border-gray-300 @enderror rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                             @error('accountant_email')
                                 <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
@@ -201,15 +236,19 @@
                     <h3 class="text-sm font-semibold text-gray-800 mb-4">{{ __('lang.labor_consultant') }}</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
-                            <input type="text" name="labor_consultant_name" value="{{ old('labor_consultant_name') }}" placeholder="{{ __('lang.labot_consultant_name') }}"
+                            <input type="text" name="labor_consultant_name"
+                                value="{{ old('labor_consultant_name') }}"
+                                placeholder="{{ __('lang.labot_consultant_name') }}"
                                 class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                         </div>
                         <div>
-                            <input type="tel" name="labor_consultant_phone" value="{{ old('labor_consultant_phone') }}" placeholder="{{ __('lang.phone') }}"
+                            <input type="tel" name="labor_consultant_phone"
+                                value="{{ old('labor_consultant_phone') }}" placeholder="{{ __('lang.phone') }}"
                                 class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                         </div>
                         <div>
-                            <input type="email" name="labor_consultant_email" value="{{ old('labor_consultant_email') }}" placeholder="{{ __('lang.e-mail') }}"
+                            <input type="email" name="labor_consultant_email"
+                                value="{{ old('labor_consultant_email') }}" placeholder="{{ __('lang.e-mail') }}"
                                 class="w-full border @error('labor_consultant_email') border-red-500 @else border-gray-300 @enderror rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                             @error('labor_consultant_email')
                                 <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
@@ -230,7 +269,8 @@
                     <div>
                         <label
                             class="border border-gray-300 rounded-lg px-4 py-3 flex items-center justify-between cursor-pointer hover:bg-gray-50 has-[:checked]:border-[#0C3183] has-[:checked]:bg-blue-50">
-                            <span class="text-sm font-medium text-gray-800">{{ __('lang.send_deadline_notification') }}</span>
+                            <span
+                                class="text-sm font-medium text-gray-800">{{ __('lang.send_deadline_notification') }}</span>
                             <input type="checkbox" name="send_deadline_notification" value="1"
                                 class="w-6 h-6 appearance-none bg-white border-2 border-gray-400 rounded-full cursor-pointer checked:border-[5px] checked:border-[#0C3183] focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:ring-offset-2">
                         </label>
@@ -247,9 +287,11 @@
 
                 <!-- Contacts Selection -->
                 <div>
-                    <h3 class="text-sm font-semibold text-gray-800 mb-4">{{ __('lang.contacts_select_at_least_one') }} <span class="text-red-500">*</span></h3>
+                    <h3 class="text-sm font-semibold text-gray-800 mb-4">{{ __('lang.contacts_select_at_least_one') }}
+                        <span class="text-red-500">*</span>
+                    </h3>
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        @foreach($userEmails as $email)
+                        @foreach ($userEmails as $email)
                             <div>
                                 <label
                                     class="border @error('contacts') border-red-500 @else border-gray-300 @enderror rounded-lg px-4 py-3 flex items-center justify-between cursor-pointer hover:bg-gray-50 has-[:checked]:border-[#0C3183] has-[:checked]:bg-blue-50">
@@ -268,7 +310,8 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-1 gap-4 mb-6">
                     <div class="text-end">
-                        <button type="submit" class="bg-[#0C3183] text-white px-6 py-3 rounded-lg mt-6">{{ __('lang.save') }}</button>
+                        <button type="submit"
+                            class="bg-[#0C3183] text-white px-6 py-3 rounded-lg mt-6">{{ __('lang.save') }}</button>
                     </div>
                 </div>
 

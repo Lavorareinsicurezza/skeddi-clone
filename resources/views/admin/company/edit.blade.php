@@ -150,10 +150,17 @@
             <!-- Row 5 - Toggles/Radio/Dropdown -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 <div>
-                    <label class="border border-gray-300 rounded-lg px-4 py-3 flex items-center justify-between cursor-pointer hover:bg-gray-50 has-[:checked]:border-[#0C3183] has-[:checked]:bg-blue-50">
-                        <span class="text-sm font-medium text-gray-800">{{ __('lang.workplace_safety_risk') }}</span>
-                        <input type="checkbox" name="workplace_safety_risk" value="1" {{ old('workplace_safety_risk', $company->workplace_safety_risk) ? 'checked' : '' }} class="w-6 h-6 appearance-none bg-white border-2 border-gray-400 rounded-full cursor-pointer checked:border-[5px] checked:border-[#0C3183] focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:ring-offset-2">
-                    </label>
+                    {{-- <label class="border border-gray-300 rounded-lg px-4 py-3 flex items-center justify-between cursor-pointer hover:bg-gray-50 has-[:checked]:border-[#0C3183] has-[:checked]:bg-blue-50">
+                        <span class="text-sm font-medium text-gray-800">{{ __('lang.workplace_safety_risk') }}</span> --}}
+                        {{-- <input type="checkbox" name="workplace_safety_risk" value="1" {{ old('workplace_safety_risk', $company->workplace_safety_risk) ? 'checked' : '' }} class="w-6 h-6 appearance-none bg-white border-2 border-gray-400 rounded-full cursor-pointer checked:border-[5px] checked:border-[#0C3183] focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:ring-offset-2"> --}}
+                        <select name="workplace_safety_risk"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent appearance-none bg-white cursor-pointer">
+                            <option value="">{{ __('lang.workplace_safety_risk') }}</option>
+                            <option value="low" {{ old('workplace_safety_risk', $company->workplace_safety_risk) == 'low'? 'selected':'' }}>{{ __('lang.low_risk') }}</option>
+                            <option value="medium" {{ old('workplace_safety_risk', $company->workplace_safety_risk) == 'medium'? 'selected': '' }}>{{ __('lang.medium_risk') }}</option>
+                            <option value="high" {{ old('workplace_safety_risk', $company->workplace_safety_risk) == 'high' ? 'selected': ''}}>{{ __('lang.high_risk') }}</option>
+                        </select>
+                    {{-- </label> --}}
                 </div>
                 <div>
                     <label class="border border-gray-300 rounded-lg px-4 py-3 flex items-center justify-between cursor-pointer hover:bg-gray-50 has-[:checked]:border-[#0C3183] has-[:checked]:bg-blue-50">
@@ -165,8 +172,9 @@
                     <select name="rischio_antincendio"
                         class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent appearance-none bg-white cursor-pointer">
                         <option value="Rischio Antincendio" {{ old('rischio_antincendio', $company->rischio_antincendio) == 'Rischio Antincendio' ? 'selected' : '' }}>{{ __('lang.rischio_antincendio') }}</option>
-                        <option value="Option 2" {{ old('rischio_antincendio', $company->rischio_antincendio) == 'Option 2' ? 'selected' : '' }}>{{ __('lang.option_2') }}</option>
-                        <option value="Option 3" {{ old('rischio_antincendio', $company->rischio_antincendio) == 'Option 3' ? 'selected' : '' }}>{{ __('lang.option_3') }}</option>
+                        <option value="level_1" {{ old('rischio_antincendio', $company->rischio_antincendio) == 'level_1' ? 'selected' : '' }}>{{ __('lang.level_1') }}</option>
+                        <option value="level_2" {{ old('rischio_antincendio', $company->rischio_antincendio) == 'level_2' ? 'selected' : '' }}>{{ __('lang.level_2') }}</option>
+                        <option value="level_3" {{ old('rischio_antincendio', $company->rischio_antincendio) == 'level_3' ? 'selected' : '' }}>{{ __('lang.level_3') }}</option>
                     </select>
                 </div>
             </div>

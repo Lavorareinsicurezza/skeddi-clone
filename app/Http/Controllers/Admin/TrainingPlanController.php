@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\CourseRenewalLog;
 use App\Models\Worker;
 use App\Models\CompanyCourseType;
+use App\Models\CompanyVisitType;
+use App\Models\Document;
 use App\Models\TrainingPlanRecord;
 use App\Models\TrainingPlanDocument;
 use Illuminate\Http\Request;
@@ -190,68 +192,201 @@ class TrainingPlanController extends Controller
     /**
      * Renew a training plan record.
      */
+    // public function renew(Request $request)
+    // {
+    //     $companyId = session('selectedCompanyId');
+
+    //     $request->validate([
+    //         'training_plan_id' => 'required|exists:training_plan_records,id',
+    //         'renewal_date' => 'required|date',
+    //     ]);
+
+    //     $trainingPlan = TrainingPlanRecord::with('companyCourseType.courseType')
+    //         ->where('company_id', $companyId)
+    //         ->where('id', $request->training_plan_id)
+    //         ->first();
+
+    //     if (!$trainingPlan) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => __('lang.training_plan_not_found')
+    //         ], 404);
+    //     }
+
+    //     // Update the training date and calculate new expiration date
+    //     $trainingPlan->training_date = $request->renewal_date;
+
+    //     // Calculate expiration date based on course validity
+    //     // First check if companyCourseType has validity_years, then courseType, default to 1 year
+    //     $validityYears = 1;
+
+    //     $previousExpiryDate = $trainingPlan->expiration_date;
+
+    //     if ($trainingPlan->companyCourseType) {
+    //         if ($trainingPlan->companyCourseType->validity_years) {
+    //             $validityYears = $trainingPlan->companyCourseType->validity_years;
+    //         } elseif ($trainingPlan->companyCourseType->courseType && $trainingPlan->companyCourseType->courseType->validity_year) {
+    //             $validityYears = $trainingPlan->companyCourseType->courseType->validity_year;
+    //         }
+    //     }
+
+    //     $trainingPlan->expiration_date = \Carbon\Carbon::parse($request->renewal_date)->addYears($validityYears);
+    //     $trainingPlan->to_be_scheduled = false;
+    //     $trainingPlan->save();
+
+    //     CourseRenewalLog::create([
+    //         'company_id'              => $companyId,
+    //         'training_plan_record_id' => $trainingPlan->id,
+    //         'worker_id'               => $trainingPlan->worker_id,
+    //         'company_course_type_id'  => $trainingPlan->company_course_type_id,
+
+    //         'managed_by'              => Auth::user()->name, // or responsible person
+    //         'subject'                 => $trainingPlan->companyCourseType->specific_name
+    //             ?? $trainingPlan->companyCourseType->name,
+
+    //         'previous_expiry_date'    => $previousExpiryDate,
+    //         'course_update_date'      => $request->renewal_date,
+    //         'new_expiry_date'         => $trainingPlan->expiration_date,
+    //         'renewal_operation_date'  => now()->toDateString(),
+    //         'renewed_by'              => Auth::id(),
+    //     ]);
+
+    //     return response()->json([
+    //         'success' => true,
+    //         'message' => __('lang.course_renewed_successfully')
+    //     ]);
+    // }
+
     public function renew(Request $request)
     {
         $companyId = session('selectedCompanyId');
 
         $request->validate([
-            'training_plan_id' => 'required|exists:training_plan_records,id',
-            'renewal_date' => 'required|date',
+            'id'            => 'required|integer',
+            'deadline_type' => 'required|string',
+            'renewal_date'  => 'required|date',
         ]);
 
-        $trainingPlan = TrainingPlanRecord::with('companyCourseType.courseType')
-            ->where('company_id', $companyId)
-            ->where('id', $request->training_plan_id)
-            ->first();
+        $deadlineType = $request->deadline_type;
+        $id = $request->id;
 
-        if (!$trainingPlan) {
-            return response()->json([
-                'success' => false,
-                'message' => __('lang.training_plan_not_found')
-            ], 404);
+        $item = null;
+        $previousExpiry = null;
+        $newExpiry = null;
+        $subject = null;
+
+        switch ($deadlineType) {
+
+            case 'Training Plan':
+
+                $item = TrainingPlanRecord::with('companyCourseType')
+                    ->where('id', $id)
+                    ->first();
+
+                if (!$item) {
+                    return response()->json(['success' => false, 'message' => 'Training record not found'], 404);
+                }
+
+                $validityYears = $item->companyCourseType->validity_years ?? 1;
+
+                $previousExpiry = $item->expiration_date;
+
+                $item->training_date = $request->renewal_date;
+                $newExpiry = \Carbon\Carbon::parse($request->renewal_date)->addYears($validityYears);
+                $item->expiration_date = $newExpiry;
+                $item->to_be_scheduled = false;
+                $item->save();
+
+                $subject = $item->companyCourseType->specific_name ?? $item->companyCourseType->name;
+
+                break;
+
+
+            case 'Course':
+
+                $item = CompanyCourseType::where('id', $id)->first();
+
+                if (!$item) {
+                    return response()->json(['success' => false, 'message' => 'Course not found'], 404);
+                }
+
+                $validityYears = $item->validity_years ?? 1;
+
+                $previousExpiry = $item->expiration_date;
+
+                $newExpiry = \Carbon\Carbon::parse($request->renewal_date)->addYears($validityYears);
+
+                $item->expiration_date = $newExpiry;
+                $item->save();
+
+                $subject = $item->specific_name ?? $item->name;
+
+                break;
+
+
+            case 'Document':
+
+                $item = Document::where('id', $id)->first();
+
+                if (!$item) {
+                    return response()->json(['success' => false, 'message' => 'Document not found'], 404);
+                }
+
+                $previousExpiry = $item->expiration_date;
+                $item->expiration_date = $newExpiry = $request->renewal_date;
+                $item->save();
+
+                $subject = $item->name;
+
+                break;
+
+
+            case 'Visit Type':
+
+                $item = CompanyVisitType::where('id', $id)->first();
+
+                if (!$item) {
+                    return response()->json(['success' => false, 'message' => 'Visit record not found'], 404);
+                }
+
+                $previousExpiry = $item->expiry_date;
+                $item->expiry_date = $newExpiry = $request->renewal_date;
+                $item->save();
+
+                $subject = $item->name;
+
+                break;
+
+
+            default:
+                return response()->json(['success' => false, 'message' => 'Invalid type'], 400);
         }
 
-        // Update the training date and calculate new expiration date
-        $trainingPlan->training_date = $request->renewal_date;
 
-        // Calculate expiration date based on course validity
-        // First check if companyCourseType has validity_years, then courseType, default to 1 year
-        $validityYears = 1;
 
-        $previousExpiryDate = $trainingPlan->expiration_date;
-
-        if ($trainingPlan->companyCourseType) {
-            if ($trainingPlan->companyCourseType->validity_years) {
-                $validityYears = $trainingPlan->companyCourseType->validity_years;
-            } elseif ($trainingPlan->companyCourseType->courseType && $trainingPlan->companyCourseType->courseType->validity_year) {
-                $validityYears = $trainingPlan->companyCourseType->courseType->validity_year;
-            }
-        }
-
-        $trainingPlan->expiration_date = \Carbon\Carbon::parse($request->renewal_date)->addYears($validityYears);
-        $trainingPlan->to_be_scheduled = false;
-        $trainingPlan->save();
-
+        // >>> LOG ENTRY FOR ALL TYPES <<<
         CourseRenewalLog::create([
             'company_id'              => $companyId,
-            'training_plan_record_id' => $trainingPlan->id,
-            'worker_id'               => $trainingPlan->worker_id,
-            'company_course_type_id'  => $trainingPlan->company_course_type_id,
+            'item_id' =>  $item->id,
+            'worker_id'               => $deadlineType === 'Training Plan' ? $item->worker_id : null,
+            'company_course_type_id'  => ($deadlineType === 'Course' || $deadlineType === 'Training Plan') ? $item->company_course_type_id : null,
 
-            'managed_by'              => Auth::user()->name, // or responsible person
-            'subject'                 => $trainingPlan->companyCourseType->specific_name
-                ?? $trainingPlan->companyCourseType->name,
-
-            'previous_expiry_date'    => $previousExpiryDate,
-            'course_update_date'      => $request->renewal_date,
-            'new_expiry_date'         => $trainingPlan->expiration_date,
-            'renewal_operation_date'  => now()->toDateString(),
+            'deadline_type'           => $deadlineType,
+            'managed_by'              => Auth::user()->name,
             'renewed_by'              => Auth::id(),
+
+            'subject'                 => $subject,
+            'previous_expiry_date'    => $previousExpiry,
+            'course_update_date'      => $request->renewal_date,
+            'new_expiry_date'         => $newExpiry,
+            'renewal_operation_date'  => now()->toDateString(),
         ]);
+
+
 
         return response()->json([
             'success' => true,
-            'message' => __('lang.course_renewed_successfully')
+            'message' => 'Renewed successfully!',
         ]);
     }
 }

@@ -416,4 +416,5 @@ return [
     'level_1'                           => 'livello 1',
     'level_2'                           => 'livello 2',
     'level_3'                           => 'livello 3',
+    'deadline_type'                   => 'Tipo di Scadenza',
 ];

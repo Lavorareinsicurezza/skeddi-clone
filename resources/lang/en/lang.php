@@ -413,4 +413,5 @@ return [
     'level_1'                           => 'Level 1',
     'level_2'                           => 'Level 2',
     'level_3'                           => 'Level 3',
+    'deadline_type'                   => 'Deadline Type',
 ];

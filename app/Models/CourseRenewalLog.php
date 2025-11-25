@@ -18,9 +18,10 @@ class CourseRenewalLog extends Model
      */
     protected $fillable = [
         'company_id',
-        'training_plan_record_id',
+        'item_id',
         'worker_id',
         'company_course_type_id',
+        'deadline_type',
         'renewed_by',
         'managed_by',
         'subject',

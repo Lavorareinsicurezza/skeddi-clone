@@ -47,6 +47,28 @@
                     <input type="date" name="to_date" id="toDate" value="{{ request('to_date') }}"
                         class="bg-transparent border-0 border-b border-gray-300 px-1 py-0.5 text-gray-600 font-medium focus:outline-none w-full sm:w-auto text-xs" />
                 </div>
+                <div
+                    class="px-3 py-2 flex items-center space-x-2 sm:border-r border-b sm:border-b-0 border-gray-200 text-xs">
+                    {{-- <label for="toDate" class="text-gray-600 font-medium whitespace-nowrap">{{ __('lang.to')
+                        }}:</label> --}}
+                    <select name="deadline_type" id="deadline-type-filter"
+                        class="bg-transparent border-0 border-b border-gray-300 px-1 py-0.5 text-gray-600 font-medium focus:outline-none w-full sm:w-auto text-xs">
+                        <option value="all">{{ __('lang.all') }}</option>
+                        <option value="courses">{{ __('lang.courses') }}</option>
+                        <option value="visits">{{ __('lang.visit_type') }}</option>
+                        <option value="documents">{{ __('lang.documents') }}</option>
+                        <option value="training_plan">{{ __('lang.training_plan') }}</option>
+                    </select>
+
+                </div>
+                <div
+                    class="px-3 py-2 flex items-center space-x-2 sm:border-r border-b sm:border-b-0 border-gray-200 text-xs">
+                    {{-- <label for="toDate" class="text-gray-600 font-medium whitespace-nowrap">{{ __('lang.to')
+                        }}:</label> --}}
+                    <input type="text" name="search" id="search"
+                        class="bg-transparent border-0 border-b border-gray-300 px-1 py-0.5 text-gray-600 font-medium focus:outline-none w-full sm:w-auto text-xs"
+                    placeholder="{{ __('lang.search') }}" value="{{ request('search') }}">
+                </div>
 
                 <!-- Reset Filter -->
                 <div class="px-3 py-2 flex justify-center sm:justify-start">
@@ -72,7 +94,10 @@
                         {{ __('lang.company_name') }}
                     </th>
                     <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap">
-                        {{ __('lang.course_name') }}
+                        {{ __('lang.name') }}
+                    </th>
+                    <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap">
+                        {{ __('lang.deadline_type') }}
                     </th>
                     <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap">
                         {{ __('lang.employee_name') }}
@@ -86,53 +111,49 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse ($trainingPlans as $plan)
-                    <tr class="bg-white border-b border-gray-200">
-                        <th scope="row" class="px-3 md:px-6 py-4 font-medium text-gray-500 whitespace-nowrap">
-                            {{ $plan->company?->name }}
-                        </th>
-                        <td class="px-3 md:px-6 py-4">
-                            {{ $plan->companyCourseType?->name }}
-                        </td>
-                        <td class="px-3 md:px-6 py-4">
-                            {{ $plan->worker?->surname }}
-                        </td>
-                        <td class="px-3 md:px-6 py-4 whitespace-nowrap">
-                            @php
-                                $expDate = $plan->expiration_date;
-                                $now = \Carbon\Carbon::now();
-                                $daysUntilExpiry = $now->diffInDays($expDate, false);
+                @forelse ($records as $plan)
+                    <tr class="bg-white border-b">
 
-                                if ($daysUntilExpiry < 0) {
-                                    $colorClass = 'text-red-600'; // Expired
-                                } elseif ($daysUntilExpiry <= 30) {
-                                    $colorClass = 'text-orange-500'; // Expiring soon
-                                } else {
-                                    $colorClass = 'text-green-600'; // Valid
-                                }
-                            @endphp
-                            <span class="{{ $colorClass }}">{{ \Carbon\Carbon::parse($plan->expiration_date)->format('d F Y') }}</span>
+                        <td class="px-3 md:px-6 py-4">
+                            {{ \App\Models\Company::find($plan->company_id)?->name }}
                         </td>
+
+                        <td class="px-3 md:px-6 py-4">
+                            {{ $plan->name }}
+                        </td>
+
+                        <td class="px-3 md:px-6 py-4">
+                            {{ $plan->deadline_type }}
+                        </td>
+
+                        <td class="px-3 md:px-6 py-4">
+                            {{ $plan->employee_name ?? '-' }}
+                        </td>
+
+                        <td class="px-3 md:px-6 py-4">
+                            {{ \Carbon\Carbon::parse($plan->expiry_date)->format('d F Y') }}
+                        </td>
+
                         <td class="px-3 md:px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center space-x-2">
                                 <a href="javascript:void(0)"
-                                    onclick="openRenewalModal({{ $plan->id }}, '{{ $plan->company?->name }}', '{{ $plan->companyCourseType?->name }}', '{{ $plan->worker?->first_name }}', '{{ $plan->worker?->surname }}')"
+                                    onclick="openRenewalModal({{ $plan->id }}, '{{ $plan->company?->name ?? null}}', '{{ $plan->name }}', '{{ $plan->worker?->first_name ?? null }}', '{{ $plan->worker?->surname ?? null }}', '{{ $plan->deadline_type }}')"
                                     class="font-medium text-[#0C3183] p-2 cursor-pointer hover:underline">
-                                   {{ __('lang.renew') }}
+                                    {{ __('lang.renew') }}
                                 </a>
                             </div>
                         </td>
-                    </tr>
 
+                    </tr>
                 @empty
-                    <tr class="bg-white border-b border-gray-200">
-                        <td colspan="5" class="px-3 md:px-6 py-4 text-center text-gray-500">
-                            {{ __('lang.no_data_available') }}
+                    <tr>
+                        <td colspan="6" class="text-center py-4 text-gray-500">
+                            No Data Available
                         </td>
                     </tr>
                 @endforelse
-
             </tbody>
+
         </table>
     </div>
 
@@ -158,7 +179,8 @@
 
                 <form id="renewalForm">
                     @csrf
-                    <input type="hidden" id="training_plan_id" name="training_plan_id">
+                    <input type="hidden" id="id" name="id">
+                    <input type="hidden" id="deadline_type" name="deadline_type">
 
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700 mb-2">
@@ -193,6 +215,8 @@
             const statusFilter = document.getElementById('statusFilter');
             const fromDate = document.getElementById('fromDate');
             const toDate = document.getElementById('toDate');
+            const deadlineTypeFilter = document.getElementById('deadline-type-filter');
+            const search = document.getElementById('search');
             const filterType = document.getElementById('filterType');
             const resetFilter = document.getElementById('resetFilter');
             const scheduledInput = document.getElementById('scheduledInput');
@@ -214,6 +238,8 @@
 
             if (fromDate) fromDate.addEventListener('change', submitForm);
             if (toDate) toDate.addEventListener('change', submitForm);
+            if (deadlineTypeFilter) deadlineTypeFilter.addEventListener('change', submitForm);
+            if (search) search.addEventListener('change', submitForm);
             if (filterType) filterType.addEventListener('change', submitForm);
 
             if (resetFilter) {
@@ -228,8 +254,10 @@
         });
 
         // Renewal Modal Functions
-        function openRenewalModal(planId, companyName, courseName, workerFirstName, workerSurname) {
-            document.getElementById('training_plan_id').value = planId;
+        function openRenewalModal(planId, companyName, courseName, workerFirstName, workerSurname, deadlineType) {
+            console.log(planId, companyName, courseName, workerFirstName, workerSurname, deadlineType);
+            document.getElementById('id').value = planId;
+            document.getElementById('deadline_type').value = deadlineType;
             document.getElementById('modalCompanyName').textContent = companyName;
             document.getElementById('modalCourseWorkerInfo').textContent =
                 courseName + ' - ' + workerFirstName + ' ' + workerSurname;
@@ -242,7 +270,7 @@
         }
 
         // Handle renewal form submission
-        document.getElementById('renewalForm').addEventListener('submit', function(e) {
+        document.getElementById('renewalForm').addEventListener('submit', function (e) {
             e.preventDefault();
 
             const formData = new FormData(this);
@@ -254,20 +282,20 @@
                 },
                 body: formData
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert(data.message);
-                    closeRenewalModal();
-                    window.location.reload();
-                } else {
-                    alert(data.message || '{{ __('lang.error') }}');
-                }
-            })
-            .catch(error => {
-                console.error('Error renewing course:', error);
-                alert('{{ __('lang.error') }}');
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        closeRenewalModal();
+                        window.location.reload();
+                    } else {
+                        alert(data.message || '{{ __('lang.error') }}');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error renewing course:', error);
+                    alert('{{ __('lang.error') }}');
+                });
         });
 
     </script>

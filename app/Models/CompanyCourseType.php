@@ -12,6 +12,7 @@ class CompanyCourseType extends Model
         'name',
         'validity_years',
         'generic_column_name',
+        'expiration_date',
         'expiration_column_name',
         'is_generic',
         'notes',

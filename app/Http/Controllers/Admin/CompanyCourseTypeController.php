@@ -43,12 +43,18 @@ class CompanyCourseTypeController extends Controller
         ]);
 
         $companyId = session('selectedCompanyId');
+        $validityYears = (int) $request->input('validity_years');
 
+        $today = \Carbon\Carbon::today();
+
+        $expirationDate = $today->copy()->addYears($validityYears);
+        // return [$expirationDate];
         CompanyCourseType::create([
             'company_id' => $companyId,
             'course_type_id' => $request->input('course_type_id'),
             'name' => $request->input('name'),
             'validity_years' => $request->input('validity_years'),
+            'expiration_date' => $expirationDate,
             'generic_column_name' => $request->input('generic_column_name'),
             'expiration_column_name' => $request->input('expiration_column_name'),
             'is_generic' => $request->has('is_generic') ? 1 : 0,
@@ -63,7 +69,9 @@ class CompanyCourseTypeController extends Controller
      */
     public function show(string $id)
     {
-        $companyCourseType = CompanyCourseType::with(['trainingPlanRecords' => function($q){return $q->with('worker');}])->company()->with('courseType')->findOrFail($id);
+        $companyCourseType = CompanyCourseType::with(['trainingPlanRecords' => function ($q) {
+            return $q->with('worker');
+        }])->company()->with('courseType')->findOrFail($id);
         return view('company.course-type.show', compact('companyCourseType'));
     }
 
@@ -72,7 +80,9 @@ class CompanyCourseTypeController extends Controller
      */
     public function edit(string $id)
     {
-        $companyCourseType = CompanyCourseType::with(['trainingPlanRecords' => function($q){return $q->with('worker');}])->company()->with('courseType')->findOrFail($id);
+        $companyCourseType = CompanyCourseType::with(['trainingPlanRecords' => function ($q) {
+            return $q->with('worker');
+        }])->company()->with('courseType')->findOrFail($id);
         $courseTypes = CourseType::all();
         return view('company.course-type.create', compact('companyCourseType', 'courseTypes'));
     }
@@ -93,12 +103,20 @@ class CompanyCourseTypeController extends Controller
         ]);
 
         $companyCourseType = CompanyCourseType::query()->company()->findOrFail($id);
+
+        $validityYears = (int) $request->input('validity_years');
+
+        $today = \Carbon\Carbon::today();
+
+        $expirationDate = $today->copy()->addYears($validityYears);
+
         $companyCourseType->update([
             'course_type_id' => $request->input('course_type_id'),
             'name' => $request->input('name'),
             'validity_years' => $request->input('validity_years'),
             'generic_column_name' => $request->input('generic_column_name'),
             'expiration_column_name' => $request->input('expiration_column_name'),
+            'expiration_date' => $expirationDate,
             'is_generic' => $request->has('is_generic') ? 1 : 0,
             'notes' => $request->input('notes'),
         ]);

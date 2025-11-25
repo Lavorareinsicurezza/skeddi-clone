@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Company;
+use App\Models\CompanyCourseType;
+use App\Models\CompanyVisitType;
+use App\Models\Document;
 use App\Models\TrainingPlanRecord;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -16,34 +20,132 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
-        // if($request->scheduled) return $request->all();
         $user = Auth::user();
         $company = $user->company;
+        $companyIds = Company::where('id', $user->company_id)
+            ->orWhere('company_id', $user->company_id)
+            ->pluck('id');
 
-        // Build query with filters
-        $query = TrainingPlanRecord::with('companyCourseType', 'worker', 'company');
+        $deadlineType = $request->get('deadline_type', 'all'); // default 'all'
+        $search = $request->get('search'); // search input
 
-        // Filter by date range
-        if ($request->filled('from_date')) {
-            $query->whereDate('expiration_date', '>=', $request->from_date);
+        /* TRAINING PLANS */
+        $trainingPlansQuery = TrainingPlanRecord::select(
+            'training_plan_records.id',
+            'training_plan_records.company_id',
+            'workers.surname as employee_name',
+            'company_course_types.name as name',
+            DB::raw("'Training Plan' as deadline_type"),
+            'training_plan_records.expiration_date as expiry_date'
+        )
+            ->leftJoin('workers', 'workers.id', 'training_plan_records.worker_id')
+            ->leftJoin('company_course_types', 'company_course_types.id', 'training_plan_records.company_course_type_id')
+            ->leftJoin('companies', 'companies.id', 'training_plan_records.company_id')
+            ->whereIn('training_plan_records.company_id', $companyIds);
+
+        if ($search) {
+            $trainingPlansQuery->where(function ($q) use ($search) {
+                $q->where('workers.surname', 'like', "%{$search}%")
+                    ->orWhere('company_course_types.name', 'like', "%{$search}%")
+                    ->orWhere('companies.name', 'like', "%{$search}%")
+                    ->orWhere(DB::raw("'Training Plan'"), 'like', "%{$search}%"); // optional: search by deadline_type
+            });
         }
 
-        if ($request->filled('to_date')) {
-            $query->whereDate('expiration_date', '<=', $request->to_date);
+        /* COURSES */
+        $coursesQuery = CompanyCourseType::select(
+            'company_course_types.id',
+            'company_course_types.company_id',
+            DB::raw('NULL as employee_name'),
+            'company_course_types.name as name',
+            DB::raw("'Course' as deadline_type"),
+            DB::raw("DATE_ADD(NOW(), INTERVAL validity_years YEAR) as expiry_date")
+        )
+            ->leftJoin('companies', 'companies.id', 'company_course_types.company_id')
+            ->whereIn('company_course_types.company_id', $companyIds);
+
+        if ($search) {
+            $coursesQuery->where(function ($q) use ($search) {
+                $q->where('company_course_types.name', 'like', "%{$search}%")
+                    ->orWhere('companies.name', 'like', "%{$search}%")
+                    ->orWhere(DB::raw("'Course'"), 'like', "%{$search}%");
+            });
         }
 
-        // Filter by scheduled
-        if ($request->filled('scheduled')) {
-            $query->where('to_be_scheduled', $request->scheduled == 'true'? 1:0);
+        /* DOCUMENTS */
+        $documentsQuery = Document::select(
+            'documents.id',
+            'documents.company_id',
+            DB::raw('NULL as employee_name'),
+            'documents.name as name',
+            DB::raw("'Document' as deadline_type"),
+            'documents.expiration_date as expiry_date'
+        )
+            ->leftJoin('companies', 'companies.id', 'documents.company_id')
+            ->whereIn('documents.company_id', $companyIds);
+
+        if ($search) {
+            $documentsQuery->where(function ($q) use ($search) {
+                $q->where('documents.name', 'like', "%{$search}%")
+                    ->orWhere('companies.name', 'like', "%{$search}%")
+                    ->orWhere(DB::raw("'Document'"), 'like', "%{$search}%");
+            });
         }
 
-        $traningPlans = $query->latest()->get();
+        /* VISITS */
+        $visitsQuery = CompanyVisitType::select(
+            'company_visit_types.id',
+            'company_visit_types.company_id',
+            DB::raw('NULL as employee_name'),
+            'company_visit_types.name as name',
+            DB::raw("'Visit Type' as deadline_type"),
+            'company_visit_types.expiry_date as expiry_date'
+        )
+            ->leftJoin('companies', 'companies.id', 'company_visit_types.company_id')
+            ->whereIn('company_visit_types.company_id', $companyIds);
+
+        if ($search) {
+            $visitsQuery->where(function ($q) use ($search) {
+                $q->where('company_visit_types.name', 'like', "%{$search}%")
+                    ->orWhere('companies.name', 'like', "%{$search}%")
+                    ->orWhere(DB::raw("'Visit Type'"), 'like', "%{$search}%");
+            });
+        }
+
+        // Apply deadline_type filter
+        $queries = collect([]);
+        if ($deadlineType === 'all' || $deadlineType === 'training_plan') {
+            $queries->push($trainingPlansQuery);
+        }
+        if ($deadlineType === 'all' || $deadlineType === 'courses') {
+            $queries->push($coursesQuery);
+        }
+        if ($deadlineType === 'all' || $deadlineType === 'documents') {
+            $queries->push($documentsQuery);
+        }
+        if ($deadlineType === 'all' || $deadlineType === 'visits') {
+            $queries->push($visitsQuery);
+        }
+
+        // Merge queries with unionAll
+        $recordsQuery = $queries->shift(); // first query
+        foreach ($queries as $query) {
+            $recordsQuery = $recordsQuery->unionAll($query);
+        }
+
+        $records = DB::query()->fromSub($recordsQuery, 'all_records')
+            ->orderBy('expiry_date', 'DESC')
+            ->get();
 
         return view('welcome', [
             'currentCompany' => $company,
-            'trainingPlans' => $traningPlans,
+            'records' => $records,
+            'selectedDeadlineType' => $deadlineType,
+            'search' => $search
         ]);
     }
+
+
 
     /**
      * Display the deadlines page.

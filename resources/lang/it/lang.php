@@ -93,7 +93,7 @@ return [
     'company_contact_person' => 'Persona di contatto aziendale',
     'employer' => 'Datore di lavoro',
     'head_of_prevention_service' => 'Responsabile del Servizio di Prevenzione e Protezione',
-    'head_of_prevention' => 'Responsabile della Prevenzione',
+    'head_of_prevention' => 'Responsabile del Servizio di Prevenzione e Protezione',
     'workers_safety_representative' => 'Rappresentante dei Lavoratori per la Sicurezza',
     'safety_representative' => 'Rappresentante della Sicurezza',
     'company_doctor' => 'Medico competente',

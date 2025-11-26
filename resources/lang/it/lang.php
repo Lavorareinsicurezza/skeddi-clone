@@ -417,4 +417,12 @@ return [
     'level_2'                           => 'livello 2',
     'level_3'                           => 'livello 3',
     'deadline_type'                   => 'Tipo di Scadenza',
+
+    // --------------------------------------------------------------------------------------------------
+    //                                 Organizational Chart
+    // --------------------------------------------------------------------------------------------------
+    'head_prevention_protection' => 'Responsabile del Servizio di Prevenzione e Protezione',
+    'competent_doctor' => 'Dottore competente',
+    'first_aid_staff' => 'Addetti al primo soccorso',
+    'firefighting_staff' => 'Addetti antincendio',
 ];

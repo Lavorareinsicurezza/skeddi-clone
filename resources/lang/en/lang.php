@@ -414,4 +414,12 @@ return [
     'level_2'                           => 'Level 2',
     'level_3'                           => 'Level 3',
     'deadline_type'                   => 'Deadline Type',
+
+    // --------------------------------------------------------------------------------------------------
+    //                                 Organizational Chart
+    // --------------------------------------------------------------------------------------------------
+    'head_prevention_protection' => 'Head of Prevention and Protection Service',
+    'competent_doctor' => 'Competent Doctor',
+    'first_aid_staff' => 'First Aid Staff',
+    'firefighting_staff' => 'Firefighting Staff',
 ];

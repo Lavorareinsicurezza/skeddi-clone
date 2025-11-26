@@ -15,8 +15,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\ChartController;
 use App\Http\Controllers\CompanyVisitController;
 use App\Http\Controllers\DashboardController;
+use PhpOffice\PhpSpreadsheet\Chart\Chart;
 
 // Public routes
 Route::middleware('guest')->group(function () {
@@ -100,5 +102,11 @@ Route::middleware('auth')->name('admin.')->group(function () {
 
     // Company renewal routes
     Route::get('/company-renewals', [CompanyRenewalController::class, 'index'])->name('company-renewals.index');
+
+    // Organizational Chart Routes
+    Route::get('/organization-chart', [ChartController::class, 'index'])->name('chart.index');
+    Route::get('/organization-chart/chart', [ChartController::class, 'detail'])->name('chart.detail');
+    Route::get('/organization-chart/pdf', [ChartController::class, 'downloadPdf'])->name('chart.pdf');
+
 });
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

@@ -34,8 +34,7 @@
                         @enderror
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.tax_code') }} <span
-                                class="text-red-500">*</span></label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.tax_code') }} </label>
                         <input type="text" name="tax_code" value="{{ old('tax_code') }}"
                             placeholder="{{ __('lang.enter_tax_code') }}"
                             class="w-full border @error('tax_code') border-red-500 @else border-gray-300 @enderror rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
@@ -44,8 +43,7 @@
                         @enderror
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.ateco') }} <span
-                                class="text-red-500">*</span></label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.ateco') }} </label>
                         <input type="text" name="ateco" value="{{ old('ateco') }}"
                             placeholder="{{ __('lang.enter_ateco_code') }}"
                             class="w-full border @error('ateco') border-red-500 @else border-gray-300 @enderror rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
@@ -65,7 +63,7 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.registered_office') }}
-                            <span class="text-red-500">*</span></label>
+                            </label>
                         <input type="text" name="registered_office" value="{{ old('registered_office') }}"
                             placeholder="{{ __('lang.enter_registered_office_address') }}"
                             class="w-full border @error('registered_office') border-red-500 @else border-gray-300 @enderror rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
@@ -81,8 +79,7 @@
                             class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.main_email') }} <span
-                                class="text-red-500">*</span></label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.main_email') }} </label>
                         <input type="email" name="main_email" value="{{ old('main_email') }}"
                             placeholder="company@example.com"
                             class="w-full border @error('main_email') border-red-500 @else border-gray-300 @enderror rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
@@ -103,8 +100,7 @@
                         @enderror
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.phone') }} <span
-                                class="text-red-500">*</span></label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.phone') }} </label>
                         <input type="tel" name="phone" value="{{ old('phone') }}" placeholder="+39 123 456 7890"
                             class="w-full border @error('phone') border-red-500 @else border-gray-300 @enderror rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
                         @error('phone')
@@ -118,7 +114,7 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.company_contact_person') }}
-                            <span class="text-red-500">*</span></label>
+                            </label>
                         <input type="text" name="company_contact_person" value="{{ old('company_contact_person') }}"
                             placeholder="{{ __('lang.enter_contact_person_name') }}"
                             class="w-full border @error('company_contact_person') border-red-500 @else border-gray-300 @enderror rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
@@ -131,8 +127,7 @@
                 <!-- Row 4 -->
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.employer') }} <span
-                                class="text-red-500">*</span></label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.employer') }} </label>
                         <input type="text" name="employer" value="{{ old('employer') }}"
                             placeholder="{{ __('lang.enter_employer_name') }}"
                             class="w-full border @error('employer') border-red-500 @else border-gray-300 @enderror rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
@@ -143,7 +138,7 @@
                     <div>
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.head_of_prevention_service') }}
-                            <span class="text-red-500">*</span></label>
+                            </label>
                         <input type="text" name="head_of_prevention" value="{{ old('head_of_prevention') }}"
                             placeholder="{{ __('lang.enter_head_of_prevention_name') }}"
                             class="w-full border @error('head_of_prevention') border-red-500 @else border-gray-300 @enderror rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
@@ -154,7 +149,7 @@
                     <div>
                         <label
                             class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.workers_safety_representative') }}
-                            <span class="text-red-500">*</span></label>
+                            </label>
                         <input type="text" name="workers_safety_representative"
                             value="{{ old('workers_safety_representative') }}"
                             placeholder="{{ __('lang.enter_safety_representative_name') }}"
@@ -164,8 +159,7 @@
                         @enderror
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.company_doctor') }} <span
-                                class="text-red-500">*</span></label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.company_doctor') }} </label>
                         <input type="text" name="company_doctor" value="{{ old('company_doctor') }}"
                             placeholder="{{ __('lang.enter_company_doctor_name') }}"
                             class="w-full border @error('company_doctor') border-red-500 @else border-gray-300 @enderror rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
@@ -207,7 +201,7 @@
 
                 <!-- External Professional Contacts -->
                 <div class="mb-6">
-                    <h3 class="text-sm font-semibold text-gray-800 mb-4">{{ __('lang.external_professional_contacts') }}*
+                    <h3 class="text-sm font-semibold text-gray-800 mb-4">{{ __('lang.external_professional_contacts') }}
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>

@@ -31,7 +31,8 @@
                             required>
                     </div>
                     <div>
-                        <input type="text" name="vat_number" value="{{ old('vat_number') }}" placeholder="{{ __('lang.vat_number') }}"
+                        <input type="text" name="vat_number" value="{{ old('vat_number') }}"
+                            placeholder="{{ __('lang.vat_number') }}"
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('vat_number') border-red-500 @enderror"
                             required>
                     </div>
@@ -40,12 +41,14 @@
                 <!-- Email and Phone Number -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <input type="email" name="email" value="{{ old('email') }}" placeholder="{{ __('lang.email_address') }}"
+                        <input type="email" name="email" value="{{ old('email') }}"
+                            placeholder="{{ __('lang.email_address') }}"
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('email') border-red-500 @enderror"
                             required>
                     </div>
                     <div>
-                        <input type="tel" name="phone" value="{{ old('phone') }}" placeholder="{{ __('lang.phone_number') }}"
+                        <input type="tel" name="phone" value="{{ old('phone') }}"
+                            placeholder="{{ __('lang.phone_number') }}"
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('phone') border-red-500 @enderror"
                             required>
                     </div>
@@ -87,20 +90,20 @@
                     <label class="block text-gray-600 font-medium mb-3">{{ __('lang.operating_headquarters') }}</label>
                     <div class="grid grid-cols-4 gap-4">
                         <div>
-                            <input type="text" name="operating_address_street" value="{{ old('operating_address_street') }}"
-                                placeholder="{{ __('lang.street') }}"
+                            <input type="text" name="operating_address_street"
+                                value="{{ old('operating_address_street') }}" placeholder="{{ __('lang.street') }}"
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('operating_address_street') border-red-500 @enderror"
                                 required>
                         </div>
                         <div>
-                            <input type="text" name="operating_address_number" value="{{ old('operating_address_number') }}"
-                                placeholder="{{ __('lang.no') }}"
+                            <input type="text" name="operating_address_number"
+                                value="{{ old('operating_address_number') }}" placeholder="{{ __('lang.no') }}"
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('operating_address_number') border-red-500 @enderror"
                                 required>
                         </div>
                         <div>
-                            <input type="text" name="operating_address_postal" value="{{ old('operating_address_postal') }}"
-                                placeholder="{{ __('lang.postal_code') }}"
+                            <input type="text" name="operating_address_postal"
+                                value="{{ old('operating_address_postal') }}" placeholder="{{ __('lang.postal_code') }}"
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('operating_address_postal') border-red-500 @enderror"
                                 required>
                         </div>
@@ -115,7 +118,8 @@
 
                 <!-- Owner Name -->
                 <div>
-                    <input type="text" name="owner_name" value="{{ old('owner_name') }}" placeholder="{{ __('lang.owner_name') }}"
+                    <input type="text" name="owner_name" value="{{ old('owner_name') }}"
+                        placeholder="{{ __('lang.owner_name') }}"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('owner_name') border-red-500 @enderror"
                         required>
                 </div>
@@ -140,7 +144,8 @@
                         class="w-4 h-4 text-blue-600 border border-gray-300 rounded focus:ring-blue-500 @error('terms') border-red-500 @enderror"
                         required>
                     <label for="terms" class="ml-2 text-sm text-gray-700">
-                        {{ __('lang.i_accept_the') }} <a href="#" class="text-red-500 hover:text-red-700 font-medium">{{ __('lang.license_terms') }}</a>
+                        {{ __('lang.i_accept_the') }} <a href="#"
+                            class="text-red-500 hover:text-red-700 font-medium">{{ __('lang.license_terms') }}</a>
                     </label>
                 </div>
 
@@ -151,7 +156,7 @@
                         {{ __('lang.cancel') }}
                     </a>
                     <button type="submit"
-                        class="flex-1 px-12 py-3 bg-[#0C3183] text-white rounded-lg font-semibold hover:bg-blue-800 transition duration-200">
+                        class="w-full bg-blue-900 text-white py-3 rounded-lg font-semibold hover:bg-blue-800 transition duration-200 shadow-md">
                         {{ __('lang.submit_registration') }}
                     </button>
                 </div>

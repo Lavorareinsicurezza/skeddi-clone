@@ -44,52 +44,15 @@ class CompanyController extends Controller
         $validated = $request->validate([
             'company_name' => 'required|string|max:255',
             'vat_number' => 'required|string|max:255|unique:companies,vat_number',
-            'tax_code' => 'required|string|max:255',
-            'ateco' => 'required|string|max:255',
-            'sdi' => 'nullable|string|max:255',
-            'registered_office' => 'required|string',
-            'operating_office' => 'nullable|string',
-            'main_email' => 'required|email|max:255',
-            'pec_email' => 'nullable|email|max:255',
-            'phone' => 'required|string|max:20',
-            'phone_2' => 'nullable|string|max:20',
-            'company_contact_person' => 'required|string|max:255',
-            'employer' => 'required|string|max:255',
-            'head_of_prevention' => 'required|string|max:255',
-            'workers_safety_representative' => 'required|string|max:255',
-            'company_doctor' => 'required|string|max:255',
-            'workplace_safety_risk' => 'nullable|string|max:255',
-            'subject_to_cpi' => 'nullable|boolean',
-            'rischio_antincendio' => 'nullable|string|max:255',
-            'accountant_name' => 'nullable|string|max:255',
-            'accountant_phone' => 'nullable|string|max:20',
-            'accountant_email' => 'nullable|email|max:255',
-            'labor_consultant_name' => 'nullable|string|max:255',
-            'labor_consultant_phone' => 'nullable|string|max:20',
-            'labor_consultant_email' => 'nullable|email|max:255',
-            'notes' => 'nullable|string',
-            'send_deadline_notification' => 'nullable|boolean',
-            'freeze_company' => 'nullable|boolean',
             'contacts' => 'required|array|min:1',
-            'contacts.*' => 'string|email',
+            'contacts.*' => 'string|email'
         ], [
             'company_name.required' => 'Company name is required.',
             'vat_number.required' => 'VAT number is required.',
             'vat_number.unique' => 'This VAT number is already registered.',
-            'tax_code.required' => 'Tax code is required.',
-            'ateco.required' => 'ATECO code is required.',
-            'registered_office.required' => 'Registered office address is required.',
-            'main_email.required' => 'Main email is required.',
-            'main_email.email' => 'Please enter a valid email address.',
-            'phone.required' => 'Phone number is required.',
-            'company_contact_person.required' => 'Company contact person is required.',
-            'employer.required' => 'Employer name is required.',
-            'head_of_prevention.required' => 'Head of Prevention and Protection Service is required.',
-            'workers_safety_representative.required' => 'Workers\' Safety Representative is required.',
-            'company_doctor.required' => 'Company doctor is required.',
             'contacts.required' => 'Please select at least one contact.',
-            'contacts.min' => 'Please select at least one contact.',
-            'pec_email.email' => 'Please enter a valid PEC email address.',
+            'contacts.min' => 'Please select at least one contact.'
+
         ]);
 
         // Map company_name to name field
@@ -98,10 +61,10 @@ class CompanyController extends Controller
         unset($data['company_name']);
 
         // Convert checkboxes to boolean (unchecked checkboxes don't submit, so we check for their presence)
-        $data['workplace_safety_risk'] = $request->workplace_safety_risk;
-        $data['subject_to_cpi'] = $request->has('subject_to_cpi');
-        $data['send_deadline_notification'] = $request->has('send_deadline_notification');
-        $data['freeze_company'] = $request->has('freeze_company');
+        $data['workplace_safety_risk'] = $request->workplace_safety_risk ?? null;
+        $data['subject_to_cpi'] = $request->has('subject_to_cpi') ?? null;
+        $data['send_deadline_notification'] = $request->has('send_deadline_notification') ?? null;
+        $data['freeze_company'] = $request->has('freeze_company') ?? null;
 
         // Add company_id from authenticated user
         $data['company_id'] = Auth::user()->company_id;
@@ -158,52 +121,14 @@ class CompanyController extends Controller
         $validated = $request->validate([
             'company_name' => 'required|string|max:255',
             'vat_number' => 'required|string|max:255|unique:companies,vat_number,' . $id,
-            'tax_code' => 'required|string|max:255',
-            'ateco' => 'required|string|max:255',
-            'sdi' => 'nullable|string|max:255',
-            'registered_office' => 'required|string',
-            'operating_office' => 'nullable|string',
-            'main_email' => 'required|email|max:255',
-            'pec_email' => 'nullable|email|max:255',
-            'phone' => 'required|string|max:20',
-            'phone_2' => 'nullable|string|max:20',
-            'company_contact_person' => 'required|string|max:255',
-            'employer' => 'required|string|max:255',
-            'head_of_prevention' => 'required|string|max:255',
-            'workers_safety_representative' => 'required|string|max:255',
-            'company_doctor' => 'required|string|max:255',
-            'workplace_safety_risk' => 'nullable|string|max:255',
-            'subject_to_cpi' => 'nullable|boolean',
-            'rischio_antincendio' => 'nullable|string|max:255',
-            'accountant_name' => 'nullable|string|max:255',
-            'accountant_phone' => 'nullable|string|max:20',
-            'accountant_email' => 'nullable|email|max:255',
-            'labor_consultant_name' => 'nullable|string|max:255',
-            'labor_consultant_phone' => 'nullable|string|max:20',
-            'labor_consultant_email' => 'nullable|email|max:255',
-            'notes' => 'nullable|string',
-            'send_deadline_notification' => 'nullable|boolean',
-            'freeze_company' => 'nullable|boolean',
             'contacts' => 'required|array|min:1',
-            'contacts.*' => 'string|email',
+            'contacts.*' => 'string|email'
         ], [
             'company_name.required' => 'Company name is required.',
             'vat_number.required' => 'VAT number is required.',
             'vat_number.unique' => 'This VAT number is already registered.',
-            'tax_code.required' => 'Tax code is required.',
-            'ateco.required' => 'ATECO code is required.',
-            'registered_office.required' => 'Registered office address is required.',
-            'main_email.required' => 'Main email is required.',
-            'main_email.email' => 'Please enter a valid email address.',
-            'phone.required' => 'Phone number is required.',
-            'company_contact_person.required' => 'Company contact person is required.',
-            'employer.required' => 'Employer name is required.',
-            'head_of_prevention.required' => 'Head of Prevention and Protection Service is required.',
-            'workers_safety_representative.required' => 'Workers\' Safety Representative is required.',
-            'company_doctor.required' => 'Company doctor is required.',
             'contacts.required' => 'Please select at least one contact.',
-            'contacts.min' => 'Please select at least one contact.',
-            'pec_email.email' => 'Please enter a valid PEC email address.',
+            'contacts.min' => 'Please select at least one contact.'
         ]);
 
         // Map company_name to name field

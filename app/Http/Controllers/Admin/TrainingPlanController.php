@@ -287,7 +287,7 @@ class TrainingPlanController extends Controller
                     return response()->json(['success' => false, 'message' => 'Training record not found'], 404);
                 }
 
-                $validityYears = $item->companyCourseType->validity_years ?? 1;
+                $validityYears = (float) $item->companyCourseType->validity_years ?? 1;
 
                 $previousExpiry = $item->expiration_date;
 
@@ -310,7 +310,7 @@ class TrainingPlanController extends Controller
                     return response()->json(['success' => false, 'message' => 'Course not found'], 404);
                 }
 
-                $validityYears = $item->validity_years ?? 1;
+                $validityYears = (float) $item->validity_years ?? 1;
 
                 $previousExpiry = $item->expiration_date;
 

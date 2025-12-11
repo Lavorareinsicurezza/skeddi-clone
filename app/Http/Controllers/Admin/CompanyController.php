@@ -10,6 +10,16 @@ use Illuminate\Support\Facades\Auth;
 use App\Exports\CompaniesExport;
 use App\Exports\CompaniesTemplateExport;
 use App\Imports\CompaniesImport;
+use App\Models\CompanyCourseType;
+use App\Models\CompanyVisitType;
+use App\Models\CourseRenewalLog;
+use App\Models\CourseType;
+use App\Models\Document;
+use App\Models\DocumentType;
+use App\Models\TrainingPlanDocument;
+use App\Models\TrainingPlanRecord;
+use App\Models\VisitType;
+use App\Models\Worker;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Validators\ValidationException;
 
@@ -70,6 +80,7 @@ class CompanyController extends Controller
             'labor_consultant_phone' => 'nullable|string|max:20',
             'labor_consultant_email' => 'nullable|email|max:255',
             'notes' => 'nullable|string',
+            'agent' => 'nullable|string',
             'send_deadline_notification' => 'nullable|boolean',
             'freeze_company' => 'nullable|boolean',
         ], [
@@ -147,6 +158,33 @@ class CompanyController extends Controller
         $validated = $request->validate([
             'company_name' => 'required|string|max:255',
             'vat_number' => 'required|string|max:255|unique:companies,vat_number,' . $id,
+            'tax_code' => 'nullable|string|max:255',
+            'ateco' => 'nullable|string|max:255',
+            'sdi' => 'nullable|string|max:255',
+            'registered_office' => 'nullable|string',
+            'operating_office' => 'nullable|string',
+            'main_email' => 'nullable|email|max:255',
+            'pec_email' => 'nullable|email|max:255',
+            'phone' => 'nullable|string|max:20',
+            'phone_2' => 'nullable|string|max:20',
+            'company_contact_person' => 'nullable|string|max:255',
+            'employer' => 'nullable|string|max:255',
+            'head_of_prevention' => 'nullable|string|max:255',
+            'workers_safety_representative' => 'nullable|string|max:255',
+            'company_doctor' => 'nullable|string|max:255',
+            'workplace_safety_risk' => 'nullable|string|max:255',
+            'subject_to_cpi' => 'nullable|boolean',
+            'rischio_antincendio' => 'nullable|string|max:255',
+            'accountant_name' => 'nullable|string|max:255',
+            'accountant_phone' => 'nullable|string|max:20',
+            'accountant_email' => 'nullable|email|max:255',
+            'labor_consultant_name' => 'nullable|string|max:255',
+            'labor_consultant_phone' => 'nullable|string|max:20',
+            'labor_consultant_email' => 'nullable|email|max:255',
+            'notes' => 'nullable|string',
+            'agent' => 'nullable|string',
+            'send_deadline_notification' => 'nullable|boolean',
+            'freeze_company' => 'nullable|boolean',
             'contacts' => 'required|array|min:1',
             'contacts.*' => 'string|email'
         ], [
@@ -178,7 +216,32 @@ class CompanyController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $company = Company::findOrFail($id);
+
+        // 1) Delete all related records
+        CourseType::where('company_id', $id)->delete();
+        CompanyCourseType::where('company_id', $id)->delete();
+        CompanyVisitType::where('company_id', $id)->delete();
+        CourseRenewalLog::where('company_id', $id)->delete();
+        DocumentType::where('company_id', $id)->delete();
+        Document::where('company_id', $id)->delete();
+        TrainingPlanRecord::where('company_id', $id)->delete();
+        TrainingPlanDocument::where('company_id', $id)->delete();
+        User::where('company_id', $id)->delete();
+        VisitType::where('company_id', $id)->delete();
+        Worker::where('company_id', $id)->delete();
+
+        // 2) Delete the company itself
+        $company->delete();
+
+        // Remove from session
+        session()->forget([
+            'selectedCompanyId',
+            'selectedCompanyName'
+        ]);
+
+        // 3) Return success message
+        return redirect()->back()->with('success', 'Company and all related data deleted successfully.');
     }
 
     /**

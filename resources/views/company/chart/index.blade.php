@@ -56,7 +56,7 @@
         @endif
 
         <!-- Addetti antincendio -->
-        @if (!empty($courseTypeFireFighter))
+        @if (!empty($courseTypeFireFighter) && isset($courseTypeFireFighter[0]->trainingPlanRecords))
             <div class="space-y-2">
                 <p class="font-medium text-gray-700">{{ __('lang.firefighting_staff') }}</p>
                 <div class="bg-white border border-gray-200 rounded-xl divide-y divide-gray-100 rounded-xl">

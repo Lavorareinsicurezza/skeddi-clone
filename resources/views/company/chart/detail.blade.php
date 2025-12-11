@@ -41,29 +41,31 @@
 
         <div class="flex flex-col md:flex-row justify-center items-center gap-[360px]">
             <!-- Bottom: Addetti antincendio -->
-            @if (!empty($courseTypeFireFighter))
-            <div class="bg-[#0C31831A] rounded-md shadow-sm px-10 py-6 text-center w-[360px]">
-                <p class="font-semibold text-lg text-gray-700">{{ __('lang.firefighting_staff') }}</p>
+            @if (!empty($courseTypeFireFighter) && isset($courseTypeFireFighter[0]->trainingPlanRrecords))
+                <div class="bg-[#0C31831A] rounded-md shadow-sm px-10 py-6 text-center w-[360px]">
+                    <p class="font-semibold text-lg text-gray-700">{{ __('lang.firefighting_staff') }}</p>
 
-                <div class="flex flex-col mt-2 space-y-1 text-gray-500">
-                    @foreach ($courseTypeFireFighter as $record)
-                        @foreach ($record->trainingPlanRecords as $plan)
-                            <span>{{ $plan->worker->first_name }} {{ $plan->worker->surname }}</span>
+                    <div class="flex flex-col mt-2 space-y-1 text-gray-500">
+                        @foreach ($courseTypeFireFighter as $record)
+                            @foreach ($record->trainingPlanRecords as $plan)
+                                <span>{{ $plan->worker->first_name }} {{ $plan->worker->surname }}</span>
+                            @endforeach
                         @endforeach
-                    @endforeach
+                    </div>
                 </div>
-            </div>
             @endif
-        <!-- Bottom: Addetti al primo soccorso -->
-        <div class="bg-[#0C31831A] rounded-md shadow-sm px-10 py-6 text-center w-[360px]">
-            <p class="font-semibold text-lg text-gray-700">{{ __('lang.first_aid_staff') }}</p>
+            <!-- Bottom: Addetti al primo soccorso -->
+            @isset($courseTypeAid->trainingPlanRecords)
+                <div class="bg-[#0C31831A] rounded-md shadow-sm px-10 py-6 text-center w-[360px]">
+                    <p class="font-semibold text-lg text-gray-700">{{ __('lang.first_aid_staff') }}</p>
 
-            <div class="flex flex-col mt-2 space-y-1 text-gray-500">
-                @foreach ($courseTypeAid->trainingPlanRecords as $record)
-                    <span>{{ $record->worker->first_name }} {{ $record->worker->surname }}</span>
-                @endforeach
-            </div>
-        </div>
+                    <div class="flex flex-col mt-2 space-y-1 text-gray-500">
+                        @foreach ($courseTypeAid->trainingPlanRecords as $record)
+                            <span>{{ $record->worker->first_name }} {{ $record->worker->surname }}</span>
+                        @endforeach
+                    </div>
+                </div>
+            @endisset
         </div>
 
     </div>

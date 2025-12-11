@@ -109,6 +109,8 @@ return [
     'email' => 'Email',
     'e-mail' => 'E-mail',
     'notes' => 'Notes',
+    'agent' => 'Agent',
+    'enter_agent_name' => 'Enter agent name',
     'send_deadline_notification' => 'Send Deadline Notification',
     'freeze_company' => 'Freeze Company',
     'contacts_select_at_least_one' => 'Contacts Select at least one',
@@ -156,6 +158,7 @@ return [
     'enter_additional_notes' => 'Enter any additional notes or comments',
     'option_2' => 'Option 2',
     'option_3' => 'Option 3',
+    'delete_company_confirm' => 'Are you sure you want to delete this company?',
 
     // --------------------------------------------------------------------------------------------------
     //                                 Company Management
@@ -422,4 +425,6 @@ return [
     'competent_doctor' => 'Competent Doctor',
     'first_aid_staff' => 'First Aid Staff',
     'firefighting_staff' => 'Firefighting Staff',
+
+    'select_a_company' => 'Select a company'
 ];

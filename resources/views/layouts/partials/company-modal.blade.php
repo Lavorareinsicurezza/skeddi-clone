@@ -9,7 +9,8 @@
             <!-- Modal Header -->
             <div class="flex items-center justify-between p-5">
                 <h3 class="text-2xl font-semibold pt-[50px] text-gray-900 w-full text-center">
-                    {{ __('lang.workplace_safety_medium_risk') }}
+                    {{ __('lang.select_a_company') }}
+                    <span class="text-gray-500" id="total-companies">(0)</span>
                 </h3>
                 <button type="button" onclick="closeCompanyModal()" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm h-8 w-8 inline-flex justify-center items-center">
                     <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -55,6 +56,7 @@ function loadCompanies() {
         .then(response => response.json())
         .then(data => {
             const companiesList = document.getElementById('companiesList');
+            document.getElementById('total-companies').innerHTML = `(${data.companies.length})`;
 
             if (data.companies && data.companies.length > 0) {
                 companiesList.innerHTML = data.companies.map(company => `

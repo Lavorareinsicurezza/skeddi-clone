@@ -1,18 +1,43 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <style>
-        body { font-family: sans-serif; }
-        table { width: 80%; margin: 20px auto; border-collapse: collapse; }
-        th, td { border: none; padding: 10px; text-align: center; }
-        th { background-color: #e9edf7; font-weight: bold; }
-        .title { text-align: center; font-size: 22px; font-weight: bold; margin-top: 20px; }
+        body {
+            font-family: sans-serif;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: none;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #e9edf7;
+            font-weight: bold;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
     </style>
 </head>
+
 <body>
 
     <!-- Top Title -->
-    <div class="title">Organigramma Azienda {{ $company->name}}</div>
+    <div class="title">Organigramma Azienda {{ $company->name }}</div>
 
     <!-- Employer Table -->
     <table>
@@ -37,32 +62,35 @@
     </table>
 
     <!-- First Aid Staff Table -->
+    @isset($courseTypeAid->trainingPlanRecords)
     <table>
         <tr>
             <th>{{ __('lang.first_aid_staff') }}</th>
         </tr>
-        @foreach ($courseTypeAid->trainingPlanRecords as $record)
-        <tr>
-            <td>{{ $record->worker->first_name }} {{ $record->worker->surname }}</td>
-        </tr>
-        @endforeach
-    </table>
-
-      <!-- Firefighting Staff Table -->
-    @if (!empty($firefighterWorkers))
-    <table>
-        <tr>
-            <th>{{ __('lang.firefighting_staff') }}</th>
-        </tr>
-        @foreach ($firefighterWorkers as $record)
-            @foreach ($record->trainingPlanRecords as $plan)
-            <tr>
-                <td>{{ $plan->worker->first_name }} {{ $plan->worker->surname }}</td>
-            </tr>
+            @foreach ($courseTypeAid->trainingPlanRecords as $record)
+                <tr>
+                    <td>{{ $record->worker->first_name }} {{ $record->worker->surname }}</td>
+                </tr>
             @endforeach
-        @endforeach
-    </table>
+        </table>
+        @endisset
+
+    <!-- Firefighting Staff Table -->
+    @if (!empty($firefighterWorkers) && isset($firefighterWorkers[0]->trainingPlanRecords))
+        <table>
+            <tr>
+                <th>{{ __('lang.firefighting_staff') }}</th>
+            </tr>
+            @foreach ($firefighterWorkers as $record)
+                @foreach ($record->trainingPlanRecords as $plan)
+                    <tr>
+                        <td>{{ $plan->worker->first_name }} {{ $plan->worker->surname }}</td>
+                    </tr>
+                @endforeach
+            @endforeach
+        </table>
     @endif
 
 </body>
+
 </html>

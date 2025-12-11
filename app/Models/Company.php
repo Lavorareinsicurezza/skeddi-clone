@@ -41,6 +41,7 @@ class Company extends Model
         'labor_consultant_phone',
         'labor_consultant_email',
         'notes',
+        'agent',
         'send_deadline_notification',
         'freeze_company',
         'contacts',

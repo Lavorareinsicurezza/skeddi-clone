@@ -90,7 +90,8 @@ return [
     'pec_email' => 'PEC (email certificata)',
     'phone' => 'Telefono',
     'phone_2' => 'Telefono 2',
-    'company_contact_person' => 'Persona di contatto aziendale',
+    // 'company_contact_person' => 'Persona di contatto aziendale',
+    'company_contact_person' => 'Referente',
     'employer' => 'Datore di lavoro',
     'head_of_prevention_service' => 'Responsabile del Servizio di Prevenzione e Protezione',
     'head_of_prevention' => 'Responsabile del Servizio di Prevenzione e Protezione',
@@ -109,6 +110,8 @@ return [
     'email' => 'Email',
     'e-mail' => 'E-mail',
     'notes' => 'Nota',
+    'agent' => 'Agente',
+    'enter_agent_name' => 'Inserisci il nome dell\'agente',
     'send_deadline_notification' => 'Invia Notifica di Scadenza',
     'freeze_company' => 'Congelare la compagnia',
     'contacts_select_at_least_one' => 'Selezionare almeno uno',
@@ -156,6 +159,7 @@ return [
     'enter_additional_notes' => 'Inserisci eventuali note o commenti aggiuntivi',
     'option_2' => 'Opzione 2',
     'option_3' => 'Opzione 3',
+    'delete_company_confirm' => 'Sei sicuro di voler eliminare questa azienda?',
 
     // --------------------------------------------------------------------------------------------------
     //                                 Company Management
@@ -425,4 +429,6 @@ return [
     'competent_doctor' => 'Dottore competente',
     'first_aid_staff' => 'Addetti al primo soccorso',
     'firefighting_staff' => 'Addetti antincendio',
+
+    'select_a_company' => "Seleziona un'azienda"
 ];

@@ -3,13 +3,15 @@
 @section('content')
 
     @if (session('success'))
-        <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative flash-message-box" role="alert">
+        <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative flash-message-box"
+            role="alert">
             <span class="block sm:inline">{{ session('success') }}</span>
         </div>
     @endif
 
     @if (session('error'))
-        <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative flash-message-box" role="alert">
+        <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative flash-message-box"
+            role="alert">
             <span class="block sm:inline">{!! session('error') !!}</span>
         </div>
     @endif
@@ -19,15 +21,18 @@
 
         <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden shadow-sm">
             <a href="{{ route('admin.companies.export') }}"
-                class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm border-r border-gray-200 flex" title="{{ __('lang.export_data') }}">
+                class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm border-r border-gray-200 flex"
+                title="{{ __('lang.export_data') }}">
                 <i class="text-gray-500 fa fa-download"></i>
             </a>
             <button onclick="document.getElementById('importModal').classList.remove('hidden')"
-                class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm border-r border-gray-200 flex" title="{{ __('lang.import_data') }}">
+                class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm border-r border-gray-200 flex"
+                title="{{ __('lang.import_data') }}">
                 <i class="text-gray-500 fa fa-upload"></i>
             </button>
             <a href="{{ route('admin.companies.create') }}"
-                class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm flex" title="{{ __('lang.create_company') }}">
+                class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm flex"
+                title="{{ __('lang.create_company') }}">
                 <i class="text-gray-500 fa fa-plus"></i>
             </a>
         </div>
@@ -66,8 +71,7 @@
                         class="bg-gray-500 text-white px-6 py-2.5 rounded-lg hover:bg-gray-600">
                         {{ __('lang.cancel') }}
                     </button>
-                    <button type="submit"
-                        class="bg-[#0C3183] text-white px-6 py-2.5 rounded-lg hover:bg-[#0a2766]">
+                    <button type="submit" class="bg-[#0C3183] text-white px-6 py-2.5 rounded-lg hover:bg-[#0a2766]">
                         {{ __('lang.import') }}
                     </button>
                 </div>
@@ -110,7 +114,7 @@
                                 {{ $company->vat_number }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ $company->tax_code}}
+                                {{ $company->tax_code }}
                             </td>
                             <td class="px-6 py-4">
                                 <a href="{{ route('admin.companies.show', $company->id) }}"
@@ -123,6 +127,17 @@
                                     title="{{ __('lang.edit') }}">
                                     <i class="fa fa-edit"></i>
                                 </a>
+                                <form action="{{ route('admin.companies.destroy', $company->id) }}" method="POST"
+                                    class="inline-block ml-2"
+                                    onsubmit="return confirm('{{ __('lang.delete_company_confirm') }}');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="font-medium text-red-500 p-2 hover:bg-red-50 border border-gray-200 rounded-[10px]"
+                                        title="{{ __('lang.actions') }}">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
                                 {{-- <a href="#"
                                     class="font-medium text-red-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]">
                                     <i class="fa fa-trash"></i>
@@ -142,9 +157,14 @@
         </table>
     </div>
 
-      <div class="mt-6 flex justify-end">
+    <div class="mt-6 flex justify-end">
         {{ $companies->onEachSide(1)->links('pagination::tailwind') }}
     </div>
 
-
+    @if (session('success') && session('success') == 'Company and all related data deleted successfully.')
+        <script>
+            localStorage.removeItem('selectedCompanyId');
+            localStorage.removeItem('selectedCompanyName');
+        </script>
+    @endif
 @endsection

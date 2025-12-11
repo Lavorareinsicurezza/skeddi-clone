@@ -424,6 +424,21 @@
                     </div>
                 </div>
 
+                @if(!empty($company->agent))
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="bg-gradient-to-r from-gray-600 to-gray-700 px-4 py-3">
+                        <h2 class="text-base font-semibold flex items-center gap-2">
+                            <i class="fa fa-user-tie"></i>
+                            {{ __('lang.agent') }}
+                        </h2>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-gray-900 text-sm">{{ $company->agent }}</p>
+                    </div>
+                </div>
+                @endif
+
+
             </div>
 
         </div>

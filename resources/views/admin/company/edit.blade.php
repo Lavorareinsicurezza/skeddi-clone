@@ -230,6 +230,11 @@
                     class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent resize-none">{{ old('notes', $company->notes) }}</textarea>
             </div>
 
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.agent') }}</label>
+                <input type="text" name="agent" value="{{ old('agent', $company->agent) }}" placeholder="{{ __('lang.enter_agent_name') }}"
+                    class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
+            </div>
             <!-- Notification and Freeze Options -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 <div>

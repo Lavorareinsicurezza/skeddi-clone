@@ -77,7 +77,7 @@
                 <!-- Functions Section -->
                 <div class="mb-8">
                     <h3 class="text-sm font-semibold text-gray-900 mb-4">{{ __('lang.functions') }}</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <!-- Company & RSVP -->
                         <div>
                             <label
@@ -88,20 +88,6 @@
                                 </div>
                                 <input type="checkbox" name="functions[]" value="company_rsvp"
                                     {{ in_array('company_rsvp', old('functions', $user->functions ?? [])) ? 'checked' : '' }}
-                                    class="w-6 h-6 appearance-none bg-white border-2 border-gray-400 rounded-full cursor-pointer checked:border-[5px] checked:border-[#0C3183]  flex-shrink-0 mt-1">
-                            </label>
-                        </div>
-
-                        <!-- PPE -->
-                        <div>
-                            <label
-                                class="border border-gray-300 rounded-lg px-4 py-3 flex items-start justify-between cursor-pointer hover:bg-gray-50 has-[:checked]:border-[#0C3183] has-[:checked]:bg-blue-50 h-full">
-                                <div class="flex-1">
-                                    <span class="text-sm font-medium text-gray-900 block">{{ __('lang.ppe') }}</span>
-                                    <span class="text-xs text-gray-500 mt-1 block">{{ __('lang.ppe_requires_workers_right') }}</span>
-                                </div>
-                                <input type="checkbox" name="functions[]" value="ppe"
-                                    {{ in_array('ppe', old('functions', $user->functions ?? [])) ? 'checked' : '' }}
                                     class="w-6 h-6 appearance-none bg-white border-2 border-gray-400 rounded-full cursor-pointer checked:border-[5px] checked:border-[#0C3183]  flex-shrink-0 mt-1">
                             </label>
                         </div>
@@ -134,16 +120,6 @@
                             </label>
                         </div>
 
-                        <!-- Inspections -->
-                        <div>
-                            <label
-                                class="border border-gray-300 rounded-lg px-4 py-3 flex items-center justify-between cursor-pointer hover:bg-gray-50 has-[:checked]:border-[#0C3183] has-[:checked]:bg-blue-50 h-full">
-                                <span class="text-sm font-medium text-gray-900">{{ __('lang.inspections') }}</span>
-                                <input type="checkbox" name="functions[]" value="inspections"
-                                    {{ in_array('inspections', old('functions', $user->functions ?? [])) ? 'checked' : '' }}
-                                    class="w-6 h-6 appearance-none bg-white border-2 border-gray-400 rounded-full cursor-pointer checked:border-[5px] checked:border-[#0C3183] ">
-                            </label>
-                        </div>
 
                         <!-- Workers -->
                         <div>
@@ -167,16 +143,6 @@
                             </label>
                         </div>
 
-                        <!-- Maintenance -->
-                        <div>
-                            <label
-                                class="border border-gray-300 rounded-lg px-4 py-3 flex items-center justify-between cursor-pointer hover:bg-gray-50 has-[:checked]:border-[#0C3183] has-[:checked]:bg-blue-50 h-full">
-                                <span class="text-sm font-medium text-gray-900">{{ __('lang.maintenance') }}</span>
-                                <input type="checkbox" name="functions[]" value="maintenance"
-                                    {{ in_array('maintenance', old('functions', $user->functions ?? [])) ? 'checked' : '' }}
-                                    class="w-6 h-6 appearance-none bg-white border-2 border-gray-400 rounded-full cursor-pointer checked:border-[5px] checked:border-[#0C3183] ">
-                            </label>
-                        </div>
                     </div>
                 </div>
 

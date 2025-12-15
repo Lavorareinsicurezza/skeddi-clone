@@ -430,5 +430,16 @@ return [
     'first_aid_staff' => 'Addetti al primo soccorso',
     'firefighting_staff' => 'Addetti antincendio',
 
-    'select_a_company' => "Seleziona un'azienda"
+    'select_a_company' => "Seleziona un'azienda",
+
+    // --------------------------------------------------------------------------------------------------
+    //                                 Expiry mail
+    // --------------------------------------------------------------------------------------------------
+    'dear_user' => 'Caro :name,',
+    'one_month' => 'Questo è un promemoria che il seguente :module scadrà tra un mese.',
+    'one_week' => 'Si prega di notare che il seguente :module scadrà tra una settimana.',
+    'last_day' => 'Importante: il seguente :module scade oggi.',
+    'recommendation' => 'Si consiglia di prendere le misure necessarie per rinnovare o aggiornare questo :module prima della data di scadenza.',
+    'contact_support' => 'Se avete domande, non esitate a contattare il nostro team di supporto.',
+    'best_regards' => 'Cordiali saluti,',
 ];

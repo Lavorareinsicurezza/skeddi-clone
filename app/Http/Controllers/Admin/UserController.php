@@ -82,8 +82,10 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
+        $companies = Company::company()->get();
+
         $user = User::with('company')->findOrFail($id);
-        return view('admin.user.show', compact('user'));
+        return view('admin.user.show', compact('user', 'companies'));
     }
 
     /**

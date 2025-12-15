@@ -426,5 +426,16 @@ return [
     'first_aid_staff' => 'First Aid Staff',
     'firefighting_staff' => 'Firefighting Staff',
 
-    'select_a_company' => 'Select a company'
+    'select_a_company' => 'Select a company',
+
+    // --------------------------------------------------------------------------------------------------
+    //                                 Expiry mail
+    // --------------------------------------------------------------------------------------------------
+    'dear_user' => 'Dear :name,',
+    'one_month' => 'This is a friendly reminder that the following :module will expire in one month.',
+    'one_week' => 'Please note that the following :module will expire in one week.',
+    'last_day' => 'Important: The following :module is expiring today.',
+    'recommendation' => 'We recommend taking the necessary action to renew or update this :module before the expiry date.',
+    'contact_support' => 'If you have any questions, please feel free to contact our support team.',
+    'best_regards' => 'Best regards,',
 ];

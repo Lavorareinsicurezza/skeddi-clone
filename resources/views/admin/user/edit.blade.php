@@ -193,10 +193,12 @@
                             </div>
                             <div class="h-[10rem] overflow-y-auto space-y-1 custom-scrollbar">
                                 @foreach ($companies as $company)
-                                    <label class="flex items-center gap-3 cursor-pointer has-[:checked]:border has-[:checked]:border-[#0C3183] p-2 has-[:checked]:rounded-lg has-[:checked]:bg-blue-50">
-                                        <input type="checkbox" name="visible_company[]" value="{{ $company->id }}"
-                                            {{ in_array($company->id, old('visible_company', $user->visible_company_ids ?? [])) ? 'checked' : '' }}
-                                            class="w-6 h-6 appearance-none bg-white border-2 border-gray-400 rounded-full cursor-pointer checked:border-[5px] checked:border-[#0C3183] ">
+                                    <label
+                                        class="flex items-center gap-3 p-2">
+                                        {{-- <input disabled type="checkbox" name="visible_company[]" value="{{ $company->id }}"
+                                            {{ in_array($company->id, old('visible_company', [])) ? 'checked' : '' }} --}}
+                                            <p class="w-4 h-4 appearance-none bg-white border-[3px] border-gray-400 rounded-full ">
+                                                </p>
                                         <span class="text-sm text-gray-900">{{ $company->name }}</span>
                                     </label>
                                 @endforeach

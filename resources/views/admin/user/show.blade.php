@@ -28,7 +28,8 @@
 
             <!-- Status Badge -->
             <div class="flex gap-3 mt-4">
-                <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-4 py-2 rounded-full flex items-center gap-2">
+                <span
+                    class="bg-blue-100 text-blue-800 text-xs font-semibold px-4 py-2 rounded-full flex items-center gap-2">
                     <i class="fa fa-user-tag"></i>
                     {{ ucfirst($user->role) }}
                 </span>
@@ -56,7 +57,8 @@
                                     <i class="fa fa-envelope text-[#0C3183]"></i>
                                 </div>
                                 <div>
-                                    <p class="text-xs text-gray-500 uppercase font-medium mb-1">{{ __('lang.email_address') }}</p>
+                                    <p class="text-xs text-gray-500 uppercase font-medium mb-1">
+                                        {{ __('lang.email_address') }}</p>
                                     <p class="text-gray-900 font-semibold break-all">{{ $user->email }}</p>
                                 </div>
                             </div>
@@ -76,7 +78,8 @@
                                     <i class="fa fa-building text-[#0C3183]"></i>
                                 </div>
                                 <div>
-                                    <p class="text-xs text-gray-500 uppercase font-medium mb-1">{{ __('lang.company_name') }}</p>
+                                    <p class="text-xs text-gray-500 uppercase font-medium mb-1">
+                                        {{ __('lang.company_name') }}</p>
                                     <p class="text-gray-900 font-semibold">{{ $user->company->name ?? '-' }}</p>
                                 </div>
                             </div>
@@ -86,7 +89,8 @@
                                     <i class="fa fa-calendar text-[#0C3183]"></i>
                                 </div>
                                 <div>
-                                    <p class="text-xs text-gray-500 uppercase font-medium mb-1">{{ __('lang.created_at') }}</p>
+                                    <p class="text-xs text-gray-500 uppercase font-medium mb-1">{{ __('lang.created_at') }}
+                                    </p>
                                     <p class="text-gray-900 font-semibold">{{ $user->created_at->format('M d, Y') }}</p>
                                 </div>
                             </div>
@@ -103,12 +107,13 @@
                         </h2>
                     </div>
                     <div class="p-6">
-                        @if($user->functions && count($user->functions) > 0)
+                        @if ($user->functions && count($user->functions) > 0)
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                @foreach($user->functions as $function)
+                                @foreach ($user->functions as $function)
                                     <div class="flex items-center gap-2 bg-green-50 text-green-700 px-4 py-3 rounded-lg">
                                         <i class="fa fa-check-circle text-sm"></i>
-                                        <span class="text-sm font-medium">{{ str_replace('_', ' ', ucfirst($function)) }}</span>
+                                        <span
+                                            class="text-sm font-medium">{{ str_replace('_', ' ', ucfirst($function)) }}</span>
                                     </div>
                                 @endforeach
                             </div>
@@ -122,25 +127,26 @@
                 </div>
 
                 <!-- Administration Functions Card -->
-                @if($user->admin_functions && count($user->admin_functions) > 0)
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-                    <div class="bg-gradient-to-r from-orange-600 to-orange-700 px-6 py-4">
-                        <h2 class="text-lg font-semibold flex items-center gap-2">
-                            <i class="fa fa-shield-alt"></i>
-                            {{ __('lang.administration_functions') }}
-                        </h2>
-                    </div>
-                    <div class="p-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            @foreach($user->admin_functions as $function)
-                                <div class="flex items-center gap-2 bg-orange-50 text-orange-700 px-4 py-3 rounded-lg">
-                                    <i class="fa fa-check-circle text-sm"></i>
-                                    <span class="text-sm font-medium">{{ str_replace('_', ' ', ucfirst($function)) }}</span>
-                                </div>
-                            @endforeach
+                @if ($user->admin_functions && count($user->admin_functions) > 0)
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="bg-gradient-to-r from-orange-600 to-orange-700 px-6 py-4">
+                            <h2 class="text-lg font-semibold flex items-center gap-2">
+                                <i class="fa fa-shield-alt"></i>
+                                {{ __('lang.administration_functions') }}
+                            </h2>
+                        </div>
+                        <div class="p-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                @foreach ($user->admin_functions as $function)
+                                    <div class="flex items-center gap-2 bg-orange-50 text-orange-700 px-4 py-3 rounded-lg">
+                                        <i class="fa fa-check-circle text-sm"></i>
+                                        <span
+                                            class="text-sm font-medium">{{ str_replace('_', ' ', ucfirst($function)) }}</span>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endif
 
             </div>
@@ -157,18 +163,13 @@
                         </h2>
                     </div>
                     <div class="p-6">
-                        @if($user->visible_company_ids && count($user->visible_company_ids) > 0)
+                        @if ($companies->count() > 0)
                             <div class="space-y-2">
-                                @foreach($user->visible_company_ids as $companyId)
-                                    @php
-                                        $company = \App\Models\Company::find($companyId);
-                                    @endphp
-                                    @if($company)
-                                        <div class="flex items-center gap-2 bg-indigo-50 text-indigo-700 px-4 py-3 rounded-lg">
-                                            <i class="fa fa-building text-sm"></i>
-                                            <span class="text-sm font-medium">{{ $company->name }}</span>
-                                        </div>
-                                    @endif
+                                @foreach ($companies as $company)
+                                    <div class="flex items-center gap-2 bg-indigo-50 text-indigo-700 px-4 py-3 rounded-lg">
+                                        <i class="fa fa-building text-sm"></i>
+                                        <span class="text-sm font-medium">{{ $company->name }}</span>
+                                    </div>
                                 @endforeach
                             </div>
                         @else

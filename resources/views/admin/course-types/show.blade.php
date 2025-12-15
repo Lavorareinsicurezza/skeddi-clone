@@ -25,7 +25,7 @@
                     <p class="text-gray-900 text-base">{{ $courseType->validity_year }}</p>
                 </div>
 
-                <!-- Generic -->
+                {{-- <!-- Generic -->
                 <div>
                     <label class="block text-sm font-medium text-gray-500 mb-2">{{ __('lang.generic') }}</label>
                     <p class="text-gray-900 text-base">{{ $courseType->generic ?? 'N/A' }}</p>
@@ -35,7 +35,7 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-500 mb-2">{{ __('lang.expiration') }}</label>
                     <p class="text-gray-900 text-base">{{ $courseType->expiration ? $courseType->expiration->format('d/m/Y') : 'N/A' }}</p>
-                </div>
+                </div> --}}
 
                 <!-- Notes -->
                 <div class="md:col-span-2">

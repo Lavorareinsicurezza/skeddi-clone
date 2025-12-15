@@ -18,6 +18,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\CompanyVisitController;
 use App\Http\Controllers\DashboardController;
+use Illuminate\Support\Facades\Artisan;
 use PhpOffice\PhpSpreadsheet\Chart\Chart;
 
 // Public routes
@@ -110,3 +111,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
 
 });
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/run-expiry-comand', function(){
+    Artisan::call('expiry:check-and-mail');
+    return 'Done';
+});

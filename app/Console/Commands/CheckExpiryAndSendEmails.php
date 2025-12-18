@@ -35,9 +35,9 @@ class CheckExpiryAndSendEmails extends Command
         $this->info('Expiry check started...');
 
         $this->checkTrainingPlans();
-        $this->checkCourses();
-        $this->checkDocuments();
-        $this->checkVisits();
+        // $this->checkCourses();
+        // $this->checkDocuments();
+        // $this->checkVisits();
 
         $this->info('Expiry check completed.');
     }
@@ -61,12 +61,13 @@ class CheckExpiryAndSendEmails extends Command
 
         Log::info('Days until expiry: ' . $days);
 
+        // 3 months = approx 90 days
+        if ($days == 90) return 'three_months';
         if ($days == 30) return 'one_month';
-        if ($days == 7)  return 'one_week';
-        if ($days == 0)  return 'last_day';
 
         return null;
     }
+
 
     private function sendMailAndLog($module, $record, $expiryDate)
     {
@@ -125,9 +126,8 @@ class CheckExpiryAndSendEmails extends Command
         ])->render();
 
         $subjectMap = [
-            'one_month' => ucfirst(str_replace('_', ' ', $module)) . " Expiry Reminder – 1 Month Remaining",
-            'one_week'  => ucfirst(str_replace('_', ' ', $module)) . " Expiry Reminder – 1 Week Remaining",
-            'last_day'  => ucfirst(str_replace('_', ' ', $module)) . " Expiring Today",
+            'three_months' => ucfirst(str_replace('_', ' ', $module)) . " Expiry Reminder – 3 Months Remaining",
+            'one_month'    => ucfirst(str_replace('_', ' ', $module)) . " Expiry Reminder – 1 Month Remaining",
         ];
 
         for ($i = 0; $i < count($contacts); $i++) {

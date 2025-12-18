@@ -49,7 +49,7 @@
                                 </tr>
                                 @if (isset($record->worker))
                                     <tr>
-                                        <td><strong>{{ __('lang.employee') }}</strong></td>
+                                        <td><strong>{{ __('lang.worker') }}</strong></td>
                                         <td>{{ $record->worker->first_name ?? '' }}
                                             {{ $record->worker->surname ?? '' }}</td>
                                     </tr>

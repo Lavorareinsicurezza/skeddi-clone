@@ -105,6 +105,8 @@
 
                                     // Unique row id for hide/show
                                     $rowId = "row-" . $worker->id . "-" . $courseType->id;
+                                    $trainingInputId = "training-" . $worker->id . "-" . $courseType->id;
+                                    $expirationInputId = "expiration-" . $worker->id . "-" . $courseType->id;
                                 @endphp
 
                                 <!-- TRAINING + EXPIRATION MERGED LAYOUT -->
@@ -179,12 +181,16 @@
 
                                                 <!-- Training Date -->
                                                 <input type="date"
+                                                    id="{{ $trainingInputId }}"
                                                     name="records[{{ $worker->id }}_{{ $courseType->id }}][training_date]"
                                                     value="{{ $record ? $record->training_date?->format('Y-m-d') : '' }}"
-                                                    class="px-2 py-1 text-xs border-0 border-b-2 border-gray-300">
+                                                    class="training-date-input px-2 py-1 text-xs border-0 border-b-2 border-gray-300"
+                                                    data-validity-years="{{ $courseType->validity_years ?? 0 }}"
+                                                    data-expiration-target="{{ $expirationInputId }}">
 
                                                 <!-- Expiration Date -->
                                                 <input type="date"
+                                                    id="{{ $expirationInputId }}"
                                                     name="records[{{ $worker->id }}_{{ $courseType->id }}][expiration_date]"
                                                     value="{{ $record ? $record->expiration_date?->format('Y-m-d') : '' }}"
                                                     class="px-2 py-1 text-xs border-0 border-b-2 border-gray-300">
@@ -330,9 +336,26 @@
             }
         }
 
-        document.addEventListener("DOMContentLoaded", function () {
-            document.querySelectorAll(".toBeScheduledCheckbox").forEach(chk => {
+        // Calculate expiration date based on training date and validity years
+        function calculateExpirationDate(trainingDate, validityYears) {
+            if (!trainingDate || !validityYears || validityYears == 0) {
+                return '';
+            }
 
+            const date = new Date(trainingDate);
+            date.setFullYear(date.getFullYear() + parseInt(validityYears));
+
+            // Format as YYYY-MM-DD for input[type="date"]
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+
+            return `${year}-${month}-${day}`;
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Handle "To Be Scheduled" checkbox
+            document.querySelectorAll(".toBeScheduledCheckbox").forEach(chk => {
                 function toggleDates() {
                     let targetId = chk.dataset.target;
                     let dateRow = document.getElementById(targetId);
@@ -347,6 +370,20 @@
 
                 chk.addEventListener("change", toggleDates);
                 toggleDates(); // run on load
+            });
+
+            // Handle automatic expiration date calculation
+            document.querySelectorAll('.training-date-input').forEach(input => {
+                input.addEventListener('change', function() {
+                    const validityYears = this.dataset.validityYears;
+                    const expirationTargetId = this.dataset.expirationTarget;
+                    const expirationInput = document.getElementById(expirationTargetId);
+
+                    if (expirationInput && this.value) {
+                        const expirationDate = calculateExpirationDate(this.value, validityYears);
+                        expirationInput.value = expirationDate;
+                    }
+                });
             });
         });
 

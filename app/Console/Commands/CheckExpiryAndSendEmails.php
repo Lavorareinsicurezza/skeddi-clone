@@ -130,11 +130,11 @@ class CheckExpiryAndSendEmails extends Command
             'one_month'    => ucfirst(str_replace('_', ' ', $module)) . " Expiry Reminder – 1 Month Remaining",
         ];
 
-        for ($i = 0; $i < count($contacts); $i++) {
+        // for ($i = 0; $i < count($contacts); $i++) {
 
             $email = (new Email())
                 ->from($setting->smtp_address)
-                ->to($contacts[$i]) // <-- send to all company contacts
+                ->to($recieverCompany->main_email) // <-- send to all company contacts
                 ->subject($subjectMap[$mailType] ?? 'Expiry Reminder')
                 ->html($html);
 
@@ -150,7 +150,7 @@ class CheckExpiryAndSendEmails extends Command
                 Log::error('Email sending failed for record: ' . $record->id . '. Error: ' . $e->getMessage());
                 return;
             }
-        }
+        // }
         // Log entry to prevent duplicate mails
         DB::table('expiry_mail_logs')->insert([
             'module'     => $module,

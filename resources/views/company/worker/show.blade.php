@@ -5,10 +5,12 @@
     <div class="mb-6 flex items-center justify-between">
         <h1 class="text-3xl font-bold text-gray-900">{{ __('lang.worker') }} {{ __('lang.view') }}</h1>
         <div class="flex gap-3">
-            <a href="{{ route('admin.company-workers.edit', $worker->id) }}"
-                class="px-6 py-3 bg-[#0C3183] text-white rounded-lg hover:bg-[#0A2869] font-medium">
-                {{ __('lang.edit') }}
-            </a>
+            @can('edit company-workers')
+                <a href="{{ route('admin.company-workers.edit', $worker->id) }}"
+                    class="px-6 py-3 bg-[#0C3183] text-white rounded-lg hover:bg-[#0A2869] font-medium">
+                    {{ __('lang.edit') }}
+                </a>
+            @endcan
             <a href="{{ route('admin.company-workers.index') }}"
                 class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium">
                 {{ __('lang.back') }}
@@ -49,19 +51,21 @@
         <div class="mb-6">
             <label class="block text-sm font-medium text-gray-500 mb-1">{{ __('lang.workplace_safety_risk') }}</label>
             <p class="text-gray-900">
-                @if($worker->workplace_safety_risk)
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                @if ($worker->workplace_safety_risk)
+                    <span
+                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
                         {{ __('lang.yes') }}
                     </span>
                 @else
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                    <span
+                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                         {{ __('lang.no') }}
                     </span>
                 @endif
             </p>
         </div>
 
-        @if($worker->workplace_safety_risk)
+        @if ($worker->workplace_safety_risk)
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <!-- Workplace Safety Risk Note -->
                 <div>
@@ -72,10 +76,9 @@
                 <!-- Workplace Safety Risk Document -->
                 <div>
                     <label class="block text-sm font-medium text-gray-500 mb-1">{{ __('lang.add_new_document') }}</label>
-                    @if($worker->workplace_safety_risk_document)
-                        <a href="{{ asset('storage/' . $worker->workplace_safety_risk_document) }}"
-                           target="_blank"
-                           class="inline-flex items-center gap-2 text-[#0C3183] hover:text-[#0A2869] font-medium">
+                    @if ($worker->workplace_safety_risk_document)
+                        <a href="{{ asset('storage/' . $worker->workplace_safety_risk_document) }}" target="_blank"
+                            class="inline-flex items-center gap-2 text-[#0C3183] hover:text-[#0A2869] font-medium">
                             <i class="fa fa-file-pdf"></i>
                             {{ basename($worker->workplace_safety_risk_document) }}
                             <i class="fa fa-external-link text-xs"></i>
@@ -91,12 +94,14 @@
         <div class="mb-6">
             <label class="block text-sm font-medium text-gray-500 mb-1">{{ __('lang.active') }}</label>
             <p class="text-gray-900">
-                @if($worker->is_active)
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                @if ($worker->is_active)
+                    <span
+                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                         {{ __('lang.in_force') }}
                     </span>
                 @else
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                    <span
+                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
                         {{ __('lang.no_longer_in_force') }}
                     </span>
                 @endif

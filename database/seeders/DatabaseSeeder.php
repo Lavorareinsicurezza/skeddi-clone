@@ -27,5 +27,8 @@ class DatabaseSeeder extends Seeder
             'role' => 'superadmin',
             'company_id' => 1,
         ]);
+
+        // Seed permissions & roles
+        $this->call(PermissionSeeder::class);
     }
 }

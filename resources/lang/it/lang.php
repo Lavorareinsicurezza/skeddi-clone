@@ -167,6 +167,7 @@ return [
 
     'role_list' => 'RUOLO',
     'role' => 'Ruolo',
+    'roles' => 'Ruoli',
 
     // --------------------------------------------------------------------------------------------------
     //                                 User Management
@@ -200,6 +201,7 @@ return [
     'no_functions_assigned' => 'Nessuna funzione assegnata',
     'no_companies_assigned' => 'Nessuna azienda assegnata',
     'created_at' => 'Creato Il',
+    'enter_password' => 'Inserisci password',
 
     // --------------------------------------------------------------------------------------------------
     //                                 Course Types
@@ -442,4 +444,6 @@ return [
     'recommendation' => 'Si consiglia di prendere le misure necessarie per rinnovare o aggiornare questo :module prima della data di scadenza.',
     'contact_support' => 'Se avete domande, non esitate a contattare il nostro team di supporto.',
     'best_regards' => 'Cordiali saluti,',
+
+    'permissions' => 'Permessi',
 ];

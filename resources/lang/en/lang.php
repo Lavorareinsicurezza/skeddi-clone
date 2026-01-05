@@ -166,6 +166,7 @@ return [
 
     'role_list' => 'ROLE',
     'role' => 'Role',
+    'roles' => 'Roles',
 
     // --------------------------------------------------------------------------------------------------
     //                                 User Management
@@ -199,6 +200,7 @@ return [
     'no_functions_assigned' => 'No functions assigned',
     'no_companies_assigned' => 'No companies assigned',
     'created_at' => 'Created At',
+    'enter_password' => 'Enter password',
 
     // --------------------------------------------------------------------------------------------------
     //                                 Course Types
@@ -438,4 +440,6 @@ return [
     'recommendation' => 'We recommend taking the necessary action to renew or update this :module before the expiry date.',
     'contact_support' => 'If you have any questions, please feel free to contact our support team.',
     'best_regards' => 'Best regards,',
+
+    'permissions' => 'Permissions'
 ];

@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
     @if (session('success'))
         <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative flash-message-box"
             role="alert">
@@ -19,13 +18,15 @@
     <div class="mb-6 flex items-center justify-between">
         <h1 class="text-3xl font-bold text-gray-900">{{ __('lang.visit_type') }}</h1>
 
-        <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden shadow-sm">
-            <a href="{{ route('admin.company-visit-types.create') }}"
-                class="px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-[#EBF1FF] text-sm flex"
-                title="{{ __('lang.create') . ' ' . __('lang.worker') }}">
-                <i class="text-gray-500 fa fa-plus"></i>
-            </a>
-        </div>
+        @can('create visit-types')
+            <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+                <a href="{{ route('admin.company-visit-types.create') }}"
+                    class="px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-[#EBF1FF] text-sm flex"
+                    title="{{ __('lang.create') . ' ' . __('lang.worker') }}">
+                    <i class="text-gray-500 fa fa-plus"></i>
+                </a>
+            </div>
+        @endcan
     </div>
 
     <!-- Course Types Table -->
@@ -45,9 +46,11 @@
                     <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
                         {{ __('lang.expiry_date') }}
                     </th>
-                    <th scope="col" class="px-6 py-4 text-xs font-bold text-gray-700 uppercase tracking-wider">
-                        {{ __('lang.actions') }}
-                    </th>
+                    @can(['edit company-visit-types', 'delete company-visit-types'])
+                        <th scope="col" class="px-6 py-4 text-xs font-bold text-gray-700 uppercase tracking-wider">
+                            {{ __('lang.actions') }}
+                        </th>
+                    @endcan
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -65,27 +68,31 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                             {{ $visitType->notes ?? '-' }}
                         </td>
-                         <td class="px-6 py-4">
-                                <a href="{{ route('admin.company-visit-types.show', $visitType->id) }}"
-                                    class="font-medium text-gray-500 p-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
-                                    title="{{ __('lang.view') }}">
-                                    <i class="fa-regular fa-eye"></i>
-                                </a>
-                                <a href="{{ route('admin.company-visit-types.edit', $visitType->id) }}"
-                                    class="font-medium text-gray-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
-                                    title="{{ __('lang.edit') }}">
-                                    <i class="fa fa-edit"></i>
-                                </a>
-                                <form action="{{ route('admin.company-visit-types.destroy', $visitType->id) }}" method="POST" class="inline-block ml-2" onsubmit="return confirm('{{ __('lang.delete_course_type_confirm') }}');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                        class="font-medium text-red-500 p-2 hover:bg-red-50 border border-gray-200 rounded-[10px]"
-                                        title="{{ __('lang.actions') }}">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </form>
+                        @can(['edit company-visit-types', 'delete company-visit-types'])
+                            <td class="px-6 py-4">
+
+                                @can('edit company-visit-types')
+                                    <a href="{{ route('admin.company-visit-types.edit', $visitType->id) }}"
+                                        class="font-medium text-gray-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
+                                        title="{{ __('lang.edit') }}">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                @endcan
+                                @can('delete company-visit-types')
+                                    <form action="{{ route('admin.company-visit-types.destroy', $visitType->id) }}" method="POST"
+                                        class="inline-block ml-2"
+                                        onsubmit="return confirm('{{ __('lang.delete_course_type_confirm') }}');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="font-medium text-red-500 p-2 hover:bg-red-50 border border-gray-200 rounded-[10px]"
+                                            title="{{ __('lang.actions') }}">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
+                                @endcan
                             </td>
+                        @endcan
                     </tr>
                 @empty
                     <tr>
@@ -104,5 +111,4 @@
             </div>
         @endif
     </div>
-
 @endsection

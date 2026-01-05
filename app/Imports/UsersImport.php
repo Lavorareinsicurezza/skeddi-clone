@@ -71,7 +71,7 @@ class UsersImport implements ToModel, WithHeadingRow, WithValidation
             'role' => [
                 'nullable',
                 'string',
-                Rule::in(['user', 'admin']),
+                'max:255',
             ],
         ];
     }
@@ -86,7 +86,6 @@ class UsersImport implements ToModel, WithHeadingRow, WithValidation
             'email.required' => 'The email field is required.',
             'email.email' => 'The email must be a valid email address.',
             'email.unique' => 'The email :input already exists in the database.',
-            'role.in' => 'The role must be either "user" or "admin".',
         ];
     }
 }

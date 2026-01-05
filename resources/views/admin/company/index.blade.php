@@ -30,11 +30,13 @@
                 title="{{ __('lang.import_data') }}">
                 <i class="text-gray-500 fa fa-upload"></i>
             </button>
+            @can('create companies')
             <a href="{{ route('admin.companies.create') }}"
                 class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm flex"
                 title="{{ __('lang.create_company') }}">
                 <i class="text-gray-500 fa fa-plus"></i>
             </a>
+            @endcan
         </div>
     </div>
 
@@ -117,16 +119,21 @@
                                 {{ $company->tax_code }}
                             </td>
                             <td class="px-6 py-4">
+                                @can('view companies')
                                 <a href="{{ route('admin.companies.show', $company->id) }}"
                                     class="font-medium text-gray-500 p-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
                                     title="{{ __('lang.view') }}">
                                     <i class="fa-regular fa-eye"></i>
                                 </a>
+                                @endcan
+                                @can('edit companies')
                                 <a href="{{ route('admin.companies.edit', $company->id) }}"
                                     class="font-medium text-gray-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
                                     title="{{ __('lang.edit') }}">
                                     <i class="fa fa-edit"></i>
                                 </a>
+                                @endcan
+                                @can('delete companies')
                                 <form action="{{ route('admin.companies.destroy', $company->id) }}" method="POST"
                                     class="inline-block ml-2"
                                     onsubmit="return confirm('{{ __('lang.delete_company_confirm') }}');">
@@ -138,6 +145,7 @@
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </form>
+                                @endcan
                                 {{-- <a href="#"
                                     class="font-medium text-red-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]">
                                     <i class="fa fa-trash"></i>

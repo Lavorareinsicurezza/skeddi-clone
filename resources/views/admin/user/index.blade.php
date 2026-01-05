@@ -26,10 +26,12 @@
                 class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm border-r border-gray-200 flex" title="Import Data">
                 <i class="text-gray-500 fa fa-upload"></i>
             </button>
+            @can('create users')
             <a href="{{ route('admin.users.create') }}"
-                class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm flex" title="Create User">
-                <i class="text-gray-500 fa fa-plus"></i>
-            </a>
+            class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm flex" title="Create User">
+            <i class="text-gray-500 fa fa-plus"></i>
+        </a>
+        @endcan
         </div>
     </div>
 
@@ -98,16 +100,20 @@
                                 {{ $user->role }}
                             </td>
                             <td class="px-6 py-4">
+                                @can('view users')
                                 <a href="{{ route('admin.users.show', $user->id) }}"
                                     class="font-medium text-gray-500 p-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
                                     title="View">
                                     <i class="fa-regular fa-eye"></i>
                                 </a>
+                                @endcan
+                                @can('edit users')
                                 <a href="{{ route('admin.users.edit', $user->id) }}"
                                     class="font-medium text-gray-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
                                     title="Edit">
                                     <i class="fa fa-edit"></i>
                                 </a>
+                                @endcan
                                 {{-- <a href="#"
                                     class="font-medium text-red-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]">
                                     <i class="fa fa-trash"></i>

@@ -58,18 +58,22 @@
 
             <!-- Action Buttons -->
             <div class="mt-6 flex gap-3 justify-end">
+                @can('edit course-types')
                 <a href="{{ route('admin.course-types.edit', $courseType->id) }}"
                     class="bg-[#0C3183] text-white px-6 py-2.5 rounded-lg hover:bg-[#0a2766]">
                     {{ __('lang.edit') }}
                 </a>
+                @endcan
+                @can('delete course-types')
                 <form action="{{ route('admin.course-types.destroy', $courseType->id) }}" method="POST" class="inline-block" onsubmit="return confirm('{{ __('lang.delete_course_type_confirm') }}');">
                     @csrf
                     @method('DELETE')
                     <button type="submit"
                         class="bg-red-500 text-white px-6 py-2.5 rounded-lg hover:bg-red-600">
-                        {{ __('lang.actions') }}
+                        {{ __('lang.delete') }}
                     </button>
                 </form>
+                @endcan
             </div>
         </div>
     </div>

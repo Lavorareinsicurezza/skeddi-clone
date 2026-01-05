@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -32,7 +33,8 @@ class UserController extends Controller
     public function create()
     {
         $companies = Company::company()->get();
-        return view('admin.user.create', compact('companies'));
+        $roles = Role::pluck('name')->toArray();
+        return view('admin.user.create', compact('companies', 'roles'));
     }
 
     /**
@@ -42,6 +44,7 @@ class UserController extends Controller
     {
         $validatedData = $request->validate([
             'email' => ['required', 'email', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:8'],
             'role' => ['required', 'string'],
             'functions' => ['nullable', 'array'],
             'visible_company' => ['array', 'min:1'],
@@ -50,26 +53,29 @@ class UserController extends Controller
             'email.required' => 'Email address is required.',
             'email.email' => 'Please enter a valid email address.',
             'email.unique' => 'This email address is already registered.',
+            'password.required' => 'Password is required.',
+            'password.min' => 'Password must be at least 8 characters.',
             'role.required' => 'Please select a role.',
             'visible_company.required' => 'Please select at least one visible company.',
             'visible_company.min' => 'Please select at least one visible company.',
             'admin_functions.required' => 'Please select at least one admin function.',
         ]);
 
-        // Generate a random password for the user
-        // $password = Str::random(12);
+        $primaryRoleName = $validatedData['role'];
 
         // Create the user
         $user = User::create([
             'name' => explode('@', $validatedData['email'])[0],
             'email' => $validatedData['email'],
-            // 'password' => Hash::make($password),
+            'password' => Hash::make($validatedData['password']),
             'company_id' => Auth::user()->company_id,
-            'role' => $validatedData['role'],
+            'role' => $primaryRoleName,
             'functions' => $validatedData['functions'] ?? [],
             'visible_company_ids' => $validatedData['visible_company'] ?? [],
             'admin_functions' => $validatedData['admin_functions'] ?? [],
         ]);
+
+        $user->syncRoles([$primaryRoleName]);
 
         // TODO: Send email to user with credentials
 

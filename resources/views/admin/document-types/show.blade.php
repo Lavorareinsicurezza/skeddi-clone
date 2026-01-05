@@ -46,10 +46,13 @@
 
             <!-- Action Buttons -->
             <div class="mt-6 flex gap-3 justify-end">
+                @can('edit document-types')
                 <a href="{{ route('admin.document-types.edit', $documentType->id) }}"
                     class="bg-[#0C3183] text-white px-6 py-2.5 rounded-lg hover:bg-[#0a2766]">
                     Edit
                 </a>
+                @endcan
+                @can('delete document-types')
                 <form action="{{ route('admin.document-types.destroy', $documentType->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this document type?');">
                     @csrf
                     @method('DELETE')
@@ -58,6 +61,7 @@
                         Delete
                     </button>
                 </form>
+                @endcan
             </div>
         </div>
     </div>

@@ -17,13 +17,14 @@
     <div class="mb-6 flex items-center justify-between">
         <h1 class="text-3xl font-bold text-gray-900">{{ __('lang.course_types_management') }}</h1>
 
+        @can('create course-types')
         <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden shadow-sm">
-
             <a href="{{ route('admin.course-types.create') }}"
                 class="px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm flex" title="{{ __('lang.create_course_type') }}">
                 <i class="text-gray-500 fa fa-plus"></i>
             </a>
         </div>
+        @endcan
     </div>
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -52,16 +53,21 @@
                                 {{ $courseType->validity_year }}
                             </td>
                             <td class="px-6 py-4">
+                                @can('view course-types')
                                 <a href="{{ route('admin.course-types.show', $courseType->id) }}"
                                     class="font-medium text-gray-500 p-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
                                     title="{{ __('lang.view') }}">
                                     <i class="fa-regular fa-eye"></i>
                                 </a>
+                                @endcan
+                                @can('edit course-types')
                                 <a href="{{ route('admin.course-types.edit', $courseType->id) }}"
                                     class="font-medium text-gray-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
                                     title="{{ __('lang.edit') }}">
                                     <i class="fa fa-edit"></i>
                                 </a>
+                                @endcan
+                                @can('delete course-types')
                                 <form action="{{ route('admin.course-types.destroy', $courseType->id) }}" method="POST" class="inline-block ml-2" onsubmit="return confirm('{{ __('lang.delete_course_type_confirm') }}');">
                                     @csrf
                                     @method('DELETE')
@@ -71,6 +77,7 @@
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </form>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

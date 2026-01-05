@@ -75,7 +75,7 @@ class RegisterController extends Controller
                 'company_id' => $company->id,
                 'role' => 'superadmin', // Set as admin/owner
             ]);
-
+            $user->assignRole('superadmin');
             DB::commit();
 
             // Log the user in

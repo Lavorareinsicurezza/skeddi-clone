@@ -50,7 +50,7 @@
                     </div>
                 @endif
 
-                <!-- Email and Role -->
+                <!-- Email and Password -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                     <div>
                         <label class="block text-sm font-semibold text-gray-900 mb-2">{{ __('lang.email_address') }}</label>
@@ -62,17 +62,31 @@
                         @enderror
                     </div>
                     <div>
-                        <label class="block text-sm font-semibold text-gray-900 mb-2">{{ __('lang.role') }}</label>
-                        <select type="text" name="role" placeholder="{{ __('lang.supervisor') }}"
-                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent @error('role') border-red-500 @enderror">
-                            <option value=""> {{ __('lang.select_role') }} </option>
-                            <option value="supervisor" {{ old('role') == 'supervisor' ? 'selected' : '' }}>
-                                {{ __('lang.supervisor') }} </option>
-                        </select>
-                        @error('role')
+                        <label class="block text-sm font-semibold text-gray-900 mb-2">{{ __('lang.password') }}</label>
+                        <input type="password" name="password"
+                            placeholder="{{ __('lang.enter_password') }}"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent @error('password') border-red-500 @enderror">
+                        @error('password')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
                     </div>
+                </div>
+
+                <!-- Role Selection -->
+                <div class="mb-8">
+                    <label class="block text-sm font-semibold text-gray-900 mb-2">{{ __('lang.role') }}</label>
+                    <select name="role"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent @error('role') border-red-500 @enderror">
+                        <option value=""> {{ __('lang.select_role') }} </option>
+                        @isset($roles)
+                            @foreach ($roles as $roleName)
+                                <option value="{{ $roleName }}" {{ old('role') == $roleName ? 'selected' : '' }}>{{ $roleName }}</option>
+                            @endforeach
+                        @endisset
+                    </select>
+                    @error('role')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <!-- Functions Section -->

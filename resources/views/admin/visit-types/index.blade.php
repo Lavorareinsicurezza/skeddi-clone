@@ -16,13 +16,14 @@
 
     <div class="mb-6 flex items-center justify-between">
         <h1 class="text-3xl font-bold text-gray-900">{{ __('lang.visit_types_management') }}</h1>
-
+        @can('create visit-types')
         <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden shadow-sm">
             <a href="{{ route('admin.visit-types.create') }}"
                 class="px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm flex" title="{{ __('lang.create_visit_type') }}">
                 <i class="text-gray-500 fa fa-plus"></i>
             </a>
         </div>
+        @endcan
     </div>
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -51,16 +52,21 @@
                                 {{ $visitType->validity_year }}
                             </td>
                             <td class="px-6 py-4">
+                                @can('view visit-types')
                                 <a href="{{ route('admin.visit-types.show', $visitType->id) }}"
                                     class="font-medium text-gray-500 p-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
                                     title="{{ __('lang.view') }}">
                                     <i class="fa-regular fa-eye"></i>
                                 </a>
+                                @endcan
+                                @can('edit visit-types')
                                 <a href="{{ route('admin.visit-types.edit', $visitType->id) }}"
                                     class="font-medium text-gray-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
                                     title="{{ __('lang.edit') }}">
                                     <i class="fa fa-edit"></i>
                                 </a>
+                                @endcan
+                                @can('delete visit-types')
                                 <form action="{{ route('admin.visit-types.destroy', $visitType->id) }}" method="POST" class="inline-block ml-2" onsubmit="return confirm('{{ __('lang.delete_visit_type_confirm') }}');">
                                     @csrf
                                     @method('DELETE')
@@ -70,6 +76,7 @@
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </form>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

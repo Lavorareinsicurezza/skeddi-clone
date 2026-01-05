@@ -5,10 +5,12 @@
     <div class="mb-6 flex items-center justify-between">
         <h1 class="text-3xl font-bold text-gray-900">{{ $companyCourseType->name }}</h1>
         <div class="flex gap-3">
+            @can('edit company-course-types')
             <a href="{{ route('admin.company-course-types.edit', $companyCourseType->id) }}"
                 class="px-6 py-3 bg-[#0C3183] text-white rounded-lg hover:bg-[#0A2869] font-medium">
                 {{ __('lang.edit') }}
             </a>
+            @endcan
             <a href="{{ route('admin.company-course-types.index') }}"
                 class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium">
                 {{ __('lang.back') }}

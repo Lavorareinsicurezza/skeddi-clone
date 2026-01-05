@@ -190,7 +190,15 @@ class DashboardController extends Controller
     public function getCompanies()
     {
         $user = Auth::user();
-        $companies = Company::select('id', 'name', 'phone')->where('company_id', $user->company_id)->get();
+        $baseQuery = Company::select('id', 'name', 'phone')->where('company_id', $user->company_id);
+
+        if ($user->hasRole('superadmin') || $user->can('view companies')) {
+            $companies = $baseQuery->get();
+        } else {
+            $companies = $baseQuery
+                ->whereJsonContains('contacts', $user->email)
+                ->get();
+        }
 
         return response()->json([
             'companies' => $companies
@@ -209,6 +217,24 @@ class DashboardController extends Controller
             'company_id' => 'required|exists:companies,id',
             'company_name' => 'required|string'
         ]);
+
+        $user = Auth::user();
+        $baseQuery = Company::select('id')->where('company_id', $user->company_id);
+        if ($user->hasRole('superadmin') || $user->can('view companies')) {
+            $allowedIds = $baseQuery->pluck('id')->toArray();
+        } else {
+            $allowedIds = $baseQuery
+                ->whereJsonContains('contacts', $user->email)
+                ->pluck('id')
+                ->toArray();
+        }
+
+        if (!in_array((int) $validated['company_id'], $allowedIds, true)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized company selection'
+            ], 403);
+        }
 
         // Store in session
         session([

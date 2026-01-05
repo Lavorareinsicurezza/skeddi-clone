@@ -44,7 +44,7 @@
                     </ul>
                 </div> --}}
             </div>
-
+            @can('create company-workers')
             <!-- Action Buttons -->
             <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden shadow-sm">
                 {{-- <button onclick="document.getElementById('importModal').classList.remove('hidden')"
@@ -58,6 +58,7 @@
                     <i class="text-gray-500 fa fa-plus"></i>
                 </a>
             </div>
+            @endcan
         </div>
     </div>
 
@@ -101,16 +102,21 @@
                             </span> --}}
                         </td>
                          <td class="px-6 py-4">
+                            @can('view company-workers')
                                 <a href="{{ route('admin.company-workers.show', $worker->id) }}"
                                     class="font-medium text-gray-500 p-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
                                     title="{{ __('lang.view') }}">
                                     <i class="fa-regular fa-eye"></i>
                                 </a>
+                                @endcan
+                                @can('edit company-workers')
                                 <a href="{{ route('admin.company-workers.edit', $worker->id) }}"
                                     class="font-medium text-gray-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
                                     title="{{ __('lang.edit') }}">
                                     <i class="fa fa-edit"></i>
                                 </a>
+                                @endcan
+                                @can('delete company-workers')
                                 <form action="{{ route('admin.company-workers.destroy', $worker->id) }}" method="POST" class="inline-block ml-2" onsubmit="return confirm('{{ __('lang.delete_worker_confirm') }}');">
                                     @csrf
                                     @method('DELETE')
@@ -120,6 +126,7 @@
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </form>
+                                @endcan
                             </td>
                     </tr>
                 @empty

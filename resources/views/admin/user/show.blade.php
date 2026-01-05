@@ -13,11 +13,13 @@
                     </p>
                 </div>
                 <div class="flex gap-3">
+                    @can('edit users')
                     <a href="{{ route('admin.users.edit', $user->id) }}"
                         class="bg-[#0C3183] text-white px-6 py-3 rounded-lg hover:bg-blue-800 shadow-sm transition-all flex items-center gap-2">
                         <i class="fa fa-edit"></i>
                         <span>{{ __('lang.edit') }}</span>
                     </a>
+                    @endcan
                     <a href="{{ route('admin.users.index') }}"
                         class="bg-white text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-50 shadow-sm border border-gray-200 transition-all flex items-center gap-2">
                         <i class="fa fa-arrow-left"></i>

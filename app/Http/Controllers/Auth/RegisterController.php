@@ -73,9 +73,9 @@ class RegisterController extends Controller
                 'email' => $validatedData['email'],
                 'password' => Hash::make($validatedData['password']),
                 'company_id' => $company->id,
-                'role' => 'superadmin', // Set as admin/owner
+                'role' => 'admin', // Set as admin/owner
             ]);
-            $user->assignRole('superadmin');
+            $user->assignRole('admin');
             DB::commit();
 
             // Log the user in

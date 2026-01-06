@@ -21,6 +21,8 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
+        $fromDate = $request->from_date;
+        $toDate = $request->to_date;
         $company = $user->company;
         $companyIds = Company::where('id', $user->company_id)
             ->orWhere('company_id', $user->company_id)
@@ -41,7 +43,10 @@ class DashboardController extends Controller
             ->leftJoin('workers', 'workers.id', 'training_plan_records.worker_id')
             ->leftJoin('company_course_types', 'company_course_types.id', 'training_plan_records.company_course_type_id')
             ->leftJoin('companies', 'companies.id', 'training_plan_records.company_id')
-            ->whereIn('training_plan_records.company_id', $companyIds);
+            ->whereIn('training_plan_records.company_id', $companyIds)
+            ->when($fromDate && $toDate, function ($q) use ($fromDate, $toDate) {
+                $q->whereBetween('training_plan_records.expiration_date', [$fromDate, $toDate]);
+            });
 
         if ($search) {
             $trainingPlansQuery->where(function ($q) use ($search) {
@@ -59,10 +64,16 @@ class DashboardController extends Controller
             DB::raw('NULL as employee_name'),
             'company_course_types.name as name',
             DB::raw("'Course' as deadline_type"),
-            DB::raw("DATE_ADD(NOW(), INTERVAL validity_years YEAR) as expiry_date")
+            DB::raw("expiration_date as expiry_date")
         )
             ->leftJoin('companies', 'companies.id', 'company_course_types.company_id')
-            ->whereIn('company_course_types.company_id', $companyIds);
+            ->whereIn('company_course_types.company_id', $companyIds)
+            ->when($fromDate && $toDate, function ($q) use ($fromDate, $toDate) {
+                $q->whereBetween(
+                    DB::raw("expiration_date"),
+                    [$fromDate, $toDate]
+                );
+            });
 
         if ($search) {
             $coursesQuery->where(function ($q) use ($search) {
@@ -82,7 +93,10 @@ class DashboardController extends Controller
             'documents.expiration_date as expiry_date'
         )
             ->leftJoin('companies', 'companies.id', 'documents.company_id')
-            ->whereIn('documents.company_id', $companyIds);
+            ->whereIn('documents.company_id', $companyIds)
+            ->when($fromDate && $toDate, function ($q) use ($fromDate, $toDate) {
+                $q->whereBetween('documents.expiration_date', [$fromDate, $toDate]);
+            });
 
         if ($search) {
             $documentsQuery->where(function ($q) use ($search) {
@@ -102,7 +116,10 @@ class DashboardController extends Controller
             'company_visit_types.expiry_date as expiry_date'
         )
             ->leftJoin('companies', 'companies.id', 'company_visit_types.company_id')
-            ->whereIn('company_visit_types.company_id', $companyIds);
+            ->whereIn('company_visit_types.company_id', $companyIds)
+            ->when($fromDate && $toDate, function ($q) use ($fromDate, $toDate) {
+                $q->whereBetween('company_visit_types.expiry_date', [$fromDate, $toDate]);
+            });
 
         if ($search) {
             $visitsQuery->where(function ($q) use ($search) {

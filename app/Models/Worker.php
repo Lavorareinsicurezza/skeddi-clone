@@ -8,6 +8,7 @@ class Worker extends Model
 {
     protected $fillable = [
         'company_id',
+        'operating_location_id',
         'first_name',
         'surname',
         'job_title',
@@ -38,5 +39,10 @@ class Worker extends Model
     public function company()
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function operatingLocation()
+    {
+        return $this->belongsTo(OperatingLocation::class);
     }
 }

@@ -77,6 +77,10 @@
                     </th>
                     <th scope="col"
                         class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                        {{ __('lang.operating_location') }}
+                    </th>
+                    <th scope="col"
+                        class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
                         {{ __('lang.position') }}
                     </th>
                     <th scope="col"
@@ -93,6 +97,9 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                             {{ $worker->first_name }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {{ $worker->operatingLocation ? $worker->operatingLocation->name : '-' }}
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-500">
                             <input type="text" value="{{ $worker->job_title }}" readonly
@@ -131,7 +138,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="px-6 py-12 text-center text-sm text-gray-500">
+                        <td colspan="5" class="px-6 py-12 text-center text-sm text-gray-500">
                             {{ __('lang.no_data_available') }}
                         </td>
                     </tr>

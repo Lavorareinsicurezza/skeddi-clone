@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Worker;
+use App\Models\OperatingLocation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,7 +24,9 @@ class WorkerController extends Controller
      */
     public function create()
     {
-        return view('company.worker.create');
+        $companyId = session('selectedCompanyId');
+        $operatingLocations = OperatingLocation::where('company_id', $companyId)->get();
+        return view('company.worker.create', compact('operatingLocations'));
     }
 
     /**
@@ -34,6 +37,7 @@ class WorkerController extends Controller
         $request->validate([
             'first_name' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
+            'operating_location_id' => 'required|exists:operating_locations,id',
             'job_title' => 'nullable|string|max:255',
             // 'department' => 'nullable|string|max:255',
             'workplace_safety_risk' => 'sometimes|boolean',
@@ -60,6 +64,7 @@ class WorkerController extends Controller
 
         Worker::create([
             'company_id' => $companyId,
+            'operating_location_id' => $request->input('operating_location_id'),
             'first_name' => $request->input('first_name'),
             'surname' => $request->input('surname'),
             'job_title' => $request->input('job_title'),
@@ -94,7 +99,9 @@ class WorkerController extends Controller
     public function edit(string $id)
     {
         $worker = Worker::query()->company()->findOrFail($id);
-        return view('company.worker.create', compact('worker'));
+        $companyId = session('selectedCompanyId');
+        $operatingLocations = OperatingLocation::where('company_id', $companyId)->get();
+        return view('company.worker.create', compact('worker', 'operatingLocations'));
     }
 
     /**
@@ -105,6 +112,7 @@ class WorkerController extends Controller
         $request->validate([
             'first_name' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
+            'operating_location_id' => 'required|exists:operating_locations,id',
             'job_title' => 'nullable|string|max:255',
             // 'department' => 'nullable|string|max:255',
             'workplace_safety_risk' => 'sometimes|boolean',
@@ -138,6 +146,7 @@ class WorkerController extends Controller
         $worker->update([
             'first_name' => $request->input('first_name'),
             'surname' => $request->input('surname'),
+            'operating_location_id' => $request->input('operating_location_id'),
             'job_title' => $request->input('job_title'),
             // 'department' => $request->input('department'),
             'workplace_safety_risk' => $request->has('workplace_safety_risk') ? 1 : 0,

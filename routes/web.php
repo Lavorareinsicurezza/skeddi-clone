@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\VisitTypeController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\WorkerController;
 use App\Http\Controllers\Admin\TrainingPlanController;
+use App\Http\Controllers\Admin\OperatingLocationController;
 use App\Http\Controllers\CompanyRenewalController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PermissionController;
@@ -63,7 +64,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
 
     //Visit Type routes
     Route::resource('visit-types', VisitTypeController::class)->middleware('ensure.permission:visit-types');
-    
+
     // Roles & Permissions
     Route::resource('roles', RoleController::class)->middleware('ensure.permission:roles');
     Route::resource('permissions', PermissionController::class)->middleware('ensure.permission:permissions');
@@ -90,18 +91,21 @@ Route::middleware('auth')->name('admin.')->group(function () {
     Route::post('/company-workers/import', [WorkerController::class, 'import'])->middleware('ensure.permission:company-workers,create')->name('company-workers.import');
     Route::resource('/company-workers', WorkerController::class)->middleware('ensure.permission:company-workers');
 
+    // Operating Locations routes
+    Route::resource('operating-locations', OperatingLocationController::class)->middleware('ensure.permission:operating-locations');
+
     // Company course types routes
     Route::get('/company-course-types/export', [CompanyCourseTypeController::class, 'export'])->middleware('ensure.permission:company-course-types,view')->name('company-course-types.export');
     Route::resource('/company-course-types', CompanyCourseTypeController::class)->middleware('ensure.permission:company-course-types');
 
     // Training plan routes
     Route::get('/training-plan', [TrainingPlanController::class, 'index'])->middleware('ensure.permission:training-plan')->name('training-plan.index');
-    Route::post('/training-plan/save', [TrainingPlanController::class, 'save'])->middleware('ensure.permission:training-plan,edit')->name('training-plan.save');
-    Route::post('/training-plan/renew', [TrainingPlanController::class, 'renew'])->middleware('ensure.permission:training-plan,edit')->name('training-plan.renew');
-    Route::post('/training-plan/documents/get', [TrainingPlanController::class, 'getDocuments'])->middleware('ensure.permission:training-plan,view')->name('training-plan.documents.get');
-    Route::post('/training-plan/documents/store', [TrainingPlanController::class, 'storeDocument'])->middleware('ensure.permission:training-plan,create')->name('training-plan.documents.store');
-    Route::delete('/training-plan/documents/{id}', [TrainingPlanController::class, 'deleteDocument'])->middleware('ensure.permission:training-plan,delete')->name('training-plan.documents.delete');
-    Route::get('/training-plan/documents/{id}/download', [TrainingPlanController::class, 'downloadDocument'])->middleware('ensure.permission:training-plan,view')->name('training-plan.documents.download');
+    Route::post('/training-plan/save', [TrainingPlanController::class, 'save'])->middleware('ensure.permission:training-plan-edit,view')->name('training-plan.save');
+    Route::post('/training-plan/renew', [TrainingPlanController::class, 'renew'])->middleware('ensure.permission:training-plan-edit,view')->name('training-plan.renew');
+    Route::post('/training-plan/documents/get', [TrainingPlanController::class, 'getDocuments'])->middleware('ensure.permission:training-plan-edit,view')->name('training-plan.documents.get');
+    Route::post('/training-plan/documents/store', [TrainingPlanController::class, 'storeDocument'])->middleware('ensure.permission:training-plan-edit,view')->name('training-plan.documents.store');
+    Route::delete('/training-plan/documents/{id}', [TrainingPlanController::class, 'deleteDocument'])->middleware('ensure.permission:training-plan-edit,view')->name('training-plan.documents.delete');
+    Route::get('/training-plan/documents/{id}/download', [TrainingPlanController::class, 'downloadDocument'])->middleware('ensure.permission:training-plan-edit,view')->name('training-plan.documents.download');
 
     //company-visit-type routes
     // Route::get('/company-visit-types/export', [CompanyVisitController::class, 'export'])->middleware('ensure.permission:company-visit-types,view')->name('company-visit-types.export');

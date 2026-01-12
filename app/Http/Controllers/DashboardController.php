@@ -8,6 +8,7 @@ use App\Models\CompanyCourseType;
 use App\Models\CompanyVisitType;
 use App\Models\Document;
 use App\Models\TrainingPlanRecord;
+use App\Models\OperatingLocation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -23,13 +24,15 @@ class DashboardController extends Controller
         $user = Auth::user();
         $fromDate = $request->from_date;
         $toDate = $request->to_date;
+        $operatingLocationId = $request->operating_location_id;
         $company = $user->company;
         $companyIds = Company::where('id', $user->company_id)
             ->orWhere('company_id', $user->company_id)
             ->pluck('id');
 
-        $deadlineType = $request->get('deadline_type', 'all'); // default 'all'
-        $search = $request->get('search'); // search input
+        $operatingLocations = OperatingLocation::whereIn('company_id', $companyIds)->get();
+        $deadlineType = $request->deadline_type ?? 'all'; // default 'all'
+        $search = $request->search; // search input
 
         /* TRAINING PLANS */
         $trainingPlansQuery = TrainingPlanRecord::select(
@@ -38,14 +41,19 @@ class DashboardController extends Controller
             'workers.surname as employee_name',
             'company_course_types.name as name',
             DB::raw("'Training Plan' as deadline_type"),
-            'training_plan_records.expiration_date as expiry_date'
+            'training_plan_records.expiration_date as expiry_date',
+            'operating_locations.name as location_name'
         )
             ->leftJoin('workers', 'workers.id', 'training_plan_records.worker_id')
             ->leftJoin('company_course_types', 'company_course_types.id', 'training_plan_records.company_course_type_id')
+            ->leftJoin('operating_locations', 'operating_locations.id', 'workers.operating_location_id')
             ->leftJoin('companies', 'companies.id', 'training_plan_records.company_id')
             ->whereIn('training_plan_records.company_id', $companyIds)
             ->when($fromDate && $toDate, function ($q) use ($fromDate, $toDate) {
                 $q->whereBetween('training_plan_records.expiration_date', [$fromDate, $toDate]);
+            })
+            ->when($operatingLocationId, function ($q) use ($operatingLocationId) {
+                $q->where('workers.operating_location_id', $operatingLocationId);
             });
 
         if ($search) {
@@ -64,7 +72,8 @@ class DashboardController extends Controller
             DB::raw('NULL as employee_name'),
             'company_course_types.name as name',
             DB::raw("'Course' as deadline_type"),
-            DB::raw("expiration_date as expiry_date")
+            DB::raw("expiration_date as expiry_date"),
+            DB::raw("NULL as location_name")
         )
             ->leftJoin('companies', 'companies.id', 'company_course_types.company_id')
             ->whereIn('company_course_types.company_id', $companyIds)
@@ -90,12 +99,20 @@ class DashboardController extends Controller
             DB::raw('NULL as employee_name'),
             'documents.name as name',
             DB::raw("'Document' as deadline_type"),
-            'documents.expiration_date as expiry_date'
+            'documents.expiration_date as expiry_date',
+            'operating_locations.name as location_name'
         )
             ->leftJoin('companies', 'companies.id', 'documents.company_id')
+            ->leftJoin('operating_locations', 'operating_locations.id', 'documents.operating_location_id')
             ->whereIn('documents.company_id', $companyIds)
             ->when($fromDate && $toDate, function ($q) use ($fromDate, $toDate) {
                 $q->whereBetween('documents.expiration_date', [$fromDate, $toDate]);
+            })
+            ->when($operatingLocationId, function ($q) use ($operatingLocationId) {
+                $q->where(function ($qq) use ($operatingLocationId) {
+                    $qq->where('documents.operating_location_id', $operatingLocationId)
+                       ->orWhereNull('documents.operating_location_id');
+                });
             });
 
         if ($search) {
@@ -113,7 +130,8 @@ class DashboardController extends Controller
             DB::raw('NULL as employee_name'),
             'company_visit_types.name as name',
             DB::raw("'Visit Type' as deadline_type"),
-            'company_visit_types.expiry_date as expiry_date'
+            'company_visit_types.expiry_date as expiry_date',
+            DB::raw("NULL as location_name")
         )
             ->leftJoin('companies', 'companies.id', 'company_visit_types.company_id')
             ->whereIn('company_visit_types.company_id', $companyIds)
@@ -158,7 +176,9 @@ class DashboardController extends Controller
             'currentCompany' => $company,
             'records' => $records,
             'selectedDeadlineType' => $deadlineType,
-            'search' => $search
+            'search' => $search,
+            'operatingLocations' => $operatingLocations,
+            'selectedOperatingLocationId' => $operatingLocationId
         ]);
     }
 
@@ -173,9 +193,17 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         $company = $user->company;
+        $companyId = session('selectedCompanyId');
+        $operatingLocationId = $request->operating_location_id;
+        $operatingLocations = OperatingLocation::where('company_id', $companyId)->get();
 
         // Build query with filters
-        $query = TrainingPlanRecord::with('companyCourseType', 'worker', 'company')->company();
+        $query = TrainingPlanRecord::with('companyCourseType', 'worker.operatingLocation', 'company')->company()
+            ->when($operatingLocationId, function ($q) use ($operatingLocationId) {
+                $q->whereHas('worker', function ($qw) use ($operatingLocationId) {
+                    $qw->where('operating_location_id', $operatingLocationId);
+                });
+            });
 
         // // Filter by date range
         // if ($request->filled('from_date')) {
@@ -196,6 +224,8 @@ class DashboardController extends Controller
         return view('company.deadlines.index', [
             'currentCompany' => $company,
             'trainingPlans' => $trainingPlans,
+            'operatingLocations' => $operatingLocations,
+            'selectedOperatingLocationId' => $operatingLocationId,
         ]);
     }
 

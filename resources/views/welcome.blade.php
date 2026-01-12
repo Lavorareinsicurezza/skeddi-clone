@@ -69,6 +69,19 @@
                         class="bg-transparent border-0 border-b border-gray-300 px-1 py-0.5 text-gray-600 font-medium focus:outline-none w-full sm:w-auto text-xs"
                     placeholder="{{ __('lang.search') }}" value="{{ request('search') }}">
                 </div>
+                <div
+                    class="px-3 py-2 flex items-center space-x-2 sm:border-r border-b sm:border-b-0 border-gray-200 text-xs">
+                    <label for="operatingLocation" class="text-gray-600 font-medium whitespace-nowrap">{{ __('lang.operating_location') }}:</label>
+                    <select name="operating_location_id" id="operatingLocation"
+                        class="bg-transparent border-0 border-b border-gray-300 px-1 py-0.5 text-gray-600 font-medium focus:outline-none w-full sm:w-auto text-xs">
+                        <option value="">{{ __('lang.all') }}</option>
+                        @foreach($operatingLocations as $location)
+                            <option value="{{ $location->id }}" {{ (string)($selectedOperatingLocationId ?? '') === (string)$location->id ? 'selected' : '' }}>
+                                {{ $location->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
 
                 <!-- Reset Filter -->
                 <div class="px-3 py-2 flex justify-center sm:justify-start">
@@ -127,7 +140,11 @@
                         </td>
 
                         <td class="px-3 md:px-6 py-4">
-                            {{ $plan->employee_name ?? '-' }}
+                            @if($plan->employee_name)
+                                {{ $plan->employee_name }}{{ $plan->location_name ? ' - ' . $plan->location_name : '' }}
+                            @else
+                                -
+                            @endif
                         </td>
 
                         <td class="px-3 md:px-6 py-4">
@@ -220,6 +237,7 @@
             // const filterType = document.getElementById('filterType');
             const resetFilter = document.getElementById('resetFilter');
             const scheduledInput = document.getElementById('scheduledInput');
+            const operatingLocation = document.getElementById('operatingLocation');
 
             function submitForm() {
                 filterForm.submit();
@@ -241,6 +259,7 @@
             if (deadlineTypeFilter) deadlineTypeFilter.addEventListener('change', submitForm);
             if (search) search.addEventListener('change', submitForm);
             // if (filterType) filterType.addEventListener('change', submitForm);
+            if (operatingLocation) operatingLocation.addEventListener('change', submitForm);
 
             if (resetFilter) {
                 resetFilter.addEventListener('click', function () {
@@ -250,6 +269,7 @@
                     // filterType.value = 'deadlines';
                     // deadlineTypeFilter.value = 'all';
                     search.value = '';
+                    if (operatingLocation) operatingLocation.value = '';
                     window.location.href = "{{ route('admin.dashboard') }}";
                 });
             }

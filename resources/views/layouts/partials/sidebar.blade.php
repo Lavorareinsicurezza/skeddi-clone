@@ -53,6 +53,14 @@
                     </a>
                 </li>
                 @endcan
+                @can('view operating-locations')
+                <li>
+                    <a href="{{ route('admin.operating-locations.index') }}" class="flex items-center p-2 rounded-[20px] {{ request()->routeIs('admin.operating-locations.*')? 'text-[#0C3183] bg-blue-50': 'text-gray-500' }} hover:text-[#0C3183] hover:bg-blue-50 group">
+                        <i class="fas fa-map-marker-alt w-5 h-5 {{ request()->routeIs('admin.operating-locations.*')? 'text-[#0C3183]': 'text-gray-500'}} transition duration-75 group-hover:text-[#0C3183]"></i>
+                        <span class="ms-3">{{ __('lang.operating_locations') }}</span>
+                    </a>
+                </li>
+                @endcan
                 @can('view company-documents')
                 <li>
                     <a href="{{ route('admin.company-documents.index') }}" class="flex items-center p-2 rounded-[20px] {{ request()->routeIs('admin.company-documents.*')? 'text-[#0C3183] bg-blue-50': 'text-gray-500' }} hover:text-[#0C3183] hover:bg-blue-50 group">

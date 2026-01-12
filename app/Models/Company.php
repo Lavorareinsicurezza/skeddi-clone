@@ -84,4 +84,9 @@ class Company extends Model
     {
         return $this->hasMany(Company::class);
     }
+
+    public function operatingLocations(): HasMany
+    {
+        return $this->hasMany(OperatingLocation::class);
+    }
 }

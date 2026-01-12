@@ -49,6 +49,22 @@
             </div>
         </div>
 
+        <!-- Operating Location -->
+        <div class="mb-6">
+            <label for="operating_location_id" class="block text-sm font-medium text-gray-700 mb-2">
+                {{ __('lang.operating_location') }}
+            </label>
+            <select name="operating_location_id" id="operating_location_id"
+                class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0C3183] text-sm">
+                <option value="">{{ __('lang.select_operating_location') }}</option>
+                @foreach($operatingLocations as $location)
+                    <option value="{{ $location->id }}" {{ old('operating_location_id', $worker->operating_location_id ?? '') == $location->id ? 'selected' : '' }}>
+                        {{ $location->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
         <!-- Job Title and Department -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>

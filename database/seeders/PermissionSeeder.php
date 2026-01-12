@@ -24,6 +24,7 @@ class PermissionSeeder extends Seeder
             'company-workers',
             'company-course-types',
             'company-visit-types',
+            'operating-locations'
         ];
 
         // Page based modules (no CRUD)
@@ -33,6 +34,7 @@ class PermissionSeeder extends Seeder
             'settings',
             'selected-company',
             'training-plan',
+            'training-plan-edit',
             'company-renewals',
             'chart',
         ];

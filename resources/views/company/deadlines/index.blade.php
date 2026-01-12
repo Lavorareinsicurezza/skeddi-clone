@@ -9,6 +9,23 @@
             {{ __('lang.deadlines') }}
         </h1>
 
+        <form id="filterForm" method="GET" action="{{ route('admin.deadlines') }}"
+            class="border border-gray-200 rounded-md overflow-hidden shadow-sm bg-white w-full lg:w-auto">
+            <div class="flex flex-col sm:flex-row sm:items-center">
+                <div class="px-3 py-2 flex items-center space-x-2 sm:border-r border-b sm:border-b-0 border-gray-200 text-xs">
+                    <label for="operatingLocation" class="text-gray-600 font-medium whitespace-nowrap">{{ __('lang.operating_location') }}:</label>
+                    <select name="operating_location_id" id="operatingLocation"
+                        class="bg-transparent border-0 border-b border-gray-300 px-1 py-0.5 text-gray-600 font-medium focus:outline-none w-full sm:w-auto text-xs">
+                        <option value="">{{ __('lang.all') }}</option>
+                        @foreach($operatingLocations as $location)
+                            <option value="{{ $location->id }}" {{ (string)($selectedOperatingLocationId ?? '') === (string)$location->id ? 'selected' : '' }}>
+                                {{ $location->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </form>
         <!-- Filter Form -->
         {{-- <form id="filterForm" method="GET" action="{{ route('admin.deadlines') }}"
             class="border border-gray-200 rounded-md overflow-hidden shadow-sm bg-white w-full lg:w-auto">
@@ -93,9 +110,12 @@
                         <td class="px-3 md:px-6 py-4">
                             {{ $plan->companyCourseType?->name }}
                         </td>
-                        <td class="px-3 md:px-6 py-4">
-                            {{ $plan->worker?->surname }}
-                        </td>
+                    <td class="px-3 md:px-6 py-4">
+                        @php
+                            $locName = $plan->worker?->operatingLocation?->name;
+                        @endphp
+                        {{ $plan->worker?->surname }}{{ $locName ? ' - ' . $locName : '' }}
+                    </td>
                         <td class="px-3 md:px-6 py-4 whitespace-nowrap">
                             @php
                                 $expDate = $plan->expiration_date;
@@ -193,6 +213,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const filterForm = document.getElementById('filterForm');
+            const operatingLocation = document.getElementById('operatingLocation');
             const statusFilter = document.getElementById('statusFilter');
             const fromDate = document.getElementById('fromDate');
             const toDate = document.getElementById('toDate');
@@ -203,6 +224,7 @@
                 filterForm.submit();
             }
 
+            if (operatingLocation) operatingLocation.addEventListener('change', submitForm);
             if (statusFilter) {
                 statusFilter.addEventListener('click', function() {
                     if (scheduledInput.value == 'true') {

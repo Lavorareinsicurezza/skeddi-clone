@@ -34,17 +34,17 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <!-- Operating Location -->
+            <div>
+                <label class="block text-sm font-medium text-gray-500 mb-1">{{ __('lang.operating_location') }}</label>
+                <p class="text-gray-900">{{ $worker->operatingLocation ? $worker->operatingLocation->name : '-' }}</p>
+            </div>
+
             <!-- Job Title -->
             <div>
                 <label class="block text-sm font-medium text-gray-500 mb-1">{{ __('lang.job_title') }}</label>
                 <p class="text-gray-900">{{ $worker->job_title ?? '-' }}</p>
             </div>
-
-            <!-- Department -->
-            {{-- <div>
-                <label class="block text-sm font-medium text-gray-500 mb-1">{{ __('lang.department') }}</label>
-                <p class="text-gray-900">{{ $worker->department ?? '-' }}</p>
-            </div> --}}
         </div>
 
         <!-- Workplace Safety Risk -->

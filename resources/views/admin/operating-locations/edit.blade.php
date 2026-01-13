@@ -39,25 +39,6 @@
                 @csrf
                 @method('PUT')
 
-                <!-- Company Selection -->
-                <div class="mb-6">
-                    <label for="company_id" class="block text-sm font-medium text-gray-700 mb-2">
-                        {{ __('lang.company') }} <span class="text-red-500">*</span>
-                    </label>
-                    <select name="company_id" id="company_id" required
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
-                        <option value="">{{ __('lang.select_company') }}</option>
-                        @foreach($companies as $company)
-                            <option value="{{ $company->id }}" {{ old('company_id', $operatingLocation->company_id) == $company->id ? 'selected' : '' }}>
-                                {{ $company->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('company_id')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
-
                 <!-- Location Name -->
                 <div class="mb-6">
                     <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
@@ -75,7 +56,7 @@
                 <!-- Address Information -->
                 <div class="mb-6">
                     <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('lang.address_information') }}</h3>
-                    
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label for="address_street" class="block text-sm font-medium text-gray-700 mb-2">
@@ -86,7 +67,7 @@
                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent"
                                    placeholder="{{ __('lang.street_placeholder') }}">
                         </div>
-                        
+
                         <div>
                             <label for="address_number" class="block text-sm font-medium text-gray-700 mb-2">
                                 {{ __('lang.street_number') }}
@@ -96,7 +77,7 @@
                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent"
                                    placeholder="{{ __('lang.street_number_placeholder') }}">
                         </div>
-                        
+
                         <div>
                             <label for="address_city" class="block text-sm font-medium text-gray-700 mb-2">
                                 {{ __('lang.city') }}
@@ -106,7 +87,7 @@
                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent"
                                    placeholder="{{ __('lang.city_placeholder') }}">
                         </div>
-                        
+
                         <div>
                             <label for="address_postal" class="block text-sm font-medium text-gray-700 mb-2">
                                 {{ __('lang.postal_code') }}
@@ -122,7 +103,7 @@
                 <!-- Site Contact Information -->
                 <div class="mb-6">
                     <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('lang.site_contact_information') }}</h3>
-                    
+
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
                             <label for="site_contact_name" class="block text-sm font-medium text-gray-700 mb-2">
@@ -133,7 +114,7 @@
                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent"
                                    placeholder="{{ __('lang.contact_name_placeholder') }}">
                         </div>
-                        
+
                         <div>
                             <label for="site_contact_phone" class="block text-sm font-medium text-gray-700 mb-2">
                                 {{ __('lang.contact_phone') }}
@@ -143,7 +124,7 @@
                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent"
                                    placeholder="{{ __('lang.contact_phone_placeholder') }}">
                         </div>
-                        
+
                         <div>
                             <label for="site_contact_email" class="block text-sm font-medium text-gray-700 mb-2">
                                 {{ __('lang.contact_email') }}

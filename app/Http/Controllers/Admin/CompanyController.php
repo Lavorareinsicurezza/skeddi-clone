@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Company;
+use App\Models\OperatingLocation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -106,7 +107,24 @@ class CompanyController extends Controller
         // Add company_id from authenticated user
         $data['company_id'] = Auth::user()->company_id;
 
-        Company::create($data);
+        $company = Company::create($data);
+
+        $locations = $request->input('operating_locations', []);
+        foreach ($locations as $loc) {
+            if (!empty($loc['name'])) {
+                OperatingLocation::create([
+                    'company_id' => $company->id,
+                    'name' => $loc['name'] ?? null,
+                    'address_street' => $loc['address_street'] ?? null,
+                    'address_number' => $loc['address_number'] ?? null,
+                    'address_postal' => $loc['address_postal'] ?? null,
+                    'address_city' => $loc['address_city'] ?? null,
+                    'site_contact_name' => $loc['site_contact_name'] ?? null,
+                    'site_contact_phone' => $loc['site_contact_phone'] ?? null,
+                    'site_contact_email' => $loc['site_contact_email'] ?? null,
+                ]);
+            }
+        }
 
         return redirect()->route('admin.companies.index')->with('success', 'Company created successfully');
     }
@@ -207,6 +225,50 @@ class CompanyController extends Controller
         $data['freeze_company'] = $request->has('freeze_company');
 
         $company->update($data);
+
+        $locations = $request->input('operating_locations', []);
+        foreach ($locations as $loc) {
+            if (!empty($loc['id'])) {
+                $existing = OperatingLocation::where('company_id', $company->id)->find($loc['id']);
+                if ($existing) {
+                    $existing->update([
+                        'name' => $loc['name'] ?? $existing->name,
+                        'address_street' => $loc['address_street'] ?? $existing->address_street,
+                        'address_number' => $loc['address_number'] ?? $existing->address_number,
+                        'address_postal' => $loc['address_postal'] ?? $existing->address_postal,
+                        'address_city' => $loc['address_city'] ?? $existing->address_city,
+                        'site_contact_name' => $loc['site_contact_name'] ?? $existing->site_contact_name,
+                        'site_contact_phone' => $loc['site_contact_phone'] ?? $existing->site_contact_phone,
+                        'site_contact_email' => $loc['site_contact_email'] ?? $existing->site_contact_email,
+                    ]);
+                }
+            } else {
+                if (!empty($loc['name'])) {
+                    OperatingLocation::create([
+                        'company_id' => $company->id,
+                        'name' => $loc['name'] ?? null,
+                        'address_street' => $loc['address_street'] ?? null,
+                        'address_number' => $loc['address_number'] ?? null,
+                        'address_postal' => $loc['address_postal'] ?? null,
+                        'address_city' => $loc['address_city'] ?? null,
+                        'site_contact_name' => $loc['site_contact_name'] ?? null,
+                        'site_contact_phone' => $loc['site_contact_phone'] ?? null,
+                        'site_contact_email' => $loc['site_contact_email'] ?? null,
+                    ]);
+                }
+            }
+        }
+
+        $deleted = $request->input('operating_locations_deleted', []);
+        foreach ($deleted as $delId) {
+            $del = OperatingLocation::where('company_id', $company->id)->find($delId);
+            if ($del) {
+                if ($del->workers()->exists() || $del->documents()->exists()) {
+                    continue;
+                }
+                $del->delete();
+            }
+        }
 
         return redirect()->route('admin.companies.index')->with('success', 'Company updated successfully');
     }

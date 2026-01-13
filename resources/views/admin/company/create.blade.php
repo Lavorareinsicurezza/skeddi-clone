@@ -285,6 +285,56 @@
                     </div>
                 </div>
 
+                <div class="mb-6">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-sm font-semibold text-gray-800">{{ __('lang.operating_locations') }}</h3>
+                        <button type="button" id="addLocationBtn" class="text-sm text-[#0C3183] font-medium">
+                            {{ __('lang.add_operating_location') }}
+                        </button>
+                    </div>
+                    <div id="locationsContainer" class="space-y-4"></div>
+                    <template id="locationTemplate">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 border border-gray-200 rounded-lg bg-gray-50">
+                            <input type="hidden" name="operating_locations[IDX][id]" value="">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.name') }}</label>
+                                <input type="text" name="operating_locations[IDX][name]" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.street') }}</label>
+                                <input type="text" name="operating_locations[IDX][address_street]" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.no') }}</label>
+                                <input type="text" name="operating_locations[IDX][address_number]" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.postal_code') }}</label>
+                                <input type="text" name="operating_locations[IDX][address_postal]" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.city') }}</label>
+                                <input type="text" name="operating_locations[IDX][address_city]" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.company_contact_person') }}</label>
+                                <input type="text" name="operating_locations[IDX][site_contact_name]" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.phone') }}</label>
+                                <input type="text" name="operating_locations[IDX][site_contact_phone]" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.email') }}</label>
+                                <input type="email" name="operating_locations[IDX][site_contact_email]" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
+                            </div>
+                            <div class="md:col-span-3 flex justify-end">
+                                <button type="button" class="removeLocation text-sm text-red-600 font-medium">{{ __('lang.delete') }}</button>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
                 <!-- Contacts Selection -->
                 <div>
                     <h3 class="text-sm font-semibold text-gray-800 mb-4">{{ __('lang.contacts_select_at_least_one') }}
@@ -318,4 +368,37 @@
             </div>
         </form>
     </div>
+@section('scripts')
+<script>
+let locIdx = 0;
+const addBtn = document.getElementById('addLocationBtn');
+const container = document.getElementById('locationsContainer');
+const tpl = document.getElementById('locationTemplate').content;
+function addLocation(initial = {}) {
+    const node = document.importNode(tpl, true);
+    node.querySelectorAll('input').forEach(inp => {
+        inp.name = inp.name.replace('IDX', locIdx);
+    });
+    if (initial.name) node.querySelector('[name="operating_locations['+locIdx+'][name]"]').value = initial.name || '';
+    if (initial.address_street) node.querySelector('[name="operating_locations['+locIdx+'][address_street]"]').value = initial.address_street || '';
+    if (initial.address_number) node.querySelector('[name="operating_locations['+locIdx+'][address_number]"]').value = initial.address_number || '';
+    if (initial.address_postal) node.querySelector('[name="operating_locations['+locIdx+'][address_postal]"]').value = initial.address_postal || '';
+    if (initial.address_city) node.querySelector('[name="operating_locations['+locIdx+'][address_city]"]').value = initial.address_city || '';
+    if (initial.site_contact_name) node.querySelector('[name="operating_locations['+locIdx+'][site_contact_name]"]').value = initial.site_contact_name || '';
+    if (initial.site_contact_phone) node.querySelector('[name="operating_locations['+locIdx+'][site_contact_phone]"]').value = initial.site_contact_phone || '';
+    if (initial.site_contact_email) node.querySelector('[name="operating_locations['+locIdx+'][site_contact_email]"]').value = initial.site_contact_email || '';
+    container.appendChild(node);
+    locIdx++;
+    bindRemove();
+}
+function bindRemove() {
+    container.querySelectorAll('.removeLocation').forEach(btn => {
+        btn.onclick = function() {
+            this.closest('.grid').remove();
+        }
+    });
+}
+addBtn.onclick = () => addLocation();
+</script>
+@endsection
 @endsection

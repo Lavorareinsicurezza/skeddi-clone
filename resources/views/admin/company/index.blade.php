@@ -84,12 +84,15 @@
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 bg-white">
             <thead class="text-xs text-gray-900 uppercase bg-white border-b">
-                <tr>
+                <tr class="bg-white border-b border-gray-200">
                     <th scope="col" class="px-6 py-3">
                         {{ __('lang.id') }}
                     </th>
                     <th scope="col" class="px-6 py-3">
                         {{ strtoupper(__('lang.company_name')) }}
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        {{ __('lang.operating_locations') }}
                     </th>
                     <th scope="col" class="px-6 py-3">
                         {{ strtoupper(__('lang.vat_number')) }}
@@ -111,6 +114,9 @@
                             </th>
                             <td class="px-6 py-4">
                                 {{ $company->name }}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ $company->operatingLocations()->count() }}
                             </td>
                             <td class="px-6 py-4">
                                 {{ $company->vat_number }}

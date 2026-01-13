@@ -41,7 +41,6 @@ class OperatingLocationController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'company_id' => 'required|exists:companies,id',
             'name' => 'required|string|max:255',
             'address_street' => 'nullable|string|max:255',
             'address_number' => 'nullable|string|max:20',
@@ -52,16 +51,15 @@ class OperatingLocationController extends Controller
             'site_contact_email' => 'nullable|email|max:255',
             'is_active' => 'boolean',
         ], [
-            'company_id.required' => 'Please select a company.',
             'name.required' => 'Location name is required.',
             'site_contact_email.email' => 'Please enter a valid email address for site contact.'
         ]);
 
-        // Ensure the company belongs to the user's company hierarchy
-        $company = Company::findOrFail($validated['company_id']);
-        if ($company->company_id !== Auth::user()->company_id) {
-            return redirect()->back()->with('error', 'Invalid company selection.');
+        $companyId = session('selectedCompanyId');
+        if(!$companyId){
+            return redirect()->back()->with('error', 'Please select a company.');
         }
+        $validated['company_id'] = $companyId;
 
         OperatingLocation::create($validated);
 
@@ -101,7 +99,6 @@ class OperatingLocationController extends Controller
         $operatingLocation = OperatingLocation::query()->company()->findOrFail($id);
 
         $validated = $request->validate([
-            'company_id' => 'required|exists:companies,id',
             'name' => 'required|string|max:255',
             'address_street' => 'nullable|string|max:255',
             'address_number' => 'nullable|string|max:20',
@@ -112,16 +109,17 @@ class OperatingLocationController extends Controller
             'site_contact_email' => 'nullable|email|max:255',
             'is_active' => 'boolean',
         ], [
-            'company_id.required' => 'Please select a company.',
             'name.required' => 'Location name is required.',
             'site_contact_email.email' => 'Please enter a valid email address for site contact.'
         ]);
 
-        // Ensure the company belongs to the user's company hierarchy
-        $company = Company::findOrFail($validated['company_id']);
-        if ($company->company_id !== Auth::user()->company_id) {
-            return redirect()->back()->with('error', 'Invalid company selection.');
+
+        $companyId = session('selectedCompanyId');
+        if(!$companyId){
+            return redirect()->back()->with('error', 'Please select a company.');
         }
+        $validated['company_id'] = $companyId;
+
 
         $operatingLocation->update($validated);
 

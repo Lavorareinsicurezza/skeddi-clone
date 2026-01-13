@@ -38,25 +38,6 @@
             <form action="{{ route('admin.operating-locations.store') }}" method="POST" class="p-6">
                 @csrf
 
-                <!-- Company Selection -->
-                <div class="mb-6">
-                    <label for="company_id" class="block text-sm font-medium text-gray-700 mb-2">
-                        {{ __('lang.company') }} <span class="text-red-500">*</span>
-                    </label>
-                    <select name="company_id" id="company_id" required
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
-                        <option value="">{{ __('lang.select_company') }}</option>
-                        @foreach($companies as $company)
-                            <option value="{{ $company->id }}" {{ old('company_id') == $company->id ? 'selected' : '' }}>
-                                {{ $company->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('company_id')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
-
                 <!-- Location Name -->
                 <div class="mb-6">
                     <label for="name" class="block text-sm font-medium text-gray-700 mb-2">

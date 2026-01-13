@@ -163,7 +163,7 @@
                                         </div>
                                         <div class="flex items-center gap-2">
                                             <span class="text-xs text-gray-500">{{ $location->workers->count() }} {{ __('lang.workers') }}</span>
-                                            <a href="{{ route('admin.operating-locations.show', $location->id) }}" 
+                                            <a href="{{ route('admin.operating-locations.show', $location->id) }}"
                                                 class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">
                                                 {{ __('lang.view') }}
                                             </a>
@@ -172,16 +172,16 @@
                                 @endforeach
                             </div>
                             <div class="mt-4">
-                                <a href="{{ route('admin.operating-locations.index') }}?company_id={{ $company->id }}" 
+                                <a href="{{ route('admin.operating-locations.index') }}?company_id={{ $company->id }}"
                                     class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">
-                                    {{ __('lang.view_all_locations') }} →
+                                    {{ __('lang.view_all') }} →
                                 </a>
                             </div>
                         @else
                             <div class="text-center py-6">
                                 <i class="fa fa-map-marker-alt text-gray-300 text-3xl mb-2"></i>
                                 <p class="text-sm text-gray-500">{{ __('lang.no_operating_locations') }}</p>
-                                <a href="{{ route('admin.operating-locations.create') }}?company_id={{ $company->id }}" 
+                                <a href="{{ route('admin.operating-locations.create') }}?company_id={{ $company->id }}"
                                     class="text-indigo-600 hover:text-indigo-800 text-sm font-medium mt-2 inline-block">
                                     {{ __('lang.create_first_location') }}
                                 </a>

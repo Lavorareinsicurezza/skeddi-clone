@@ -14,10 +14,7 @@ class OperatingLocation extends Model
     protected $fillable = [
         'company_id',
         'name',
-        'address_street',
-        'address_number',
-        'address_postal',
-        'address_city',
+        'address',
         'site_contact_name',
         'site_contact_phone',
         'site_contact_email',
@@ -55,24 +52,6 @@ class OperatingLocation extends Model
 
     public function getFullAddressAttribute(): string
     {
-        $parts = [];
-        
-        if ($this->address_street) {
-            $parts[] = $this->address_street;
-        }
-        
-        if ($this->address_number) {
-            $parts[] = $this->address_number;
-        }
-        
-        if ($this->address_city) {
-            $parts[] = $this->address_city;
-        }
-        
-        if ($this->address_postal) {
-            $parts[] = $this->address_postal;
-        }
-        
-        return implode(', ', $parts);
+        return (string)($this->address ?? '');
     }
 }

@@ -42,10 +42,7 @@ class OperatingLocationController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'address_street' => 'nullable|string|max:255',
-            'address_number' => 'nullable|string|max:20',
-            'address_postal' => 'nullable|string|max:20',
-            'address_city' => 'nullable|string|max:100',
+            'address' => 'nullable|string|max:255',
             'site_contact_name' => 'nullable|string|max:255',
             'site_contact_phone' => 'nullable|string|max:20',
             'site_contact_email' => 'nullable|email|max:255',
@@ -100,10 +97,7 @@ class OperatingLocationController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'address_street' => 'nullable|string|max:255',
-            'address_number' => 'nullable|string|max:20',
-            'address_postal' => 'nullable|string|max:20',
-            'address_city' => 'nullable|string|max:100',
+            'address' => 'nullable|string|max:255',
             'site_contact_name' => 'nullable|string|max:255',
             'site_contact_phone' => 'nullable|string|max:20',
             'site_contact_email' => 'nullable|email|max:255',

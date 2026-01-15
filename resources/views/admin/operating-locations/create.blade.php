@@ -55,46 +55,16 @@
                 <!-- Address Information -->
                 <div class="mb-6">
                     <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('lang.address_information') }}</h3>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                    <div class="grid grid-cols-1 gap-4">
                         <div>
-                            <label for="address_street" class="block text-sm font-medium text-gray-700 mb-2">
-                                {{ __('lang.street') }}
+                            <label for="address" class="block text-sm font-medium text-gray-700 mb-2">
+                                {{ __('lang.address') }}
                             </label>
-                            <input type="text" name="address_street" id="address_street"
-                                   value="{{ old('address_street') }}"
+                            <input type="text" name="address" id="address"
+                                   value="{{ old('address') }}"
                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent"
-                                   placeholder="{{ __('lang.street_placeholder') }}">
-                        </div>
-                        
-                        <div>
-                            <label for="address_number" class="block text-sm font-medium text-gray-700 mb-2">
-                                {{ __('lang.street_number') }}
-                            </label>
-                            <input type="text" name="address_number" id="address_number"
-                                   value="{{ old('address_number') }}"
-                                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent"
-                                   placeholder="{{ __('lang.street_number_placeholder') }}">
-                        </div>
-                        
-                        <div>
-                            <label for="address_city" class="block text-sm font-medium text-gray-700 mb-2">
-                                {{ __('lang.city') }}
-                            </label>
-                            <input type="text" name="address_city" id="address_city"
-                                   value="{{ old('address_city') }}"
-                                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent"
-                                   placeholder="{{ __('lang.city_placeholder') }}">
-                        </div>
-                        
-                        <div>
-                            <label for="address_postal" class="block text-sm font-medium text-gray-700 mb-2">
-                                {{ __('lang.postal_code') }}
-                            </label>
-                            <input type="text" name="address_postal" id="address_postal"
-                                   value="{{ old('address_postal') }}"
-                                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent"
-                                   placeholder="{{ __('lang.postal_code_placeholder') }}">
+                                   placeholder="{{ __('lang.address') }}">
                         </div>
                     </div>
                 </div>
@@ -102,7 +72,7 @@
                 <!-- Site Contact Information -->
                 <div class="mb-6">
                     <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('lang.site_contact_information') }}</h3>
-                    
+
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
                             <label for="site_contact_name" class="block text-sm font-medium text-gray-700 mb-2">
@@ -113,7 +83,7 @@
                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent"
                                    placeholder="{{ __('lang.contact_name_placeholder') }}">
                         </div>
-                        
+
                         <div>
                             <label for="site_contact_phone" class="block text-sm font-medium text-gray-700 mb-2">
                                 {{ __('lang.contact_phone') }}
@@ -123,7 +93,7 @@
                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent"
                                    placeholder="{{ __('lang.contact_phone_placeholder') }}">
                         </div>
-                        
+
                         <div>
                             <label for="site_contact_email" class="block text-sm font-medium text-gray-700 mb-2">
                                 {{ __('lang.contact_email') }}

@@ -115,10 +115,7 @@ class CompanyController extends Controller
                 OperatingLocation::create([
                     'company_id' => $company->id,
                     'name' => $loc['name'] ?? null,
-                    'address_street' => $loc['address_street'] ?? null,
-                    'address_number' => $loc['address_number'] ?? null,
-                    'address_postal' => $loc['address_postal'] ?? null,
-                    'address_city' => $loc['address_city'] ?? null,
+                    'address' => $loc['address'] ?? null,
                     'site_contact_name' => $loc['site_contact_name'] ?? null,
                     'site_contact_phone' => $loc['site_contact_phone'] ?? null,
                     'site_contact_email' => $loc['site_contact_email'] ?? null,
@@ -233,10 +230,7 @@ class CompanyController extends Controller
                 if ($existing) {
                     $existing->update([
                         'name' => $loc['name'] ?? $existing->name,
-                        'address_street' => $loc['address_street'] ?? $existing->address_street,
-                        'address_number' => $loc['address_number'] ?? $existing->address_number,
-                        'address_postal' => $loc['address_postal'] ?? $existing->address_postal,
-                        'address_city' => $loc['address_city'] ?? $existing->address_city,
+                        'address' => $loc['address'] ?? $existing->address,
                         'site_contact_name' => $loc['site_contact_name'] ?? $existing->site_contact_name,
                         'site_contact_phone' => $loc['site_contact_phone'] ?? $existing->site_contact_phone,
                         'site_contact_email' => $loc['site_contact_email'] ?? $existing->site_contact_email,
@@ -247,10 +241,7 @@ class CompanyController extends Controller
                     OperatingLocation::create([
                         'company_id' => $company->id,
                         'name' => $loc['name'] ?? null,
-                        'address_street' => $loc['address_street'] ?? null,
-                        'address_number' => $loc['address_number'] ?? null,
-                        'address_postal' => $loc['address_postal'] ?? null,
-                        'address_city' => $loc['address_city'] ?? null,
+                        'address' => $loc['address'] ?? null,
                         'site_contact_name' => $loc['site_contact_name'] ?? null,
                         'site_contact_phone' => $loc['site_contact_phone'] ?? null,
                         'site_contact_email' => $loc['site_contact_email'] ?? null,

@@ -301,20 +301,8 @@
                                 <input type="text" name="operating_locations[IDX][name]" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.street') }}</label>
-                                <input type="text" name="operating_locations[IDX][address_street]" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.no') }}</label>
-                                <input type="text" name="operating_locations[IDX][address_number]" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.postal_code') }}</label>
-                                <input type="text" name="operating_locations[IDX][address_postal]" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.city') }}</label>
-                                <input type="text" name="operating_locations[IDX][address_city]" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.address') }}</label>
+                                <input type="text" name="operating_locations[IDX][address]" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.company_contact_person') }}</label>
@@ -380,10 +368,7 @@ function addLocation(initial = {}) {
         inp.name = inp.name.replace('IDX', locIdx);
     });
     if (initial.name) node.querySelector('[name="operating_locations['+locIdx+'][name]"]').value = initial.name || '';
-    if (initial.address_street) node.querySelector('[name="operating_locations['+locIdx+'][address_street]"]').value = initial.address_street || '';
-    if (initial.address_number) node.querySelector('[name="operating_locations['+locIdx+'][address_number]"]').value = initial.address_number || '';
-    if (initial.address_postal) node.querySelector('[name="operating_locations['+locIdx+'][address_postal]"]').value = initial.address_postal || '';
-    if (initial.address_city) node.querySelector('[name="operating_locations['+locIdx+'][address_city]"]').value = initial.address_city || '';
+    if (initial.address) node.querySelector('[name="operating_locations['+locIdx+'][address]"]').value = initial.address || '';
     if (initial.site_contact_name) node.querySelector('[name="operating_locations['+locIdx+'][site_contact_name]"]').value = initial.site_contact_name || '';
     if (initial.site_contact_phone) node.querySelector('[name="operating_locations['+locIdx+'][site_contact_phone]"]').value = initial.site_contact_phone || '';
     if (initial.site_contact_email) node.querySelector('[name="operating_locations['+locIdx+'][site_contact_email]"]').value = initial.site_contact_email || '';

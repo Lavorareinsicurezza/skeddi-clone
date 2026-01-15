@@ -267,20 +267,8 @@
                                 <input type="text" name="operating_locations[{{ $loop->index }}][name]" value="{{ $loc->name }}" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.street') }}</label>
-                                <input type="text" name="operating_locations[{{ $loop->index }}][address_street]" value="{{ $loc->address_street }}" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.no') }}</label>
-                                <input type="text" name="operating_locations[{{ $loop->index }}][address_number]" value="{{ $loc->address_number }}" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.postal_code') }}</label>
-                                <input type="text" name="operating_locations[{{ $loop->index }}][address_postal]" value="{{ $loc->address_postal }}" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.city') }}</label>
-                                <input type="text" name="operating_locations[{{ $loop->index }}][address_city]" value="{{ $loc->address_city }}" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.address') }}</label>
+                                <input type="text" name="operating_locations[{{ $loop->index }}][address]" value="{{ $loc->address }}" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.company_contact_person') }}</label>
@@ -308,20 +296,8 @@
                             <input type="text" name="operating_locations[IDX][name]" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.street') }}</label>
-                            <input type="text" name="operating_locations[IDX][address_street]" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.no') }}</label>
-                            <input type="text" name="operating_locations[IDX][address_number]" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.postal_code') }}</label>
-                            <input type="text" name="operating_locations[IDX][address_postal]" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.city') }}</label>
-                            <input type="text" name="operating_locations[IDX][address_city]" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.address') }}</label>
+                            <input type="text" name="operating_locations[IDX][address]" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.company_contact_person') }}</label>

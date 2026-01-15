@@ -45,27 +45,25 @@
             </select>
         </div>
 
-        <!-- Name and Validity Years -->
+        <!-- Name and Validity Years (inherited from course type) -->
+        @if(isset($companyCourseType))
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
-                <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
+                <label class="block text-sm font-medium text-gray-700 mb-2">
                     {{ __('lang.name') }}
                 </label>
-                <input type="text" name="name" id="name" value="{{ old('name', $companyCourseType->name ?? '') }}"
-                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0C3183] text-sm"
-                    placeholder="{{ __('lang.name') }}" required>
+                <input type="text" value="{{ $companyCourseType->courseType->course_name ?? $companyCourseType->name }}"
+                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg bg-gray-100 text-sm" disabled>
             </div>
-
             <div>
-                <label for="validity_years" class="block text-sm font-medium text-gray-700 mb-2">
+                <label class="block text-sm font-medium text-gray-700 mb-2">
                     {{ __('lang.validity_year') }}
                 </label>
-                <input type="number" name="validity_years" id="validity_years"
-                    value="{{ old('validity_years', $companyCourseType->validity_years ?? '') }}"
-                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0C3183] text-sm"
-                    placeholder="{{ __('lang.validity_year') }}" min="0">
+                <input type="text" value="{{ $companyCourseType->courseType->validity_year ?? $companyCourseType->validity_years }}"
+                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg bg-gray-100 text-sm" disabled>
             </div>
         </div>
+        @endif
 
         <!-- Generic Column Name and Expiration Column Name -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">

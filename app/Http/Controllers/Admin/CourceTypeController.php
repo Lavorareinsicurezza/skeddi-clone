@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\CompanyCourseType;
 use App\Models\CourseType;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -91,6 +92,18 @@ class CourceTypeController extends Controller
         }
 
         $courseType->update($validated);
+
+        // Propagate changes to company course types: inherit name and validity, recalc expiration
+        $validityYears = (int) $courseType->validity_year;
+        $today = Carbon::today();
+        $newExpiration = $today->copy()->addYears($validityYears);
+
+        CompanyCourseType::where('course_type_id', $courseType->id)
+            ->update([
+                'name' => $courseType->course_name,
+                'validity_years' => $courseType->validity_year,
+                'expiration_date' => $newExpiration,
+            ]);
 
         return redirect()->route('admin.course-types.index')->with('success', 'Course type updated successfully');
     }

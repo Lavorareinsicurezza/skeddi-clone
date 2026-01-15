@@ -34,8 +34,6 @@ class CompanyCourseTypeController extends Controller
     {
         $request->validate([
             'course_type_id' => 'required|exists:course_types,id',
-            'name' => 'required|string|max:255',
-            'validity_years' => 'nullable|integer|min:0',
             'generic_column_name' => 'nullable|string|max:255',
             'expiration_column_name' => 'nullable|string|max:255',
             'is_generic' => 'sometimes|boolean',
@@ -43,7 +41,8 @@ class CompanyCourseTypeController extends Controller
         ]);
 
         $companyId = session('selectedCompanyId');
-        $validityYears = (int) $request->input('validity_years');
+        $courseType = CourseType::findOrFail($request->input('course_type_id'));
+        $validityYears = (int) ($courseType->validity_year ?? 0);
 
         $today = \Carbon\Carbon::today();
 
@@ -52,8 +51,8 @@ class CompanyCourseTypeController extends Controller
         CompanyCourseType::create([
             'company_id' => $companyId,
             'course_type_id' => $request->input('course_type_id'),
-            'name' => $request->input('name'),
-            'validity_years' => $request->input('validity_years'),
+            'name' => $courseType->course_name,
+            'validity_years' => $courseType->validity_year,
             'expiration_date' => $expirationDate,
             'generic_column_name' => $request->input('generic_column_name'),
             'expiration_column_name' => $request->input('expiration_column_name'),
@@ -94,8 +93,6 @@ class CompanyCourseTypeController extends Controller
     {
         $request->validate([
             'course_type_id' => 'required|exists:course_types,id',
-            'name' => 'required|string|max:255',
-            'validity_years' => 'nullable|integer|min:0',
             'generic_column_name' => 'nullable|string|max:255',
             'expiration_column_name' => 'nullable|string|max:255',
             'is_generic' => 'sometimes|boolean',
@@ -103,8 +100,9 @@ class CompanyCourseTypeController extends Controller
         ]);
 
         $companyCourseType = CompanyCourseType::query()->company()->findOrFail($id);
+        $courseType = CourseType::findOrFail($request->input('course_type_id'));
 
-        $validityYears = (int) $request->input('validity_years');
+        $validityYears = (int) ($courseType->validity_year ?? 0);
 
         $today = \Carbon\Carbon::today();
 
@@ -112,8 +110,8 @@ class CompanyCourseTypeController extends Controller
 
         $companyCourseType->update([
             'course_type_id' => $request->input('course_type_id'),
-            'name' => $request->input('name'),
-            'validity_years' => $request->input('validity_years'),
+            'name' => $courseType->course_name,
+            'validity_years' => $courseType->validity_year,
             'generic_column_name' => $request->input('generic_column_name'),
             'expiration_column_name' => $request->input('expiration_column_name'),
             'expiration_date' => $expirationDate,

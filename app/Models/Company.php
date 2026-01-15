@@ -21,7 +21,7 @@ class Company extends Model
         'ateco',
         'sdi',
         'registered_office',
-        'operating_office',
+        // 'operating_office',
         'main_email',
         'pec_email',
         'phone',

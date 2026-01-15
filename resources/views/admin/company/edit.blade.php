@@ -63,11 +63,11 @@
                         <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
-                <div>
+                {{-- <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.operating_office') }}</label>
                     <input type="text" name="operating_office" value="{{ old('operating_office', $company->operating_office) }}" placeholder="{{ __('lang.enter_operating_office_address') }}"
                         class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
-                </div>
+                </div> --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.main_email') }} </label>
                     <input type="email" name="main_email" value="{{ old('main_email', $company->main_email) }}" placeholder="company@example.com"

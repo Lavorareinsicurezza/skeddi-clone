@@ -77,7 +77,7 @@
                                 </div>
                             </div>
 
-                            <div class="flex items-start gap-2">
+                            {{-- <div class="flex items-start gap-2">
                                 <div class="bg-purple-50 p-2 rounded">
                                     <i class="fa fa-briefcase text-purple-600 text-sm"></i>
                                 </div>
@@ -85,7 +85,7 @@
                                     <p class="text-xs text-gray-500 uppercase font-medium">{{ __('lang.operating_office') }}</p>
                                     <p class="text-gray-900 text-sm">{{ $company->operating_office ?? '-' }}</p>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>

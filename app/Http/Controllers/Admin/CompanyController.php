@@ -61,7 +61,6 @@ class CompanyController extends Controller
             'ateco' => 'nullable|string|max:255',
             'sdi' => 'nullable|string|max:255',
             'registered_office' => 'nullable|string',
-            // 'operating_office' => 'nullable|string',
             'main_email' => 'nullable|email|max:255',
             'pec_email' => 'nullable|email|max:255',
             'phone' => 'nullable|string|max:20',
@@ -177,7 +176,6 @@ class CompanyController extends Controller
             'ateco' => 'nullable|string|max:255',
             'sdi' => 'nullable|string|max:255',
             'registered_office' => 'nullable|string',
-            // 'operating_office' => 'nullable|string',
             'main_email' => 'nullable|email|max:255',
             'pec_email' => 'nullable|email|max:255',
             'phone' => 'nullable|string|max:20',
@@ -303,6 +301,15 @@ class CompanyController extends Controller
     public function export()
     {
         return Excel::download(new CompaniesExport, 'companies-' . date('Y-m-d-His') . '.xlsx');
+    }
+
+    /**
+     * Export a single company to Excel
+     */
+    public function exportSingle(string $id)
+    {
+        $company = Company::findOrFail($id);
+        return Excel::download(new CompaniesExport($company->id), 'company-' . $company->id . '-' . date('Y-m-d-His') . '.xlsx');
     }
 
     /**

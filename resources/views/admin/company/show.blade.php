@@ -13,6 +13,14 @@
                     </p>
                 </div>
                 <div class="flex gap-2">
+                    @can('view companies')
+                    <a href="{{ route('admin.companies.export.single', $company->id) }}"
+                        class="bg-white text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 shadow-sm border border-gray-200 transition-all flex items-center gap-2 text-sm"
+                        title="{{ __('lang.export_data') }}">
+                        <i class="fa fa-download"></i>
+                        <span>{{ __('lang.export') }}</span>
+                    </a>
+                    @endcan
                     @can('edit companies')
                     <a href="{{ route('admin.companies.edit', $company->id) }}"
                         class="bg-[#0C3183] text-white px-4 py-2 rounded-lg hover:bg-blue-800 shadow-sm transition-all flex items-center gap-2 text-sm">
@@ -77,15 +85,7 @@
                                 </div>
                             </div>
 
-                            {{-- <div class="flex items-start gap-2">
-                                <div class="bg-purple-50 p-2 rounded">
-                                    <i class="fa fa-briefcase text-purple-600 text-sm"></i>
-                                </div>
-                                <div class="flex-1">
-                                    <p class="text-xs text-gray-500 uppercase font-medium">{{ __('lang.operating_office') }}</p>
-                                    <p class="text-gray-900 text-sm">{{ $company->operating_office ?? '-' }}</p>
-                                </div>
-                            </div> --}}
+                            
                         </div>
                     </div>
                 </div>

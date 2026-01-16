@@ -13,6 +13,8 @@ use App\Models\TrainingPlanDocument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\TrainingPlanExport;
 
 class TrainingPlanController extends Controller
 {
@@ -38,6 +40,14 @@ class TrainingPlanController extends Controller
             });
 
         return view('company.training-plan.index', compact('workers', 'courseTypes', 'trainingRecords'));
+    }
+
+    /**
+     * Export training plan records to Excel.
+     */
+    public function export()
+    {
+        return Excel::download(new TrainingPlanExport, 'training-plan-' . date('Y-m-d-His') . '.xlsx');
     }
 
     /**

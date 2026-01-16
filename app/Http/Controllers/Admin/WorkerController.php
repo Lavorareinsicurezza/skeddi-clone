@@ -7,6 +7,8 @@ use App\Models\Worker;
 use App\Models\OperatingLocation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\WorkersExport;
 
 class WorkerController extends Controller
 {
@@ -186,5 +188,13 @@ class WorkerController extends Controller
 
         // TODO: Implement import logic
         return redirect()->route('admin.company-workers.index')->with('success', __('lang.workers_imported_successfully'));
+    }
+
+    /**
+     * Export workers to Excel.
+     */
+    public function export()
+    {
+        return Excel::download(new WorkersExport, 'workers-' . date('Y-m-d-His') . '.xlsx');
     }
 }

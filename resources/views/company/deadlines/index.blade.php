@@ -24,6 +24,13 @@
                         @endforeach
                     </select>
                 </div>
+                <div class="px-3 py-2 flex items-center sm:border-r border-b sm:border-b-0 border-gray-200 text-xs">
+                    <a href="{{ route('admin.deadlines.export', ['operating_location_id' => $selectedOperatingLocationId]) }}"
+                       class="font-semibold text-gray-600 hover:text-[#0C3183] flex items-center gap-2">
+                        <i class="fa fa-download"></i>
+                        <span>{{ __('lang.export') }}</span>
+                    </a>
+                </div>
             </div>
         </form>
         <!-- Filter Form -->

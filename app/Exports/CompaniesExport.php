@@ -11,12 +11,23 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class CompaniesExport implements FromCollection, WithHeadings, WithMapping, WithStyles
 {
+    private ?int $companyId = null;
+
+    public function __construct(?int $companyId = null)
+    {
+        $this->companyId = $companyId;
+    }
+
     /**
      * @return \Illuminate\Support\Collection
      */
     public function collection()
     {
-        return Company::company()->get();
+        $query = Company::company();
+        if ($this->companyId) {
+            $query->where('id', $this->companyId);
+        }
+        return $query->get();
     }
 
     /**
@@ -32,7 +43,6 @@ class CompaniesExport implements FromCollection, WithHeadings, WithMapping, With
             'ATECO',
             'SDI',
             'Registered Office',
-            'Operating Office',
             'Main Email',
             'PEC Email',
             'Phone',
@@ -72,7 +82,6 @@ class CompaniesExport implements FromCollection, WithHeadings, WithMapping, With
             $company->ateco,
             $company->sdi,
             $company->registered_office,
-            $company->operating_office,
             $company->main_email,
             $company->pec_email,
             $company->phone,

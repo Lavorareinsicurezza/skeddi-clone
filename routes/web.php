@@ -43,9 +43,11 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->middleware('ensure.permission:dashboard')->name('dashboard');
     Route::get('/deadlines', [DashboardController::class, 'deadlines'])->middleware('ensure.permission:deadlines')->name('deadlines');
+    Route::get('/deadlines/export', [DashboardController::class, 'exportDeadlines'])->middleware('ensure.permission:deadlines,view')->name('deadlines.export');
 
     // Company import/export routes
     Route::get('/companies/export', [CompanyController::class, 'export'])->middleware('ensure.permission:companies,view')->name('companies.export');
+    Route::get('/companies/{id}/export', [CompanyController::class, 'exportSingle'])->middleware('ensure.permission:companies,view')->name('companies.export.single');
     Route::post('/companies/import', [CompanyController::class, 'import'])->middleware('ensure.permission:companies,create')->name('companies.import');
     Route::get('/companies/template', [CompanyController::class, 'downloadTemplate'])->middleware('ensure.permission:companies,view')->name('companies.template');
 
@@ -89,9 +91,11 @@ Route::middleware('auth')->name('admin.')->group(function () {
 
     // Company workers routes
     Route::post('/company-workers/import', [WorkerController::class, 'import'])->middleware('ensure.permission:company-workers,create')->name('company-workers.import');
+    Route::get('/company-workers/export', [WorkerController::class, 'export'])->middleware('ensure.permission:company-workers,view')->name('company-workers.export');
     Route::resource('/company-workers', WorkerController::class)->middleware('ensure.permission:company-workers');
 
     // Operating Locations routes
+    Route::get('/operating-locations/export', [OperatingLocationController::class, 'export'])->middleware('ensure.permission:operating-locations,view')->name('operating-locations.export');
     Route::resource('operating-locations', OperatingLocationController::class)->middleware('ensure.permission:operating-locations');
 
     // Company course types routes
@@ -100,6 +104,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
 
     // Training plan routes
     Route::get('/training-plan', [TrainingPlanController::class, 'index'])->middleware('ensure.permission:training-plan')->name('training-plan.index');
+    Route::get('/training-plan/export', [TrainingPlanController::class, 'export'])->middleware('ensure.permission:training-plan,view')->name('training-plan.export');
     Route::post('/training-plan/save', [TrainingPlanController::class, 'save'])->middleware('ensure.permission:training-plan-edit,view')->name('training-plan.save');
     Route::post('/training-plan/renew', [TrainingPlanController::class, 'renew'])->middleware('ensure.permission:training-plan-edit,view')->name('training-plan.renew');
     Route::post('/training-plan/documents/get', [TrainingPlanController::class, 'getDocuments'])->middleware('ensure.permission:training-plan-edit,view')->name('training-plan.documents.get');

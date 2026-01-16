@@ -7,6 +7,8 @@ use App\Models\OperatingLocation;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\OperatingLocationsExport;
 
 class OperatingLocationController extends Controller
 {
@@ -144,5 +146,13 @@ class OperatingLocationController extends Controller
 
         return redirect()->route('admin.operating-locations.index')
             ->with('success', 'Operating location deleted successfully');
+    }
+
+    /**
+     * Export operating locations to Excel.
+     */
+    public function export()
+    {
+        return Excel::download(new OperatingLocationsExport, 'operating-locations-' . date('Y-m-d-His') . '.xlsx');
     }
 }

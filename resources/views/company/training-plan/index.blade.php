@@ -20,6 +20,11 @@
         <h1 class="text-3xl font-bold text-gray-900">{{ __('lang.training_plan') }}</h1>
 
         <div class="flex items-center gap-3">
+            <a href="{{ route('admin.training-plan.export') }}"
+                class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium">
+                <i class="fa fa-download mr-2"></i>
+                {{ __('lang.export') }}
+            </a>
             <!-- Edit Button (Hidden in edit mode) -->
             <button type="button" id="editButton" onclick="toggleEditMode()"
                 class="px-6 py-3 bg-[#0C3183] text-white rounded-lg hover:bg-[#0A2869] font-medium">

@@ -11,6 +11,8 @@ use App\Models\TrainingPlanRecord;
 use App\Models\OperatingLocation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\DeadlinesExport;
 
 class DashboardController extends Controller
 {
@@ -227,6 +229,15 @@ class DashboardController extends Controller
             'operatingLocations' => $operatingLocations,
             'selectedOperatingLocationId' => $operatingLocationId,
         ]);
+    }
+
+    /**
+     * Export deadlines (training plans) to Excel
+     */
+    public function exportDeadlines(Request $request)
+    {
+        $operatingLocationId = $request->operating_location_id ? (int)$request->operating_location_id : null;
+        return Excel::download(new DeadlinesExport($operatingLocationId), 'deadlines-' . date('Y-m-d-His') . '.xlsx');
     }
 
     /**

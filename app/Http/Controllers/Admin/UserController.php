@@ -23,7 +23,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::query()->company()->where('role', '!=', 'superadmin')->paginate(20);
+        $users = User::query()->company()->paginate(20);
         return view('admin.user.index', compact('users'));
     }
 

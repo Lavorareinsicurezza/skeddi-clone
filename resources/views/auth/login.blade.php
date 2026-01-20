@@ -80,11 +80,11 @@
                 <div class="flex items-center justify-between mb-6">
                     <label class="flex items-center">
                         <input type="checkbox" name="remember"
-                            class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                            class="w-4 h-4 text-blue-600 border border-gray-300 rounded focus:ring-blue-500">
                         <span class="ml-2 text-sm text-gray-600">{{ __('lang.remember_me') }}</span>
                     </label>
-                    <a href="{{ route('password.request') }}"
-                        class="text-sm text-blue-600 hover:text-blue-800 font-medium">{{ __('lang.forgot_password') }}</a>
+                    {{-- <a href="{{ route('password.request') }}"
+                        class="text-sm text-blue-600 hover:text-blue-800 font-medium">{{ __('lang.forgot_password') }}</a> --}}
                 </div>
 
                 <!-- Login Button -->
@@ -95,15 +95,15 @@
 
                 <!-- Sign Up & Contact Links -->
                 <div class="mt-6 text-center space-y-2">
-                    <p class="text-sm text-gray-600">
+                    {{-- <p class="text-sm text-gray-600">
                         {{ __('lang.dont_have_an_account_for_your_company') }}
                         <a href="{{ route('register') }}"
                             class="text-blue-600 hover:text-blue-800 font-medium">{{ __('lang.register') }}</a>
-                    </p>
-                    <p class="text-sm text-gray-600">
+                    </p> --}}
+                    {{-- <p class="text-sm text-gray-600">
                         {{ __('lang.are_you_a_consultant_or_freelancer') }}
                         <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">{{ __('lang.contact_us') }}</a>
-                    </p>
+                    </p> --}}
                 </div>
             </form>
         </div>

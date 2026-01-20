@@ -85,7 +85,7 @@
                                 </div>
                             </div>
 
-                            
+
                         </div>
                     </div>
                 </div>
@@ -447,7 +447,7 @@
                 </div>
 
                 <!-- Selected Contacts - Compact -->
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                {{-- <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                     <div class="bg-gradient-to-r from-indigo-600 to-indigo-700 px-4 py-3">
                         <h2 class="text-base font-semibold  flex items-center gap-2">
                             <i class="fa fa-at"></i>
@@ -471,7 +471,7 @@
                             </div>
                         @endif
                     </div>
-                </div>
+                </div> --}}
 
                 @if(!empty($company->agent))
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">

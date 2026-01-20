@@ -55,8 +55,8 @@ class CompanyController extends Controller
         $validated = $request->validate([
             'company_name' => 'required|string|max:255',
             'vat_number' => 'required|string|max:255|unique:companies,vat_number',
-            'contacts' => 'required|array|min:1',
-            'contacts.*' => 'string|email',
+            // 'contacts' => 'required|array|min:1',
+            // 'contacts.*' => 'string|email',
             'tax_code' => 'nullable|string|max:255',
             'ateco' => 'nullable|string|max:255',
             'sdi' => 'nullable|string|max:255',
@@ -87,8 +87,8 @@ class CompanyController extends Controller
             'company_name.required' => 'Company name is required.',
             'vat_number.required' => 'VAT number is required.',
             'vat_number.unique' => 'This VAT number is already registered.',
-            'contacts.required' => 'Please select at least one contact.',
-            'contacts.min' => 'Please select at least one contact.'
+            // 'contacts.required' => 'Please select at least one contact.',
+            // 'contacts.min' => 'Please select at least one contact.'
 
         ]);
 
@@ -198,14 +198,14 @@ class CompanyController extends Controller
             'agent' => 'nullable|string',
             'send_deadline_notification' => 'nullable|boolean',
             'freeze_company' => 'nullable|boolean',
-            'contacts' => 'required|array|min:1',
-            'contacts.*' => 'string|email'
+            // 'contacts' => 'required|array|min:1',
+            // 'contacts.*' => 'string|email'
         ], [
             'company_name.required' => 'Company name is required.',
             'vat_number.required' => 'VAT number is required.',
             'vat_number.unique' => 'This VAT number is already registered.',
-            'contacts.required' => 'Please select at least one contact.',
-            'contacts.min' => 'Please select at least one contact.'
+            // 'contacts.required' => 'Please select at least one contact.',
+            // 'contacts.min' => 'Please select at least one contact.'
         ]);
 
         // Map company_name to name field

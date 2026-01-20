@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         // Create test user with company_id
         User::factory()->create([
             'name' => 'Test User',
-            'email' => 'test@example.com',
+            'email' => 'ismail@devop360.com',
             'password' => Hash::make('devop360'),
             'role' => 'superadmin',
             'company_id' => 1,

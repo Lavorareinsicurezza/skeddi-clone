@@ -318,7 +318,7 @@
                 </template>
             </div>
 
-            <!-- Contacts Selection -->
+            {{-- <!-- Contacts Selection -->
             <div>
                 <h3 class="text-sm font-semibold text-gray-800 mb-4">{{ __('lang.contacts_select_at_least_one') }} <span class="text-red-500">*</span></h3>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -334,7 +334,7 @@
                 @error('contacts')
                     <p class="mt-2 text-sm text-red-500">{{ $message }}</p>
                 @enderror
-            </div>
+            </div> --}}
 
             <div class="grid grid-cols-1 md:grid-cols-1 gap-4 mb-6">
                 <div class="text-end">

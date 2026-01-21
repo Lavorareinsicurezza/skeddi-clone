@@ -18,13 +18,13 @@ class CompanyDocumentsExport implements FromQuery, WithHeadings, WithMapping
     {
         return [
             'ID',
-            'Document Name',
-            'Document Type',
-            'Scheduling Note',
-            'Expiration Date',
-            'To Schedule',
-            'Notes',
-            'Created At',
+            'Nome Documento',
+            'Tipo Documento',
+            'Nota Scadenzario',
+            'Data Scadenza',
+            'Da Scadenzare',
+            'Note',
+            'Data Creazione',
         ];
     }
 

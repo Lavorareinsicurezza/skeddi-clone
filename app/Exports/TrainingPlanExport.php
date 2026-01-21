@@ -19,13 +19,13 @@ class TrainingPlanExport implements FromCollection, WithHeadings, WithMapping, W
     public function headings(): array
     {
         return [
-            'Company Name',
-            'Course Name',
-            'Employee Name',
-            'Operating Location',
-            'Training Date',
-            'Expiration Date',
-            'To Be Scheduled',
+            'Ragione Sociale',
+            'Nome Corso',
+            'Nome Dipendente',
+            'Sede Operativa',
+            'Data Formazione',
+            'Data Scadenza',
+            'Da Programmare',
         ];
     }
 

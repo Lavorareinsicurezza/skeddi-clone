@@ -34,12 +34,12 @@ class UsersTemplateExport implements FromArray, WithHeadings, WithStyles
     public function headings(): array
     {
         return [
-            'Name',
+            'Nome',
             'Email',
-            'Role',
-            'Functions (comma-separated)',
-            'Visible Company Names (comma-separated)',
-            'Admin Functions (comma-separated)',
+            'Ruolo',
+            'Funzioni (separate da virgola)',
+            'Aziende Visibili (separate da virgola)',
+            'Funzioni Admin (separate da virgola)',
         ];
     }
 

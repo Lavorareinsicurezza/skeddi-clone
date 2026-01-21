@@ -30,13 +30,13 @@ class UsersExport implements FromCollection, WithHeadings, WithMapping, WithStyl
     public function headings(): array
     {
         return [
-            'Name',
+            'Nome',
             'Email',
-            'Role',
-            'Company',
-            'Functions',
-            'Visible Company Names',
-            'Admin Functions',
+            'Ruolo',
+            'Azienda',
+            'Funzioni',
+            'Aziende Visibili',
+            'Funzioni Admin',
         ];
     }
 

@@ -19,13 +19,13 @@ class WorkersExport implements FromCollection, WithHeadings, WithMapping, WithSt
     public function headings(): array
     {
         return [
-            'Surname',
-            'First Name',
-            'Operating Location',
-            'Job Title',
-            'Workplace Safety Risk',
-            'Is Active',
-            'Additional Information',
+            'Cognome',
+            'Nome',
+            'Sede Operativa',
+            'Mansione',
+            'Rischio Sicurezza',
+            'Attivo',
+            'Informazioni Aggiuntive',
         ];
     }
 

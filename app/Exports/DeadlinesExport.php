@@ -33,13 +33,13 @@ class DeadlinesExport implements FromCollection, WithHeadings, WithMapping, With
     public function headings(): array
     {
         return [
-            'Company Name',
-            'Course Name',
-            'Employee Name',
-            'Operating Location',
-            'Training Date',
-            'Expiry Date',
-            'To Be Scheduled',
+            'Ragione Sociale',
+            'Nome Corso',
+            'Nome Dipendente',
+            'Sede Operativa',
+            'Data Formazione',
+            'Data Scadenza',
+            'Da Programmare',
         ];
     }
 
@@ -50,8 +50,8 @@ class DeadlinesExport implements FromCollection, WithHeadings, WithMapping, With
             $record->companyCourseType?->name,
             $record->worker?->surname,
             $record->worker?->operatingLocation?->name,
-            optional($record->training_date)->format('Y-m-d'),
-            optional($record->expiration_date)->format('Y-m-d'),
+            optional($record->training_date)->format('d/m/Y'),
+            optional($record->expiration_date)->format('d/m/Y'),
             $record->to_be_scheduled ? 'Yes' : 'No',
         ];
     }

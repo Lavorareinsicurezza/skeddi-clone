@@ -19,14 +19,14 @@ class OperatingLocationsExport implements FromCollection, WithHeadings, WithMapp
     public function headings(): array
     {
         return [
-            'Name',
-            'Company',
-            'Address',
-            'Site Contact Name',
-            'Site Contact Phone',
-            'Site Contact Email',
-            'Status',
-            'Created At',
+            'Nome',
+            'Azienda',
+            'Indirizzo',
+            'Nome Referente Sede',
+            'Telefono Referente Sede',
+            'Email Referente Sede',
+            'Stato',
+            'Data Creazione',
         ];
     }
 

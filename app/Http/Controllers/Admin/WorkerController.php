@@ -39,7 +39,7 @@ class WorkerController extends Controller
         $request->validate([
             'first_name' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
-            'operating_location_id' => 'required|exists:operating_locations,id',
+            'operating_location_id' => 'nullable|exists:operating_locations,id',
             'job_title' => 'nullable|string|max:255',
             // 'department' => 'nullable|string|max:255',
             'workplace_safety_risk' => 'sometimes|boolean',
@@ -114,7 +114,7 @@ class WorkerController extends Controller
         $request->validate([
             'first_name' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
-            'operating_location_id' => 'required|exists:operating_locations,id',
+            'operating_location_id' => 'nullable|exists:operating_locations,id',
             'job_title' => 'nullable|string|max:255',
             // 'department' => 'nullable|string|max:255',
             'workplace_safety_risk' => 'sometimes|boolean',

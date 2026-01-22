@@ -20,11 +20,20 @@
                         </td>
                     </tr>
 
+                    @if(!empty($customBody) && $customBody != '<br>')
+                        <tr>
+                            <td style="font-size:14px; color:#333;">
+                                {!! $customBody !!}
+                            </td>
+                        </tr>
+                    @else
                     <tr>
                         <td style="font-size:14px; color:#333;">
                             <p>{{ __('lang.dear_user', ['name' => $record->company->name ?? 'User']) }}</p>
 
-                            @if ($mailType === 'one_month')
+                            @if (is_numeric($mailType))
+                                <p>Please note that the {{ strtolower($module) }} is expiring in {{ $mailType }} days.</p>
+                            @elseif ($mailType === 'one_month')
                                 <p>{{ __('lang.one_month', ['module' => strtolower($module)]) }}</p>
                             @elseif ($mailType === 'one_week')
                                 <p>{{ __('lang.one_week', ['module' => strtolower($module)]) }}</p>
@@ -68,6 +77,7 @@
                             </p>
                         </td>
                     </tr>
+                    @endif
 
                 </table>
             </td>

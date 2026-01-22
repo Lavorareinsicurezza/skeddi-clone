@@ -5,16 +5,24 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\User;
+use App\Models\Setting;
 use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use App\Exports\UsersExport;
 use App\Exports\UsersTemplateExport;
 use App\Imports\UsersImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Validators\ValidationException;
+use Symfony\Component\Mailer\Transport;
+use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\Address;
+use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
 {
@@ -201,5 +209,118 @@ class UserController extends Controller
     public function downloadTemplate()
     {
         return Excel::download(new UsersTemplateExport, 'users-import-template.xlsx');
+    }
+
+    /**
+     * Send OTP for password reset
+     */
+    public function sendOtp(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id'
+        ]);
+
+        $user = User::findOrFail($request->user_id);
+
+        // Generate OTP
+        $otp = rand(100000, 999999);
+
+        // Store in Cache for 10 minutes
+        Cache::put('password_reset_otp_' . $user->id, $otp, now()->addMinutes(10));
+
+        // Send Email
+        try {
+            $this->sendEmail($user, 'Password Reset OTP', 'emails.otp', ['user' => $user, 'otp' => $otp]);
+            return response()->json(['success' => true, 'message' => 'OTP sent successfully to ' . $user->email]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Failed to send OTP: ' . $e->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Reset Password
+     */
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'otp' => 'required|digits:6',
+            'password' => ['required', 'confirmed', 'string', 'min:8'],
+        ]);
+
+        $cachedOtp = Cache::get('password_reset_otp_' . $request->user_id);
+
+        if (!$cachedOtp || $cachedOtp != $request->otp) {
+            return response()->json(['success' => false, 'message' => 'Invalid or expired OTP.'], 422);
+        }
+
+        $user = User::findOrFail($request->user_id);
+
+        // Update Password
+        $user->update([
+            'password' => Hash::make($request->password)
+        ]);
+
+        // Clear OTP
+        Cache::forget('password_reset_otp_' . $request->user_id);
+
+        // Send Confirmation Email
+        try {
+            $this->sendEmail($user, 'Password Changed Successfully', 'emails.password-changed', ['user' => $user]);
+        } catch (\Exception $e) {
+            // Log error but don't fail the request since password is changed
+            // Log::error('Failed to send password changed email: ' . $e->getMessage());
+        }
+
+        return response()->json(['success' => true, 'message' => 'Password changed successfully!']);
+    }
+
+    /**
+     * Helper to send email using user's company settings
+     */
+    private function sendEmail($user, $subject, $viewName, $data)
+    {
+        $companyId = $user->company_id;
+
+        // If user doesn't have company_id (e.g. super admin?), try Auth user's company or fail gracefully
+        if (!$companyId) {
+             throw new \Exception('User is not associated with a company for SMTP settings.');
+        }
+
+        $setting = Setting::where('company_id', $companyId)->first();
+
+        if (!$setting || !$setting->smtp_host || !$setting->smtp_username || !$setting->smtp_password) {
+            throw new \Exception('SMTP settings missing for company.');
+        }
+
+        $scheme = $setting->smtp_port == 465 ? 'smtps' : 'smtp';
+        $dsn = sprintf(
+            '%s://%s:%s@%s:%s',
+            $scheme,
+            urlencode($setting->smtp_username),
+            urlencode($setting->smtp_password),
+            $setting->smtp_host,
+            $setting->smtp_port
+        );
+
+        $transport = Transport::fromDsn($dsn);
+        $mailer = new Mailer(transport: $transport);
+
+        $html = View::make($viewName, $data)->render();
+
+        $fromAddress = $setting->smtp_address ?? $setting->smtp_username;
+        $fromName = config('app.name');
+
+        $email = (new Email())
+            ->from(new Address($fromAddress, $fromName))
+            ->to($user->email)
+            ->subject($subject)
+            ->html($html);
+
+        if ($setting->smtp_reply_to) {
+            $email->replyTo($setting->smtp_reply_to);
+        }
+
+        $mailer->send($email);
     }
 }

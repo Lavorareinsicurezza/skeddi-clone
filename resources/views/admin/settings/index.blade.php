@@ -50,28 +50,40 @@
         </div>
 
         <!-- Alert Notifications Settings -->
-        <div class="px-6 py-3">
+        <div class="px-6 py-3" x-data="{
+            periods: @json($setting->notification_periods ?? [90, 30]),
+            addPeriod() {
+                this.periods.push(0);
+            },
+            removePeriod(index) {
+                this.periods.splice(index, 1);
+            }
+        }">
             <h2 class="text-sm font-semibold text-gray-700 mb-4">{{ __('lang.alert_notifications_settings') }}</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                    <label class="block text-xs text-gray-500 mb-2">{{ __('lang.days_prior_course_deadline') }}</label>
-                    <input type="number" name="days_prior_course_deadline"
-                        value="{{ old('days_prior_course_deadline', $setting->days_prior_course_deadline) }}" min="0"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <div class="mb-4">
+                <label class="block text-xs text-gray-500 mb-2">Notification Periods (Days before expiry)</label>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 space-y-3">
+                    <template x-for="(period, index) in periods" :key="index">
+                        <div class="flex items-center gap-3 p-2 rounded-lg bg-blue-100">
+                            <input type="number" name="notification_periods[]" x-model="periods[index]" min="1"
+                                class="w-full md:w-1/3 px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Enter days (e.g., 90)">
+
+                            <button type="button" @click="removePeriod(index)" class="text-red-500 hover:text-red-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                            </button>
+                        </div>
+                    </template>
                 </div>
-                <div>
-                    <label class="block text-xs text-gray-500 mb-2">{{ __('lang.days_prior_health_insurance') }}</label>
-                    <input type="number" name="days_prior_health_insurance"
-                        value="{{ old('days_prior_health_insurance', $setting->days_prior_health_insurance) }}" min="0"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                </div>
-                <div>
-                    <label class="block text-xs text-gray-500 mb-2">{{ __('lang.days_prior_maintenance_deadline') }}</label>
-                    <input type="number" name="days_prior_maintenance_deadline"
-                        value="{{ old('days_prior_maintenance_deadline', $setting->days_prior_maintenance_deadline) }}"
-                        min="0"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                </div>
+                <button type="button" @click="addPeriod()"
+                    class="mt-3 flex items-center px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 text-sm font-medium transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
+                    </svg>
+                    Add Period
+                </button>
             </div>
         </div>
 
@@ -374,9 +386,12 @@
 
         <div class="mb-6 px-6">
             <ul class="mt-4 text-sm text-gray-700 list-disc list-inside">
-                <li>{0} Company Name</li>
-                <li>{1} Day of Descending</li>
-                <li>{2} List of deadlines for that day</li>
+                <li>{company_name} - Company Name</li>
+                <li>{days_left} - Days remaining until expiry</li>
+                <li>{course_name} - Name of the course/document/item</li>
+                <li>{expiry_date} - Expiration Date (e.g., 22 February 2026)</li>
+                <li>{worker_first_name} - Worker's First Name</li>
+                <li>{worker_last_name} - Worker's Last Name</li>
             </ul>
         </div>
 

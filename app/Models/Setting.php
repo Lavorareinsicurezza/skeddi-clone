@@ -10,9 +10,7 @@ class Setting extends Model
 {
     protected $fillable = [
         'company_id',
-        'days_prior_course_deadline',
-        'days_prior_health_insurance',
-        'days_prior_maintenance_deadline',
+        'notification_periods',
         'smtp_address',
         'smtp_alias',
         'smtp_reply_to',
@@ -33,6 +31,7 @@ class Setting extends Model
     protected $casts = [
         'email_auto_generated' => 'boolean',
         'whatsapp_notification' => 'boolean',
+        'notification_periods' => 'array',
     ];
 
     /**

@@ -76,6 +76,10 @@ Route::middleware('auth')->name('admin.')->group(function () {
     Route::put('/settings', [SettingController::class, 'update'])->middleware('ensure.permission:settings,edit')->name('settings.update');
     Route::post('/settings/test', [SettingController::class, 'testSmtp'])->middleware('ensure.permission:settings,view')->name('settings.test');
 
+    // User OTP and Password Reset
+    Route::post('/users/send-otp', [UserController::class, 'sendOtp'])->name('users.send-otp');
+    Route::post('/users/reset-password', [UserController::class, 'resetPassword'])->name('users.reset-password');
+
     Route::resource('users', UserController::class)->middleware('ensure.permission:users');
 
     // API routes for company selection

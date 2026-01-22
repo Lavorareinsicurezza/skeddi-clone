@@ -25,10 +25,13 @@ class SettingController extends Controller
         if (!$setting) {
             $setting = Setting::create([
                 'company_id' => auth()->user()->company_id,
-                'days_prior_course_deadline' => 1,
-                'days_prior_health_insurance' => 1,
-                'days_prior_maintenance_deadline' => 1,
+                'notification_periods' => [90, 30], // Default values
             ]);
+        }
+
+        // Ensure notification_periods is an array if it's null (for existing records migrated)
+        if (is_null($setting->notification_periods)) {
+            $setting->notification_periods = [90, 30];
         }
 
         // Get UI version (timestamp)
@@ -43,9 +46,8 @@ class SettingController extends Controller
     public function update(Request $request)
     {
         $validated = $request->validate([
-            'days_prior_course_deadline' => 'required|integer|min:0',
-            'days_prior_health_insurance' => 'required|integer|min:0',
-            'days_prior_maintenance_deadline' => 'required|integer|min:0',
+            'notification_periods' => 'required|array',
+            'notification_periods.*' => 'required|integer|min:1',
             'smtp_address' => 'nullable|string|max:255',
             'smtp_alias' => 'nullable|string|max:255',
             'smtp_reply_to' => 'nullable|string|max:255',
@@ -63,6 +65,7 @@ class SettingController extends Controller
             'whatsapp_smtp_reply_to' => 'nullable|string|max:255',
         ]);
 
+       $validated['notification_periods'] = array_map('intval', $validated['notification_periods']);
         // Convert checkboxes to boolean
         $validated['email_auto_generated'] = $request->has('email_auto_generated');
         $validated['whatsapp_notification'] = $request->has('whatsapp_notification');

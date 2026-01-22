@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\View;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\Transport;
 use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\Address;
 
 
 class CheckExpiryAndSendEmails extends Command
@@ -55,35 +56,62 @@ class CheckExpiryAndSendEmails extends Command
         return $shouldSend;
     }
 
-    private function getMailType($expiryDate)
+    private function getMailType($expiryDate, $notificationPeriods)
     {
         $days = Carbon::today()->diffInDays(Carbon::parse($expiryDate), false);
 
         Log::info('Days until expiry: ' . $days);
 
-        // 3 months = approx 90 days
-        if ($days == 90) return 'three_months';
-        if ($days == 30) return 'one_month';
+        // Check against configured notification periods
+        if (in_array($days, $notificationPeriods)) {
+            return (string) $days;
+        }
 
         return null;
     }
 
 
+    private function processNotificationBody($body, $record, $daysLeft)
+    {
+        $expiryDate = $record->expiration_date ?? ($record->expiry_date ?? null);
+        $formattedExpiry = $expiryDate ? Carbon::parse($expiryDate)->format('d F Y') : '';
+
+        $replacements = [
+            '{company_name}' => $record->company->name ?? '',
+            '{days_left}' => $daysLeft,
+            '{course_name}' => $record->name ?? ($record->companyCourseType->name ?? ''),
+            '{worker_first_name}' => $record->worker->first_name ?? '',
+            '{worker_last_name}' => $record->worker->surname ?? '',
+            '{expiry_date}' => $formattedExpiry,
+        ];
+
+        return str_replace(array_keys($replacements), array_values($replacements), $body);
+    }
+
     private function sendMailAndLog($module, $record, $expiryDate)
     {
         Log::info('Attempting to send mail for module: ' . $module . ', record_id: ' . json_encode($record) . ', expiryDate: ' . $expiryDate);
 
-        $mailType = $this->getMailType($expiryDate);
+        $company = Company::find($record->company_id);
+        if (!$company) {
+            Log::warning('Company not found for record: ' . $record->id);
+            return;
+        }
+
+        // Fetch Settings first to get notification periods
+        $setting = Setting::where('company_id', $company->company_id)->first();
+        if (!$setting) {
+            Log::warning('Settings missing for company: ' . $company->id);
+            return;
+        }
+
+        $notificationPeriods = $setting->notification_periods ?? [90, 30]; // Default fallback
+
+        $mailType = $this->getMailType($expiryDate, $notificationPeriods);
         if (!$mailType) return;
 
         if (!$this->shouldSendMail($module, $record->id, $mailType)) {
             Log::warning('Skipping mail for module: ' . $module . ', record_id: ' . $record->id . ', type: ' . $mailType . '. Already sent.');
-            return;
-        }
-
-        $company = Company::find($record->company->company_id);
-        if (!$company) {
-            Log::warning('Company not found for record: ' . $record->id);
             return;
         }
 
@@ -98,9 +126,7 @@ class CheckExpiryAndSendEmails extends Command
             return;
         }
 
-        // Fetch SMTP settings
-        $setting = Setting::where('company_id', $company->id)->first();
-        if (!$setting || !$setting->smtp_host || !$setting->smtp_username || !$setting->smtp_password) {
+        if (!$setting->smtp_host || !$setting->smtp_username || !$setting->smtp_password) {
             Log::warning('SMTP settings missing for company: ' . $company->id);
             return;
         }
@@ -118,24 +144,31 @@ class CheckExpiryAndSendEmails extends Command
         $transport = Transport::fromDsn($dsn);
         $mailer = new Mailer(transport: $transport);
 
+        // Process notification body if available
+        $customBody = null;
+        if (!empty($setting->notification_body)) {
+            $customBody = $this->processNotificationBody($setting->notification_body, $record, $mailType);
+        }
+
         // Render Blade directly
         $html = View::make('emails.expiry-reminder', [
             'record'   => $record,
             'module'   => ucfirst(str_replace('_', ' ', $module)),
-            'mailType' => $mailType
+            'mailType' => $mailType,
+            'customBody' => $customBody
         ])->render();
 
-        $subjectMap = [
-            'three_months' => ucfirst(str_replace('_', ' ', $module)) . " Expiry Reminder – 3 Months Remaining",
-            'one_month'    => ucfirst(str_replace('_', ' ', $module)) . " Expiry Reminder – 1 Month Remaining",
-        ];
+        $subject = $setting->notification_subject ?? (ucfirst(str_replace('_', ' ', $module)) . " Expiry Reminder – " . $mailType . " Days Remaining");
+
+        $fromAddress = $setting->smtp_address ?? $setting->smtp_username;
+        $fromName = config('app.name');
 
         // for ($i = 0; $i < count($contacts); $i++) {
 
             $email = (new Email())
-                ->from($setting->smtp_address)
+                ->from(new Address($fromAddress, $fromName))
                 ->to($recieverCompany->main_email) // <-- send to all company contacts
-                ->subject($subjectMap[$mailType] ?? 'Expiry Reminder')
+                ->subject($subject)
                 ->html($html);
 
             if ($setting->smtp_reply_to) {
@@ -194,7 +227,7 @@ class CheckExpiryAndSendEmails extends Command
 
     private function checkTrainingPlans()
     {
-        $plans = TrainingPlanRecord::with('company')->whereNotNull('expiration_date')->get();
+        $plans = TrainingPlanRecord::with(['company', 'worker', 'companyCourseType'])->whereNotNull('expiration_date')->get();
         foreach ($plans as $plan) {
             $this->sendMailAndLog('training_plan', $plan, $plan->expiration_date);
         }

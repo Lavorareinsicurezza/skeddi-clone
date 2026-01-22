@@ -114,6 +114,11 @@
                                     <i class="fa fa-edit"></i>
                                 </a>
                                 @endcan
+                                <button onclick="openResetModal({{ $user->id }}, '{{ $user->name }}', '{{ $user->email }}')"
+                                    class="font-medium text-gray-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
+                                    title="Reset Password">
+                                    <i class="fa fa-key"></i>
+                                </button>
                                 {{-- <a href="#"
                                     class="font-medium text-red-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]">
                                     <i class="fa fa-trash"></i>
@@ -136,5 +141,176 @@
     <div class="mt-6 flex justify-end">
         {{ $users->onEachSide(1)->links('pagination::tailwind') }}
     </div>
+
+    <!-- Reset Password Modal -->
+    <div id="resetPasswordModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold text-gray-900">Reset Password</h3>
+                <button onclick="closeResetModal()" class="text-gray-400 hover:text-gray-600">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+
+            <div class="mb-4">
+                <p class="text-sm text-gray-600">User: <span id="resetUserName" class="font-bold"></span></p>
+                <p class="text-sm text-gray-600">Email: <span id="resetUserEmail" class="font-bold"></span></p>
+            </div>
+
+            <div id="otpSection">
+                <button type="button" onclick="sendOtp()" id="sendOtpBtn"
+                    class="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 mb-4">
+                    Send OTP
+                </button>
+                <div id="otpMessage" class="hidden mb-4 text-sm"></div>
+            </div>
+
+            <form id="resetPasswordForm" onsubmit="submitResetPassword(event)">
+                <input type="hidden" id="resetUserId" name="user_id">
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">OTP Code</label>
+                    <input type="text" id="otpInput" name="otp" required maxlength="6"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Enter 6-digit OTP">
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">New Password</label>
+                    <input type="password" id="newPassword" name="password" required minlength="8"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    {{-- <p class="text-xs text-gray-500 mt-1">Min 8 chars, letters, numbers & symbols</p> --}}
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="password_confirmation" required minlength="8"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="flex justify-end gap-2">
+                    <button type="button" onclick="closeResetModal()"
+                        class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">
+                        Cancel
+                    </button>
+                    <button type="submit" id="submitResetBtn"
+                        class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+                        Reset Password
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let currentUserId = null;
+
+        function openResetModal(id, name, email) {
+            currentUserId = id;
+            document.getElementById('resetUserId').value = id;
+            document.getElementById('resetUserName').textContent = name;
+            document.getElementById('resetUserEmail').textContent = email;
+            document.getElementById('resetPasswordModal').classList.remove('hidden');
+            document.getElementById('otpMessage').classList.add('hidden');
+            document.getElementById('resetPasswordForm').reset();
+        }
+
+        function closeResetModal() {
+            document.getElementById('resetPasswordModal').classList.add('hidden');
+        }
+
+        async function sendOtp() {
+            const btn = document.getElementById('sendOtpBtn');
+            const msg = document.getElementById('otpMessage');
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Sending...';
+            msg.classList.add('hidden');
+
+            try {
+                const response = await fetch("{{ route('admin.users.send-otp') }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: JSON.stringify({ user_id: currentUserId })
+                });
+
+                const data = await response.json();
+
+                msg.textContent = data.message;
+                msg.className = data.success ? 'mb-4 text-sm text-green-600' : 'mb-4 text-sm text-red-600';
+                msg.classList.remove('hidden');
+
+            } catch (error) {
+                msg.textContent = 'Network error occurred.';
+                msg.className = 'mb-4 text-sm text-red-600';
+                msg.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Send OTP';
+            }
+        }
+
+        async function submitResetPassword(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submitResetBtn');
+            const originalText = btn.textContent;
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Processing...';
+
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch("{{ route('admin.users.reset-password') }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                // Check if response is ok
+                if (!response.ok) {
+                    const contentType = response.headers.get('content-type');
+                    if (contentType && contentType.includes('application/json')) {
+                         const result = await response.json();
+                         let errorMsg = result.message || 'Failed to reset password.';
+                         if (result.errors) {
+                             errorMsg += '\n' + Object.values(result.errors).flat().join('\n');
+                         }
+                         alert(errorMsg);
+                         return;
+                    }
+                    throw new Error(response.statusText || 'Server Error');
+                }
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert(result.message);
+                    closeResetModal();
+                } else {
+                    let errorMsg = result.message || 'Failed to reset password.';
+                    if (result.errors) {
+                         errorMsg += '\n' + Object.values(result.errors).flat().join('\n');
+                    }
+                    alert(errorMsg);
+                }
+            } catch (error) {
+                console.error(error);
+                alert('An error occurred: ' + (error.message || 'Please try again.'));
+            } finally {
+                btn.disabled = false;
+                btn.textContent = originalText;
+            }
+        }
+    </script>
 
 @endsection

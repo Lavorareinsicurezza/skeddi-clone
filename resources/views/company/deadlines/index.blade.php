@@ -121,7 +121,7 @@
                         @php
                             $locName = $plan->worker?->operatingLocation?->name;
                         @endphp
-                        {{ $plan->worker?->surname }}{{ $locName ? ' - ' . $locName : '' }}
+                        {{ $plan->worker?->first_name .' '. $plan->worker?->surname }}{{ $locName ? ' - ' . $locName : '' }}
                     </td>
                         <td class="px-3 md:px-6 py-4 whitespace-nowrap">
                             @php

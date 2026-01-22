@@ -48,7 +48,7 @@ class DeadlinesExport implements FromCollection, WithHeadings, WithMapping, With
         return [
             $record->company?->name,
             $record->companyCourseType?->name,
-            $record->worker?->surname,
+            $record->worker?->first_name .' '. $record->worker?->surname,
             $record->worker?->operatingLocation?->name,
             optional($record->training_date)->format('d/m/Y'),
             optional($record->expiration_date)->format('d/m/Y'),

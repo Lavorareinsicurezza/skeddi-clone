@@ -34,7 +34,7 @@ class TrainingPlanExport implements FromCollection, WithHeadings, WithMapping, W
         return [
             $record->company?->name,
             $record->companyCourseType?->name,
-            $record->worker?->surname,
+            $record->worker?->first_name .' '. $record->worker?->surname,
             $record->worker?->operatingLocation?->name,
             optional($record->training_date)->format('Y-m-d'),
             optional($record->expiration_date)->format('Y-m-d'),

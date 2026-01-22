@@ -44,19 +44,23 @@ class CompanyDocumentController extends Controller
             'name' => 'required|string|max:255',
             'document_type_id' => 'required|exists:document_types,id',
             'scheduling_note' => 'nullable|string',
-            'expiration_date' => 'nullable|date',
+            // 'expiration_date' => 'nullable|date',
             'to_schedule' => 'sometimes|boolean',
             'notes' => 'nullable|string',
         ]);
 
-            $companyId = session('selectedCompanyId');
+        $companyId = session('selectedCompanyId');
+        $document = DocumentType::findOrFail($request->input('document_type_id'));
+
+        $today = \Carbon\Carbon::today();
+        $expirationDate = $today->copy()->addYears($document->validity_year);
 
         Document::create([
             'company_id' => $companyId,
             'document_type_id' => $request->input('document_type_id'),
             'name' => $request->input('name'),
             'scheduling_note' => $request->input('scheduling_note'),
-            'expiration_date' => $request->input('expiration_date'),
+            'expiration_date' => $expirationDate,
             'to_schedule' => $request->has('to_schedule') ? $request->input('to_schedule') : false,
             'notes' => $request->input('notes'),
         ]);

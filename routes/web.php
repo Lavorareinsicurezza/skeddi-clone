@@ -117,7 +117,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
     Route::resource('/company-visit-types', CompanyVisitController::class)->middleware('ensure.permission:company-visit-types');
 
     // Company renewal routes
-    Route::get('/company-renewals', [CompanyRenewalController::class, 'index'])->middleware('ensure.permission:company-renewals')->name('company-renewals.index');
+    // Route::get('/company-renewals', [CompanyRenewalController::class, 'index'])->middleware('ensure.permission:company-renewals')->name('company-renewals.index');
 
     // Organizational Chart Routes
     Route::get('/organization-chart', [ChartController::class, 'index'])->middleware('ensure.permission:chart')->name('chart.index');

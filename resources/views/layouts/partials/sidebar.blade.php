@@ -93,14 +93,14 @@
                     </a>
                 </li>
                 @endcan
-                @can('view company-renewals')
+                {{-- @can('view company-renewals')
                 <li>
                     <a href="{{ route('admin.company-renewals.index') }}" class="flex items-center p-2 rounded-[20px] {{ request()->routeIs('admin.company-renewals.index')? 'text-[#0C3183] bg-blue-50': 'text-gray-500' }} hover:text-[#0C3183] hover:bg-blue-50 group">
                         <i class="fas fa-sync-alt w-5 h-5 {{ request()->routeIs('admin.company-renewals.index')? 'text-[#0C3183]': 'text-gray-500'}} transition duration-75 group-hover:text-[#0C3183]"></i>
                         <span class="ms-3">{{ __('lang.renewals') }}</span>
                     </a>
                 </li>
-                @endcan
+                @endcan --}}
             </ul>
         </div>
         @endif

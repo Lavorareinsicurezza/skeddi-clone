@@ -32,6 +32,7 @@ class PermissionSeeder extends Seeder
             'dashboard',
             'deadlines',
             'settings',
+            'edit settings',
             'selected-company',
             'training-plan',
             'training-plan-edit',
@@ -53,7 +54,7 @@ class PermissionSeeder extends Seeder
         // Create view-only permissions
         foreach ($pageModules as $module) {
             Permission::firstOrCreate([
-                'name' => "view {$module}"
+                'name' => $module != 'edit settings' ? "view {$module}" : $module
             ]);
         }
 

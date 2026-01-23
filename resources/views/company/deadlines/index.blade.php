@@ -12,6 +12,8 @@
         <form id="filterForm" method="GET" action="{{ route('admin.deadlines') }}"
             class="border border-gray-200 rounded-md overflow-hidden shadow-sm bg-white w-full lg:w-auto">
             <div class="flex flex-col sm:flex-row sm:items-center">
+
+                <!-- Operating Location -->
                 <div class="px-3 py-2 flex items-center space-x-2 sm:border-r border-b sm:border-b-0 border-gray-200 text-xs">
                     <label for="operatingLocation" class="text-gray-600 font-medium whitespace-nowrap">{{ __('lang.operating_location') }}:</label>
                     <select name="operating_location_id" id="operatingLocation"
@@ -24,51 +26,33 @@
                         @endforeach
                     </select>
                 </div>
+
+                <!-- Deadline Type -->
+                <div class="px-3 py-2 flex items-center space-x-2 sm:border-r border-b sm:border-b-0 border-gray-200 text-xs">
+                    <select name="deadline_type" id="deadline-type-filter"
+                        class="bg-transparent border-0 border-b border-gray-300 px-1 py-0.5 text-gray-600 font-medium focus:outline-none w-full sm:w-auto text-xs">
+                        <option value="all">{{ __('lang.all') }}</option>
+                        <option value="courses" {{ request('deadline_type') == 'courses' ? 'selected': '' }}>{{ __('lang.courses') }}</option>
+                        <option value="visits" {{ request('deadline_type') == 'visits' ? 'selected': '' }}>{{ __('lang.visit_type') }}</option>
+                        <option value="documents" {{ request('deadline_type') == 'documents' ? 'selected': '' }}>{{ __('lang.documents') }}</option>
+                        <option value="training_plan" {{ request('deadline_type') == 'training_plan' ? 'selected': '' }}>{{ __('lang.training_plan') }}</option>
+                    </select>
+                </div>
+
+                <!-- Search -->
+                <div class="px-3 py-2 flex items-center space-x-2 sm:border-r border-b sm:border-b-0 border-gray-200 text-xs">
+                    <input type="text" name="search" id="search"
+                        class="bg-transparent border-0 border-b border-gray-300 px-1 py-0.5 text-gray-600 font-medium focus:outline-none w-full sm:w-auto text-xs"
+                        placeholder="{{ __('lang.search') }}" value="{{ request('search') }}">
+                </div>
+
+                <!-- Export -->
                 <div class="px-3 py-2 flex items-center sm:border-r border-b sm:border-b-0 border-gray-200 text-xs">
                     <a href="{{ route('admin.deadlines.export', ['operating_location_id' => $selectedOperatingLocationId]) }}"
                        class="font-semibold text-gray-600 hover:text-[#0C3183] flex items-center gap-2">
                         <i class="fa fa-download"></i>
                         <span>{{ __('lang.export') }}</span>
                     </a>
-                </div>
-            </div>
-        </form>
-        <!-- Filter Form -->
-        {{-- <form id="filterForm" method="GET" action="{{ route('admin.deadlines') }}"
-            class="border border-gray-200 rounded-md overflow-hidden shadow-sm bg-white w-full lg:w-auto">
-
-            <div class="flex flex-col sm:flex-row sm:items-center">
-
-                <!-- Left Section -->
-                <div class="p-1.5 sm:border-r border-b sm:border-b-0 border-gray-200 bg-blue-100">
-                    <div class="cursor-pointer font-semibold text-[#0C3183] rounded px-3 py-2 text-xs">
-                        {{ __('lang.deadlines') }}
-                    </div>
-                </div>
-
-                <!-- Status -->
-                <div class="p-1.5 sm:border-r border-b sm:border-b-0 border-gray-200">
-                    <div id="statusFilter"
-                        class="cursor-pointer {{ request('scheduled') != 'false' ? 'bg-blue-50 text-[#0C3183]' : 'text-gray-500' }} rounded px-3 py-2 font-semibold text-xs">
-                        {{ __('lang.to_be_scheduled') }}
-                        <input type="hidden" name="scheduled" id="scheduledInput" value="{{ request('scheduled') }}">
-                    </div>
-                </div>
-
-                <!-- From Date -->
-                <div
-                    class="px-3 py-2 flex items-center space-x-2 sm:border-r border-b sm:border-b-0 border-gray-200 text-xs">
-                    <label for="fromDate" class="text-gray-600 font-medium whitespace-nowrap">{{ __('lang.from') }}:</label>
-                    <input type="date" name="from_date" id="fromDate" value="{{ request('from_date') }}"
-                        class="bg-transparent border-0 border-b border-gray-300 px-1 py-0.5 text-gray-600 font-medium focus:outline-none w-full sm:w-auto text-xs" />
-                </div>
-
-                <!-- To Date -->
-                <div
-                    class="px-3 py-2 flex items-center space-x-2 sm:border-r border-b sm:border-b-0 border-gray-200 text-xs">
-                    <label for="toDate" class="text-gray-600 font-medium whitespace-nowrap">{{ __('lang.to') }}:</label>
-                    <input type="date" name="to_date" id="toDate" value="{{ request('to_date') }}"
-                        class="bg-transparent border-0 border-b border-gray-300 px-1 py-0.5 text-gray-600 font-medium focus:outline-none w-full sm:w-auto text-xs" />
                 </div>
 
                 <!-- Reset Filter -->
@@ -79,9 +63,8 @@
                         <span>{{ __('lang.reset') }}</span>
                     </button>
                 </div>
-
             </div>
-        </form> --}}
+        </form>
     </div>
 
 
@@ -95,7 +78,10 @@
                         {{ __('lang.company_name') }}
                     </th>
                     <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap">
-                        {{ __('lang.course_name') }}
+                        {{ __('lang.name') }}
+                    </th>
+                    <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap">
+                        {{ __('lang.deadline_type') }}
                     </th>
                     <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap">
                         {{ __('lang.employee_name') }}
@@ -109,61 +95,53 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse ($trainingPlans as $plan)
-                    <tr class="bg-white border-b border-gray-200">
-                        <th scope="row" class="px-3 md:px-6 py-4 font-medium text-gray-500 whitespace-nowrap">
-                            {{ $plan->company?->name }}
-                        </th>
-                        <td class="px-3 md:px-6 py-4">
-                            {{ $plan->companyCourseType?->name }}
-                        </td>
-                    <td class="px-3 md:px-6 py-4">
-                        @php
-                            $locName = $plan->worker?->operatingLocation?->name;
-                        @endphp
-                        {{ $plan->worker?->first_name .' '. $plan->worker?->surname }}{{ $locName ? ' - ' . $locName : '' }}
-                    </td>
-                        <td class="px-3 md:px-6 py-4 whitespace-nowrap">
-                            @php
-                                $expDate = $plan->expiration_date;
-                                $now = \Carbon\Carbon::now();
-                                $daysUntilExpiry = $now->diffInDays($expDate, false);
+                @forelse ($records as $plan)
+                    <tr class="bg-white border-b">
 
-                                if ($daysUntilExpiry < 0) {
-                                    $colorClass = 'text-red-600'; // Expired
-                                } elseif ($daysUntilExpiry <= 30) {
-                                    $colorClass = 'text-orange-500'; // Expiring soon
-                                } else {
-                                    $colorClass = 'text-green-600'; // Valid
-                                }
-                            @endphp
-                            <span
-                                class="{{ $colorClass }}">{{ \Carbon\Carbon::parse($plan->expiration_date)->format('d F Y') }}</span>
+                        <td class="px-3 md:px-6 py-4">
+                            {{ $currentCompany->name }}
                         </td>
+
+                        <td class="px-3 md:px-6 py-4">
+                            {{ $plan->name }}
+                        </td>
+
+                        <td class="px-3 md:px-6 py-4">
+                            {{ $plan->deadline_type }}
+                        </td>
+
+                        <td class="px-3 md:px-6 py-4">
+                            @if($plan->employee_name)
+                                {{ $plan->employee_name }}{{ $plan->location_name ? ' - ' . $plan->location_name : '' }}
+                            @else
+                                -
+                            @endif
+                        </td>
+
+                        <td class="px-3 md:px-6 py-4">
+                            {{ \Carbon\Carbon::parse($plan->expiry_date)->format('d F Y') }}
+                        </td>
+
                         <td class="px-3 md:px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center space-x-2">
                                 <a href="javascript:void(0)"
-                                    onclick="openRenewalModal({{ $plan->id }}, '{{ $plan->company?->name }}', '{{ $plan->companyCourseType?->name }}', '{{ $plan->worker?->first_name }}', '{{ $plan->worker?->surname }}', '{{ date('m/d/Y', strtotime($plan->training_date)) }}')"
+                                    onclick="openRenewalModal({{ $plan->id }}, '{{ $currentCompany->name }}', '{{ $plan->name }}', '{{ $plan->first_name ?? '' }}', '{{ $plan->surname ?? '' }}', '{{ $plan->deadline_type }}')"
                                     class="font-medium text-[#0C3183] p-2 cursor-pointer hover:underline">
                                     {{ __('lang.renew') }}
                                 </a>
-                                {{-- <a href="#"
-                                    class="font-medium text-red-500 p-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]">
-                                    <i class="fa fa-trash"></i>
-                                </a> --}}
                             </div>
                         </td>
-                    </tr>
 
+                    </tr>
                 @empty
-                    <tr class="bg-white border-b border-gray-200">
-                        <td colspan="5" class="px-3 md:px-6 py-4 text-center text-gray-500">
+                    <tr>
+                        <td colspan="6" class="text-center py-4 text-gray-500">
                             {{ __('lang.no_data_available') }}
                         </td>
                     </tr>
                 @endforelse
-
             </tbody>
+
         </table>
     </div>
 
@@ -189,7 +167,8 @@
 
                 <form id="renewalForm">
                     @csrf
-                    <input type="hidden" id="training_plan_id" name="training_plan_id">
+                    <input type="hidden" id="id" name="id">
+                    <input type="hidden" id="deadline_type" name="deadline_type">
 
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700 mb-2">
@@ -214,6 +193,7 @@
             </div>
         </div>
     </div>
+
 @endsection
 
 @section('scripts')
@@ -221,59 +201,39 @@
         document.addEventListener('DOMContentLoaded', function() {
             const filterForm = document.getElementById('filterForm');
             const operatingLocation = document.getElementById('operatingLocation');
-            const statusFilter = document.getElementById('statusFilter');
-            const fromDate = document.getElementById('fromDate');
-            const toDate = document.getElementById('toDate');
+            const deadlineTypeFilter = document.getElementById('deadline-type-filter');
+            const search = document.getElementById('search');
             const resetFilter = document.getElementById('resetFilter');
-            const scheduledInput = document.getElementById('scheduledInput');
 
             function submitForm() {
                 filterForm.submit();
             }
 
             if (operatingLocation) operatingLocation.addEventListener('change', submitForm);
-            if (statusFilter) {
-                statusFilter.addEventListener('click', function() {
-                    if (scheduledInput.value == 'true') {
-                        scheduledInput.value = 'false';
-                    } else {
-                        scheduledInput.value = 'true';
-                    }
-                    submitForm();
-                });
-            }
-
-            if (fromDate) fromDate.addEventListener('change', submitForm);
-            if (toDate) toDate.addEventListener('change', submitForm);
+            if (deadlineTypeFilter) deadlineTypeFilter.addEventListener('change', submitForm);
+            if (search) search.addEventListener('change', submitForm);
 
             if (resetFilter) {
                 resetFilter.addEventListener('click', function() {
-                    scheduledInput.value = 'false';
-                    fromDate.value = '';
-                    toDate.value = '';
                     window.location.href = "{{ route('admin.deadlines') }}";
                 });
             }
         });
 
         // Renewal Modal Functions
-        function openRenewalModal(planId, companyName, courseName, workerFirstName, workerSurname, trainingDate) {
-            console.log('Training Date:', trainingDate);
-
-            // Convert mm/dd/yyyy → yyyy-mm-dd
-            let parts = trainingDate.split('/');
-            let formattedDate = `${parts[2]}-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}`;
-
-            console.log('Formatted Date:', formattedDate);
-
-            document.getElementById('training_plan_id').value = planId;
+        function openRenewalModal(planId, companyName, courseName, workerFirstName, workerSurname, deadlineType) {
+            console.log(planId, companyName, courseName, workerFirstName, workerSurname, deadlineType);
+            document.getElementById('id').value = planId;
+            document.getElementById('deadline_type').value = deadlineType;
             document.getElementById('modalCompanyName').textContent = companyName;
-            document.getElementById('modalCourseWorkerInfo').textContent =
-                courseName + ' - ' + workerFirstName + ' ' + workerSurname;
+
+            let info = courseName;
+            if (workerFirstName || workerSurname) {
+                info += ' - ' + (workerFirstName || '') + ' ' + (workerSurname || '');
+            }
+            document.getElementById('modalCourseWorkerInfo').textContent = info;
 
             document.getElementById('renewalModal').classList.remove('hidden');
-
-            document.getElementById('renewal_date').value = formattedDate;
         }
 
         function closeRenewalModal() {
@@ -298,15 +258,14 @@
                 .then(data => {
                     if (data.success) {
                         alert(data.message);
-                        closeRenewalModal();
                         window.location.reload();
                     } else {
-                        alert(data.message || '{{ __('lang.error') }}');
+                        alert(data.message || 'Error renewing plan');
                     }
                 })
                 .catch(error => {
-                    console.error('Error renewing course:', error);
-                    alert('{{ __('lang.error') }}');
+                    console.error('Error:', error);
+                    alert('An error occurred while renewing.');
                 });
         });
     </script>

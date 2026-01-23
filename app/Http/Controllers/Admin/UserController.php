@@ -109,7 +109,8 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $companies = Company::company()->get();
-        return view('admin.user.edit', compact('user', 'companies'));
+        $roles = Role::pluck('name')->toArray();
+        return view('admin.user.edit', compact('user', 'companies', 'roles'));
     }
 
     /**

@@ -53,7 +53,7 @@ class CompanyDocumentController extends Controller
         $document = DocumentType::findOrFail($request->input('document_type_id'));
 
         $today = \Carbon\Carbon::today();
-        $expirationDate = $today->copy()->addYears($document->validity_year);
+        $expirationDate = $today->copy()->addYears((int) $document->validity_year);
 
         Document::create([
             'company_id' => $companyId,

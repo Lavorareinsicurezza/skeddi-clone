@@ -66,7 +66,11 @@
                         <select type="text" name="role" placeholder="{{ __('lang.supervisor') }}"
                             class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent @error('role') border-red-500 @enderror">
                             <option value=""> {{ __('lang.select_role') }} </option>
-                            <option value="supervisor" {{ old('role', $user->role) == 'supervisor' ? 'selected' : '' }}> {{ __('lang.supervisor') }} </option>
+                            @isset($roles)
+                                @foreach ($roles as $roleName)
+                                    <option value="{{ $roleName }}" {{ old('role', $user->role) == $roleName ? 'selected' : '' }}>{{ $roleName }}</option>
+                                @endforeach
+                            @endisset
                         </select>
                         @error('role')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>

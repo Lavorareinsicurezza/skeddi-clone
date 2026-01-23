@@ -66,7 +66,7 @@
                     <template x-for="(period, index) in periods" :key="index">
                         <div class="flex items-center gap-3 p-2 rounded-lg bg-blue-100">
                             <input type="number" name="notification_periods[]" x-model="periods[index]" min="1"
-                                class="w-full md:w-1/3 px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                class=" w-[100%] px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 placeholder="Enter days (e.g., 90)">
 
                             <button type="button" @click="removePeriod(index)" class="text-red-500 hover:text-red-700">

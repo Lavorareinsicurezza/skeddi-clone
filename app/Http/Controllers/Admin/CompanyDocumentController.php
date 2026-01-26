@@ -44,17 +44,17 @@ class CompanyDocumentController extends Controller
             'name' => 'required|string|max:255',
             'document_type_id' => 'required|exists:document_types,id',
             'scheduling_note' => 'nullable|string',
-            // 'expiration_date' => 'nullable|date',
+            'issue_date' => 'required|date',
             'to_schedule' => 'sometimes|boolean',
             'notes' => 'nullable|string',
         ]);
 
         $companyId = session('selectedCompanyId');
-        $document = DocumentType::findOrFail($request->input('document_type_id'));
+        $documentType = DocumentType::findOrFail($request->input('document_type_id'));
 
-        $today = \Carbon\Carbon::today();
-        $expirationDate = $today->copy()->addYears((int) $document->validity_year);
-
+        $issueDate = \Carbon\Carbon::parse($request->input('issue_date'));
+        $expirationDate = $issueDate->copy()->addYears((int) $documentType->validity_year);
+        // return ['issue_date' => $issueDate, 'expiration_date' => $expirationDate];
         Document::create([
             'company_id' => $companyId,
             'document_type_id' => $request->input('document_type_id'),
@@ -82,7 +82,6 @@ class CompanyDocumentController extends Controller
     public function edit(string $id)
     {
         $document = Document::findOrFail($id);
-
         $types = DocumentType::all();
         return view('company.document.create', compact('document', 'types'));
     }
@@ -96,17 +95,22 @@ class CompanyDocumentController extends Controller
             'name' => 'required|string|max:255',
             'document_type_id' => 'required|exists:document_types,id',
             'scheduling_note' => 'nullable|string',
-            'expiration_date' => 'nullable|date',
+            'issue_date' => 'required|date',
             'to_schedule' => 'sometimes|boolean',
             'notes' => 'nullable|string',
         ]);
 
         $document = Document::findOrFail($id);
+        $documentType = DocumentType::findOrFail($request->input('document_type_id'));
+
+        $issueDate = \Carbon\Carbon::parse($request->input('issue_date'));
+        $expirationDate = $issueDate->copy()->addYears((int) $documentType->validity_year);
+
         $document->update([
             'document_type_id' => $request->input('document_type_id'),
             'name' => $request->input('name'),
             'scheduling_note' => $request->input('scheduling_note'),
-            'expiration_date' => $request->input('expiration_date'),
+            'expiration_date' => $expirationDate,
             'to_schedule' => $request->has('to_schedule') ? $request->input('to_schedule') : false,
             'notes' => $request->input('notes'),
         ]);

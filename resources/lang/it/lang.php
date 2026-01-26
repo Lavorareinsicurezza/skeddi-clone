@@ -235,6 +235,7 @@ return [
     'delete_document_type_confirm' => 'Sei sicuro di voler eliminare questo tipo di documento?',
     'document_type_details' => 'Dettagli Tipo di Documento',
     'enter_document_name' => 'Inserisci nome del documento',
+    'issue_date' => 'Data di Emissione',
 
     // --------------------------------------------------------------------------------------------------
     //                                 Visit Types

@@ -234,6 +234,7 @@ return [
     'delete_document_type_confirm' => 'Are you sure you want to delete this document type?',
     'document_type_details' => 'Document Type Details',
     'enter_document_name' => 'Enter document name',
+    'issue_date' => 'Issue Date',
 
     // --------------------------------------------------------------------------------------------------
     //                                 Visit Types

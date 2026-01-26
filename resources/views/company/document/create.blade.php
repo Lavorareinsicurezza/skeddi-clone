@@ -77,6 +77,22 @@
                         </label>
                     </div>
 
+                    <div>
+                        @php
+                            $issueDate = '';
+                            if (isset($document) && $document->expiration_date && $document->documentType) {
+                                $issueDate = \Carbon\Carbon::parse($document->expiration_date)->subYears((int)$document->documentType->validity_year)->format('Y-m-d');
+                            }
+                        @endphp
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            {{ __('lang.issue_date') }} <span class="text-red-500">*</span>
+                        </label>
+                        <input type="date" name="issue_date"
+                            value="{{ old('issue_date', $issueDate) }}"
+                            required
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#0C3183]">
+                    </div>
+
                     {{-- <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             {{ __('lang.expiration_date') }}

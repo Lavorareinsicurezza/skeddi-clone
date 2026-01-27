@@ -84,12 +84,17 @@
                 </div>
 
                 <!-- Reset Filter -->
-                <div class="px-3 py-2 flex justify-center sm:justify-start">
+                <div class="px-3 py-2 flex justify-center sm:justify-start items-center space-x-3">
                     <button type="button" id="resetFilter"
                         class="flex items-center text-red-600 cursor-pointer hover:text-red-700 text-xs font-medium space-x-1">
                         <i class="fas fa-rotate-left w-3 h-3"></i>
                         <span>{{ __('lang.reset') }}</span>
                     </button>
+                    <a href="{{ route('admin.deadlines.export', request()->query()) }}"
+                        class="flex items-center text-green-600 cursor-pointer hover:text-green-700 text-xs font-medium space-x-1">
+                        <i class="fas fa-file-excel w-3 h-3"></i>
+                        <span>{{ __('lang.export') }}</span>
+                    </a>
                 </div>
 
             </div>

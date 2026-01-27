@@ -118,6 +118,13 @@ class CompanyController extends Controller
                     'site_contact_name' => $loc['site_contact_name'] ?? null,
                     'site_contact_phone' => $loc['site_contact_phone'] ?? null,
                     'site_contact_email' => $loc['site_contact_email'] ?? null,
+                    'smtp_host' => $loc['smtp_host'] ?? null,
+                    'smtp_port' => $loc['smtp_port'] ?? null,
+                    'smtp_username' => $loc['smtp_username'] ?? null,
+                    'smtp_password' => $loc['smtp_password'] ?? null,
+                    'smtp_encryption' => $loc['smtp_encryption'] ?? null,
+                    'smtp_from_address' => $loc['smtp_from_address'] ?? null,
+                    'smtp_from_name' => $loc['smtp_from_name'] ?? null,
                 ]);
             }
         }
@@ -232,6 +239,13 @@ class CompanyController extends Controller
                         'site_contact_name' => $loc['site_contact_name'] ?? $existing->site_contact_name,
                         'site_contact_phone' => $loc['site_contact_phone'] ?? $existing->site_contact_phone,
                         'site_contact_email' => $loc['site_contact_email'] ?? $existing->site_contact_email,
+                        'smtp_host' => $loc['smtp_host'] ?? $existing->smtp_host,
+                        'smtp_port' => $loc['smtp_port'] ?? $existing->smtp_port,
+                        'smtp_username' => $loc['smtp_username'] ?? $existing->smtp_username,
+                        'smtp_password' => $loc['smtp_password'] ?? $existing->smtp_password,
+                        'smtp_encryption' => $loc['smtp_encryption'] ?? $existing->smtp_encryption,
+                        'smtp_from_address' => $loc['smtp_from_address'] ?? $existing->smtp_from_address,
+                        'smtp_from_name' => $loc['smtp_from_name'] ?? $existing->smtp_from_name,
                     ]);
                 }
             } else {
@@ -243,6 +257,13 @@ class CompanyController extends Controller
                         'site_contact_name' => $loc['site_contact_name'] ?? null,
                         'site_contact_phone' => $loc['site_contact_phone'] ?? null,
                         'site_contact_email' => $loc['site_contact_email'] ?? null,
+                        'smtp_host' => $loc['smtp_host'] ?? null,
+                        'smtp_port' => $loc['smtp_port'] ?? null,
+                        'smtp_username' => $loc['smtp_username'] ?? null,
+                        'smtp_password' => $loc['smtp_password'] ?? null,
+                        'smtp_encryption' => $loc['smtp_encryption'] ?? null,
+                        'smtp_from_address' => $loc['smtp_from_address'] ?? null,
+                        'smtp_from_name' => $loc['smtp_from_name'] ?? null,
                     ]);
                 }
             }

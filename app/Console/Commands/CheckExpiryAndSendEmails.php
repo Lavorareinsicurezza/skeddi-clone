@@ -126,19 +126,45 @@ class CheckExpiryAndSendEmails extends Command
             return;
         }
 
-        if (!$setting->smtp_host || !$setting->smtp_username || !$setting->smtp_password) {
+        // Initialize SMTP settings with default global settings
+        $smtpHost = $setting->smtp_host;
+        $smtpPort = $setting->smtp_port;
+        $smtpUsername = $setting->smtp_username;
+        $smtpPassword = $setting->smtp_password;
+        $fromAddress = $setting->smtp_address ?? $setting->smtp_username;
+        $fromName = config('app.name');
+
+        // Check for Operating Location Override
+        if (isset($record->worker) && $record->worker && $record->worker->operatingLocation) {
+            $opLocation = $record->worker->operatingLocation;
+            // Check if SMTP is configured for this location
+            if (!empty($opLocation->smtp_host) && !empty($opLocation->smtp_username) && !empty($opLocation->smtp_password)) {
+                $smtpHost = $opLocation->smtp_host;
+                $smtpPort = $opLocation->smtp_port;
+                $smtpUsername = $opLocation->smtp_username;
+                $smtpPassword = $opLocation->smtp_password;
+                $fromAddress = $opLocation->smtp_from_address ?? $opLocation->smtp_username;
+                if (!empty($opLocation->smtp_from_name)) {
+                    $fromName = $opLocation->smtp_from_name;
+                }
+
+                Log::info('Using Operating Location SMTP for record: ' . $record->id . ' (Location: ' . $opLocation->name . ')');
+            }
+        }
+
+        if (!$smtpHost || !$smtpUsername || !$smtpPassword) {
             Log::warning('SMTP settings missing for company: ' . $company->id);
             return;
         }
 
-        $scheme = $setting->smtp_port == 465 ? 'smtps' : 'smtp';
+        $scheme = $smtpPort == 465 ? 'smtps' : 'smtp';
         $dsn = sprintf(
             '%s://%s:%s@%s:%s',
             $scheme,
-            urlencode($setting->smtp_username),
-            urlencode($setting->smtp_password),
-            $setting->smtp_host,
-            $setting->smtp_port
+            urlencode($smtpUsername),
+            urlencode($smtpPassword),
+            $smtpHost,
+            $smtpPort
         );
 
         $transport = Transport::fromDsn($dsn);
@@ -160,8 +186,8 @@ class CheckExpiryAndSendEmails extends Command
 
         $subject = $setting->notification_subject ?? (ucfirst(str_replace('_', ' ', $module)) . " Expiry Reminder – " . $mailType . " Days Remaining");
 
-        $fromAddress = $setting->smtp_address ?? $setting->smtp_username;
-        $fromName = config('app.name');
+        // $fromAddress = $setting->smtp_address ?? $setting->smtp_username;
+        // $fromName = config('app.name');
 
         // for ($i = 0; $i < count($contacts); $i++) {
 
@@ -227,7 +253,7 @@ class CheckExpiryAndSendEmails extends Command
 
     private function checkTrainingPlans()
     {
-        $plans = TrainingPlanRecord::with(['company', 'worker', 'companyCourseType'])->whereNotNull('expiration_date')->get();
+        $plans = TrainingPlanRecord::with(['company', 'worker.operatingLocation', 'companyCourseType'])->whereNotNull('expiration_date')->get();
         foreach ($plans as $plan) {
             $this->sendMailAndLog('training_plan', $plan, $plan->expiration_date);
         }

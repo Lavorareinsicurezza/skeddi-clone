@@ -11,48 +11,37 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class DeadlinesExport implements FromCollection, WithHeadings, WithMapping, WithStyles
 {
-    private ?int $operatingLocationId;
+    private $records;
 
-    public function __construct(?int $operatingLocationId = null)
+    public function __construct($records)
     {
-        $this->operatingLocationId = $operatingLocationId;
+        $this->records = $records;
     }
 
     public function collection()
     {
-        $query = TrainingPlanRecord::with('companyCourseType', 'worker.operatingLocation', 'company')->company()
-            ->when($this->operatingLocationId, function ($q) {
-                $q->whereHas('worker', function ($qw) {
-                    $qw->where('operating_location_id', $this->operatingLocationId);
-                });
-            });
-
-        return $query->latest()->get();
+        return $this->records;
     }
 
     public function headings(): array
     {
         return [
-            'Ragione Sociale',
-            'Nome Corso',
-            'Nome Dipendente',
-            'Sede Operativa',
-            'Data Formazione',
-            'Data Scadenza',
-            'Da Programmare',
+            'Nome',
+            'Tipo',
+            'Lavoratore',
+            'Sede',
+            'Data di Scadenza',
         ];
     }
 
     public function map($record): array
     {
         return [
-            $record->company?->name,
-            $record->companyCourseType?->name,
-            $record->worker?->first_name .' '. $record->worker?->surname,
-            $record->worker?->operatingLocation?->name,
-            optional($record->training_date)->format('d/m/Y'),
-            optional($record->expiration_date)->format('d/m/Y'),
-            $record->to_be_scheduled ? 'Yes' : 'No',
+            $record->name,
+            $record->deadline_type,
+            $record->employee_name,
+            $record->location_name,
+            $record->expiry_date,
         ];
     }
 

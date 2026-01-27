@@ -110,6 +110,45 @@
                     </div>
                 </div>
 
+                <!-- SMTP Configuration -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('lang.smtp_configuration') }}</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="smtp_host" class="block text-sm font-medium text-gray-700 mb-2">SMTP Host</label>
+                            <input type="text" name="smtp_host" id="smtp_host" value="{{ old('smtp_host', $operatingLocation->smtp_host) }}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
+                        </div>
+                        <div>
+                            <label for="smtp_port" class="block text-sm font-medium text-gray-700 mb-2">SMTP Port</label>
+                            <input type="text" name="smtp_port" id="smtp_port" value="{{ old('smtp_port', $operatingLocation->smtp_port) }}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
+                        </div>
+                        <div>
+                            <label for="smtp_username" class="block text-sm font-medium text-gray-700 mb-2">SMTP Username</label>
+                            <input type="text" name="smtp_username" id="smtp_username" value="{{ old('smtp_username', $operatingLocation->smtp_username) }}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
+                        </div>
+                        <div>
+                            <label for="smtp_password" class="block text-sm font-medium text-gray-700 mb-2">SMTP Password</label>
+                            <input type="password" name="smtp_password" id="smtp_password" value="{{ old('smtp_password', $operatingLocation->smtp_password) }}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
+                        </div>
+                        <div>
+                            <label for="smtp_encryption" class="block text-sm font-medium text-gray-700 mb-2">SMTP Encryption</label>
+                            <select name="smtp_encryption" id="smtp_encryption" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
+                                <option value="">None</option>
+                                <option value="tls" {{ old('smtp_encryption', $operatingLocation->smtp_encryption) == 'tls' ? 'selected' : '' }}>TLS</option>
+                                <option value="ssl" {{ old('smtp_encryption', $operatingLocation->smtp_encryption) == 'ssl' ? 'selected' : '' }}>SSL</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="smtp_from_address" class="block text-sm font-medium text-gray-700 mb-2">From Address</label>
+                            <input type="email" name="smtp_from_address" id="smtp_from_address" value="{{ old('smtp_from_address', $operatingLocation->smtp_from_address) }}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
+                        </div>
+                        <div>
+                            <label for="smtp_from_name" class="block text-sm font-medium text-gray-700 mb-2">From Name</label>
+                            <input type="text" name="smtp_from_name" id="smtp_from_name" value="{{ old('smtp_from_name', $operatingLocation->smtp_from_name) }}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Status -->
                 <div class="mb-6">
                     <label class="flex items-center">

@@ -18,6 +18,13 @@ class OperatingLocation extends Model
         'site_contact_name',
         'site_contact_phone',
         'site_contact_email',
+        'smtp_host',
+        'smtp_port',
+        'smtp_username',
+        'smtp_password',
+        'smtp_encryption',
+        'smtp_from_address',
+        'smtp_from_name',
         'is_active'
     ];
 

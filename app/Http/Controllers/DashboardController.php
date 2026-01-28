@@ -9,10 +9,18 @@ use App\Models\CompanyVisitType;
 use App\Models\Document;
 use App\Models\TrainingPlanRecord;
 use App\Models\OperatingLocation;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\View;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\DeadlinesExport;
+use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mailer\Transport;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\Address;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -540,6 +548,203 @@ class DashboardController extends Controller
         return response()->json([
             'companies' => $companies
         ]);
+    }
+
+    /**
+     * Send emails to selected records from dashboard.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function sendEmails(Request $request)
+    {
+        $data = $request->validate([
+            'items' => 'required|array|min:1',
+            'items.*.module' => 'required|string|in:training_plan,course,document,visit',
+            'items.*.id' => 'required|integer',
+            'subject' => 'required|string',
+            'body' => 'nullable|string'
+        ]);
+
+        $results = [];
+        $user = Auth::user();
+
+        foreach ($data['items'] as $item) {
+            $module = $item['module'];
+            $id = $item['id'];
+            $record = null;
+            $expiryDate = null;
+
+            try {
+                switch ($module) {
+                    case 'training_plan':
+                        $record = TrainingPlanRecord::with(['company', 'worker.operatingLocation', 'companyCourseType'])->find($id);
+                        $expiryDate = $record->expiration_date ?? null;
+                        break;
+                    case 'course':
+                        $record = CompanyCourseType::with('company')->find($id);
+                        $expiryDate = $record->expiration_date ?? null;
+                        break;
+                    case 'document':
+                        $record = Document::with('company')->find($id);
+                        $expiryDate = $record->expiration_date ?? null;
+                        break;
+                    case 'visit':
+                        $record = CompanyVisitType::with('company')->find($id);
+                        $expiryDate = $record->expiry_date ?? null;
+                        break;
+                }
+
+                if (!$record) {
+                    $results[] = ['id' => $id, 'module' => $module, 'success' => false, 'message' => 'Record not found'];
+                    continue;
+                }
+
+                // Check authorization
+                $companyIds = Company::where('id', $user->company_id)
+                    ->orWhere('company_id', $user->company_id)
+                    ->pluck('id');
+
+                if (!$companyIds->contains($record->company_id)) {
+                    $results[] = ['id' => $id, 'module' => $module, 'success' => false, 'message' => 'Unauthorized'];
+                    continue;
+                }
+
+                $sent = $this->sendNotificationEmail($module, $record, $expiryDate, $data['subject'], $data['body'] ?? '');
+                $results[] = ['id' => $id, 'module' => $module, 'success' => $sent];
+            } catch (\Exception $e) {
+                Log::error('sendEmails error: ' . $e->getMessage());
+                $results[] = ['id' => $id, 'module' => $module, 'success' => false, 'message' => $e->getMessage()];
+            }
+        }
+
+        return response()->json(['success' => true, 'results' => $results]);
+    }
+
+    /**
+     * Send notification email for a single record.
+     *
+     * @param string $module
+     * @param mixed $record
+     * @param string|null $expiryDate
+     * @param string $subject
+     * @param string $body
+     * @return bool
+     */
+    private function sendNotificationEmail($module, $record, $expiryDate, $subject, $body)
+    {
+        try {
+            $company = Company::find($record->company_id);
+            if (!$company) {
+                Log::warning('Company not found for record: ' . $record->id);
+                return false;
+            }
+
+            $setting = Setting::where('company_id', $company->company_id)->first();
+            if (!$setting) {
+                Log::warning('Settings missing for company: ' . $company->id);
+                return false;
+            }
+
+            $receiverCompany = Company::find($record->company_id);
+            if (!$receiverCompany->main_email) {
+                Log::warning('No email found for company: ' . $company->id);
+                return false;
+            }
+
+            // SMTP settings (company or operating location override)
+            $smtpHost = $setting->smtp_host;
+            $smtpPort = $setting->smtp_port;
+            $smtpUsername = $setting->smtp_username;
+            $smtpPassword = $setting->smtp_password;
+            $fromAddress = $setting->smtp_address ?? $setting->smtp_username;
+            $fromName = config('app.name');
+
+            // Check for Operating Location Override
+            if (isset($record->worker) && $record->worker && $record->worker->operatingLocation) {
+                $opLocation = $record->worker->operatingLocation;
+                if (!empty($opLocation->smtp_host) && !empty($opLocation->smtp_username) && !empty($opLocation->smtp_password)) {
+                    $smtpHost = $opLocation->smtp_host;
+                    $smtpPort = $opLocation->smtp_port;
+                    $smtpUsername = $opLocation->smtp_username;
+                    $smtpPassword = $opLocation->smtp_password;
+                    $fromAddress = $opLocation->smtp_from_address ?? $opLocation->smtp_username;
+                    if (!empty($opLocation->smtp_from_name)) {
+                        $fromName = $opLocation->smtp_from_name;
+                    }
+                }
+            }
+
+            if (!$smtpHost || !$smtpUsername || !$smtpPassword) {
+                Log::warning('SMTP settings missing for company: ' . $company->id);
+                return false;
+            }
+
+            $scheme = $smtpPort == 465 ? 'smtps' : 'smtp';
+            $dsn = sprintf(
+                '%s://%s:%s@%s:%s',
+                $scheme,
+                urlencode($smtpUsername),
+                urlencode($smtpPassword),
+                $smtpHost,
+                $smtpPort
+            );
+
+            $transport = Transport::fromDsn($dsn);
+            $mailer = new Mailer(transport: $transport);
+
+            // Calculate days left for mail type
+            $mailType = 'manual';
+            if ($expiryDate) {
+                $days = Carbon::today()->diffInDays(Carbon::parse($expiryDate), false);
+                $mailType = $days > 0 ? $days . ' days' : 'expired';
+            }
+
+            // Process body if contains placeholders
+            $processedBody = $body;
+            if ($body) {
+                $replacements = [
+                    '{company_name}' => $record->company->name ?? '',
+                    '{days_left}' => $mailType,
+                    '{course_name}' => $record->name ?? ($record->companyCourseType->name ?? ''),
+                    '{worker_first_name}' => $record->worker->first_name ?? '',
+                    '{worker_last_name}' => $record->worker->surname ?? '',
+                    '{expiry_date}' => $expiryDate ? Carbon::parse($expiryDate)->format('d F Y') : '',
+                ];
+                $processedBody = str_replace(array_keys($replacements), array_values($replacements), $body);
+            }
+
+            // Render email template
+            $html = View::make('emails.expiry-reminder', [
+                'record' => $record,
+                'module' => ucfirst(str_replace('_', ' ', $module)),
+                'mailType' => $mailType,
+                'customBody' => $processedBody
+            ])->render();
+
+            $email = (new Email())
+                ->from(new Address($fromAddress, $fromName))
+                ->to($receiverCompany->main_email)
+                ->subject($subject)
+                ->html($html);
+
+            if ($setting->smtp_reply_to) {
+                $email->replyTo($setting->smtp_reply_to);
+            }
+
+            // Send email
+            try {
+                $mailer->send($email);
+                Log::info('Dashboard email sent module:' . $module . ' id:' . $record->id . ' to:' . $receiverCompany->main_email);
+                return true;
+            } catch (\Exception $e) {
+                Log::error('Email sending failed: ' . $e->getMessage());
+                return false;
+            }
+        } catch (\Exception $e) {
+            Log::error('sendNotificationEmail error: ' . $e->getMessage());
+            return false;
+        }
     }
 
     /**

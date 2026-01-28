@@ -10,6 +10,14 @@
             {{ __('lang.hello') }}, {{ $currentCompany->name ?? 'Guest' }}
         </h1>
 
+        <!-- Send Notification Button (hidden by default) -->
+        <div id="sendNotificationContainer" class="hidden flex items-center space-x-2">
+            <button id="openSendNotificationBtn" type="button"
+                class="px-4 py-2 bg-[#0C3183] text-white rounded-lg shadow-sm text-sm font-medium hover:bg-[#0A2869]">
+                Send Email
+            </button>
+        </div>
+
         <!-- Filter Form -->
         <form id="filterForm" method="GET" action="{{ route('admin.dashboard') }}"
             class="border border-gray-200 rounded-md overflow-hidden shadow-sm bg-white w-full lg:w-auto">
@@ -109,6 +117,9 @@
             <thead class="text-xs text-gray-900 uppercase bg-white border-b">
                 <tr>
                     <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap">
+                        <input type="checkbox" id="masterCheckbox" title="Select all">
+                    </th>
+                    <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap">
                         {{ __('lang.company_name') }}
                     </th>
                     <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap">
@@ -130,7 +141,20 @@
             </thead>
             <tbody>
                 @forelse ($records as $plan)
+                    @php
+                        $dt = strtolower(trim($plan->deadline_type));
+                        $moduleKey = match($dt) {
+                            'training plan' => 'training_plan',
+                            'course' => 'course',
+                            'document' => 'document',
+                            'visit type' => 'visit',
+                            default => Str::slug($dt, '_'),
+                        };
+                    @endphp
                     <tr class="bg-white border-b">
+                        <td class="px-3 md:px-6 py-4">
+                            <input type="checkbox" class="recordCheckbox" data-id="{{ $plan->id }}" data-module="{{ $moduleKey }}">
+                        </td>
 
                         <td class="px-3 md:px-6 py-4">
                             {{ \App\Models\Company::find($plan->company_id)?->name }}
@@ -169,7 +193,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="text-center py-4 text-gray-500">
+                        <td colspan="7" class="text-center py-4 text-gray-500">
                             No Data Available
                         </td>
                     </tr>
@@ -228,6 +252,91 @@
         </div>
     </div>
 
+    <!-- Send Email Modal -->
+    <div id="sendEmailModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-20 mx-auto p-6 border w-full max-w-2xl shadow-lg rounded-lg bg-white">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-gray-900">Send Email</h3>
+                <button onclick="closeSendEmailModal()" class="text-gray-400 hover:text-gray-600">
+                    <i class="fa fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <form id="sendEmailForm">
+                @csrf
+                <input type="hidden" id="selectedItems" name="items">
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email Subject</label>
+                    <input type="text" id="emailSubject" name="subject" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183]">
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email Body</label>
+
+                    <div class="w-full border border-gray-300 rounded-lg bg-white">
+                        <!-- Toolbar -->
+                        <div class="px-3 py-2 border-b bg-gray-50">
+                            <div class="flex flex-wrap items-center gap-1">
+                                <button type="button" id="emailBoldBtn" title="Bold"
+                                    class="p-2 text-gray-600 rounded hover:text-gray-900 hover:bg-gray-200">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M6 4v12h4.5a4.5 4.5 0 003.256-7.606A4 4 0 0011 4H6zm2 2h3a2 2 0 110 4H8V6zm0 6h4a2.5 2.5 0 110 5H8v-5z" />
+                                    </svg>
+                                </button>
+                                <button type="button" id="emailItalicBtn" title="Italic"
+                                    class="p-2 text-gray-600 rounded hover:text-gray-900 hover:bg-gray-200">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10 4v3h2.21l-3.42 8H6v3h8v-3h-2.21l3.42-8H18V4z" />
+                                    </svg>
+                                </button>
+                                <button type="button" id="emailUnderlineBtn" title="Underline"
+                                    class="p-2 text-gray-600 rounded hover:text-gray-900 hover:bg-gray-200">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10 17a5 5 0 01-5-5V4h2v8a3 3 0 006 0V4h2v8a5 5 0 01-5 5zm-8 1h16v2H2z" />
+                                    </svg>
+                                </button>
+                                <div class="w-px h-6 bg-gray-300 mx-1"></div>
+                                <button type="button" id="emailLinkBtn" title="Insert Link"
+                                    class="p-2 text-gray-600 rounded hover:text-gray-900 hover:bg-gray-200">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" />
+                                    </svg>
+                                </button>
+                                <div class="w-px h-6 bg-gray-300 mx-1"></div>
+                                <button type="button" id="emailUlBtn" title="Unordered List"
+                                    class="p-2 text-gray-600 rounded hover:text-gray-900 hover:bg-gray-200">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" />
+                                    </svg>
+                                </button>
+                                <button type="button" id="emailOlBtn" title="Ordered List"
+                                    class="p-2 text-gray-600 rounded hover:text-gray-900 hover:bg-gray-200">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="px-4 py-3 bg-white rounded-b-lg">
+                            <div id="emailEditor" contenteditable="true"
+                                class="block w-full px-0 text-sm text-gray-800 bg-white border-0 focus:ring-0 focus:outline-none min-h-[200px]"></div>
+                            <textarea id="emailBody" name="body" class="hidden"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3 mt-6">
+                    <button type="button" onclick="closeSendEmailModal()"
+                        class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">Close</button>
+                    <button type="submit"
+                        class="px-4 py-2 bg-[#0C3183] text-white rounded-lg hover:bg-[#0A2869] font-medium">Send</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
 @endsection
 
 @section('scripts')
@@ -239,11 +348,154 @@
             const toDate = document.getElementById('toDate');
             const deadlineTypeFilter = document.getElementById('deadline-type-filter');
             const search = document.getElementById('search');
-            // const filterType = document.getElementById('filterType');
             const resetFilter = document.getElementById('resetFilter');
             const scheduledInput = document.getElementById('scheduledInput');
             const operatingLocation = document.getElementById('operatingLocation');
 
+            // Checkbox handling
+            const masterCheckbox = document.getElementById('masterCheckbox');
+            const recordCheckboxes = Array.from(document.querySelectorAll('.recordCheckbox'));
+            const sendNotificationContainer = document.getElementById('sendNotificationContainer');
+            const openSendNotificationBtn = document.getElementById('openSendNotificationBtn');
+            const sendEmailModal = document.getElementById('sendEmailModal');
+            const selectedItemsInput = document.getElementById('selectedItems');
+            const emailEditor = document.getElementById('emailEditor');
+            const emailBodyInput = document.getElementById('emailBody');
+            const sendEmailForm = document.getElementById('sendEmailForm');
+
+            function updateSendButtonVisibility() {
+                const checkedCount = recordCheckboxes.filter(cb => cb.checked).length;
+                sendNotificationContainer.classList.toggle('hidden', checkedCount === 0);
+            }
+
+            if (masterCheckbox) {
+                masterCheckbox.addEventListener('change', function () {
+                    recordCheckboxes.forEach(cb => {
+                        cb.checked = this.checked;
+                    });
+                    updateSendButtonVisibility();
+                });
+            }
+
+            recordCheckboxes.forEach(cb => {
+                cb.addEventListener('change', function () {
+                    updateSendButtonVisibility();
+                    // Update master checkbox state
+                    if (masterCheckbox) {
+                        const allChecked = recordCheckboxes.every(checkbox => checkbox.checked);
+                        const someChecked = recordCheckboxes.some(checkbox => checkbox.checked);
+                        masterCheckbox.checked = allChecked;
+                        masterCheckbox.indeterminate = someChecked && !allChecked;
+                    }
+                });
+            });
+
+            openSendNotificationBtn.addEventListener('click', function () {
+                const selected = recordCheckboxes.filter(cb => cb.checked).map(el => ({
+                    module: el.dataset.module,
+                    id: parseInt(el.dataset.id)
+                }));
+
+                selectedItemsInput.value = JSON.stringify(selected);
+                document.getElementById('emailSubject').value = '';
+                emailEditor.innerHTML = '';
+                emailBodyInput.value = '';
+                sendEmailModal.classList.remove('hidden');
+            });
+
+            window.closeSendEmailModal = function () {
+                sendEmailModal.classList.add('hidden');
+            };
+
+            // Editor functionality
+            function execEditorCmd(cmd, val = null) {
+                document.execCommand(cmd, false, val);
+                emailEditor.focus();
+            }
+
+            document.getElementById('emailBoldBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                execEditorCmd('bold');
+            });
+            document.getElementById('emailItalicBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                execEditorCmd('italic');
+            });
+            document.getElementById('emailUnderlineBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                execEditorCmd('underline');
+            });
+            document.getElementById('emailLinkBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                const url = prompt('Enter URL:');
+                if (url) execEditorCmd('createLink', url);
+            });
+            document.getElementById('emailUlBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                execEditorCmd('insertUnorderedList');
+            });
+            document.getElementById('emailOlBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                execEditorCmd('insertOrderedList');
+            });
+
+            emailEditor.addEventListener('input', function () {
+                emailBodyInput.value = emailEditor.innerHTML;
+            });
+
+            // Handle form submission
+            sendEmailForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const items = selectedItemsInput.value ? JSON.parse(selectedItemsInput.value) : [];
+                const subject = document.getElementById('emailSubject').value;
+                const body = emailBodyInput.value;
+
+                if (!items.length) {
+                    alert('No records selected');
+                    return;
+                }
+                if (!subject) {
+                    alert('Please enter an email subject');
+                    return;
+                }
+
+                const payload = { items, subject, body };
+
+                const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                fetch('{{ route('admin.send-emails') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': token
+                    },
+                    body: JSON.stringify(payload)
+                })
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.success) {
+                            const results = data.results;
+                            const successful = results.filter(r => r.success).length;
+                            const failed = results.filter(r => !r.success).length;
+
+                            let message = `Emails sent: ${successful}`;
+                            if (failed > 0) {
+                                message += `, Failed: ${failed}`;
+                            }
+                            alert(message);
+                            closeSendEmailModal();
+                            window.location.reload();
+                        } else {
+                            alert('Error sending emails');
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        alert('Error sending emails');
+                    });
+            });
+
+            // Filter form handling
             function submitForm() {
                 filterForm.submit();
             }
@@ -263,7 +515,6 @@
             if (toDate) toDate.addEventListener('change', submitForm);
             if (deadlineTypeFilter) deadlineTypeFilter.addEventListener('change', submitForm);
             if (search) search.addEventListener('change', submitForm);
-            // if (filterType) filterType.addEventListener('change', submitForm);
             if (operatingLocation) operatingLocation.addEventListener('change', submitForm);
 
             if (resetFilter) {
@@ -271,8 +522,6 @@
                     scheduledInput.value = 'false';
                     fromDate.value = '';
                     toDate.value = '';
-                    // filterType.value = 'deadlines';
-                    // deadlineTypeFilter.value = 'all';
                     search.value = '';
                     if (operatingLocation) operatingLocation.value = '';
                     window.location.href = "{{ route('admin.dashboard') }}";

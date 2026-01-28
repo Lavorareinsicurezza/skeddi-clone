@@ -44,6 +44,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->middleware('ensure.permission:dashboard')->name('dashboard');
     Route::get('/deadlines', [DashboardController::class, 'deadlines'])->middleware('ensure.permission:deadlines')->name('deadlines');
     Route::get('/deadlines/export', [DashboardController::class, 'exportDeadlines'])->middleware('ensure.permission:deadlines,view')->name('deadlines.export');
+    Route::post('/send-emails', [DashboardController::class, 'sendEmails'])->middleware('ensure.permission:dashboard')->name('send-emails');
 
     // Company import/export routes
     Route::get('/companies/export', [CompanyController::class, 'export'])->middleware('ensure.permission:companies,view')->name('companies.export');

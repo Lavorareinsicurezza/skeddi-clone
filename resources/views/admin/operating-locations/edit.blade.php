@@ -111,8 +111,34 @@
                 </div>
 
                 <!-- SMTP Configuration -->
-                <div class="mb-6">
+                <div class="mb-6" x-data="smtpProfileSelector()">
                     <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('lang.smtp_configuration') }}</h3>
+
+                    <!-- SMTP Profile Selector -->
+                    <div class="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Seleziona Profilo SMTP
+                            <span class="text-xs text-gray-500">(opzionale - auto-compila i campi sottostanti)</span>
+                        </label>
+                        <select name="smtp_profile_id" x-model="selectedProfileId" @change="loadProfile()"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
+                            <option value="">-- Seleziona un profilo o inserisci manualmente --</option>
+                            @foreach($smtpProfiles as $profile)
+                                <option value="{{ $profile->id }}" {{ old('smtp_profile_id', $operatingLocation->smtp_profile_id) == $profile->id ? 'selected' : '' }}>
+                                    {{ $profile->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @can('create smtp-profiles')
+                        <div class="mt-2">
+                            <a href="{{ route('admin.smtp-profiles.create') }}" target="_blank"
+                                class="text-sm text-blue-600 hover:text-blue-800 inline-flex items-center">
+                                <i class="fa fa-plus mr-1"></i> Crea nuovo profilo SMTP
+                            </a>
+                        </div>
+                        @endcan
+                    </div>
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label for="smtp_host" class="block text-sm font-medium text-gray-700 mb-2">SMTP Host</label>
@@ -172,4 +198,39 @@
             </form>
         </div>
     </div>
+
+    <script>
+        // SMTP Profile Selector
+        function smtpProfileSelector() {
+            return {
+                selectedProfileId: '{{ old('smtp_profile_id', $operatingLocation->smtp_profile_id) }}',
+                profiles: @json($smtpProfiles),
+
+                loadProfile() {
+                    if (!this.selectedProfileId) {
+                        return;
+                    }
+
+                    const profile = this.profiles.find(p => p.id == this.selectedProfileId);
+                    if (profile) {
+                        // Auto-fill SMTP fields
+                        document.getElementById('smtp_host').value = profile.host || '';
+                        document.getElementById('smtp_port').value = profile.port || '';
+                        document.getElementById('smtp_username').value = profile.username || '';
+                        document.getElementById('smtp_password').value = profile.password || '';
+                        document.getElementById('smtp_from_address').value = profile.from_address || '';
+                        document.getElementById('smtp_from_name').value = profile.from_name || '';
+
+                        // Set encryption dropdown
+                        const encryptionSelect = document.getElementById('smtp_encryption');
+                        if (profile.encryption) {
+                            encryptionSelect.value = profile.encryption;
+                        } else {
+                            encryptionSelect.value = '';
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 @endsection

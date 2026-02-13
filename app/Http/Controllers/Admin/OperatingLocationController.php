@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\OperatingLocation;
 use App\Models\Company;
+use App\Models\SmtpProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -34,7 +35,9 @@ class OperatingLocationController extends Controller
             ->orderBy('name')
             ->get();
 
-        return view('admin.operating-locations.create', compact('companies'));
+        $smtpProfiles = SmtpProfile::all();
+
+        return view('admin.operating-locations.create', compact('companies', 'smtpProfiles'));
     }
 
     /**
@@ -49,6 +52,7 @@ class OperatingLocationController extends Controller
             'site_contact_phone' => 'nullable|string|max:20',
             'site_contact_email' => 'nullable|email|max:255',
             'is_active' => 'boolean',
+            'smtp_profile_id' => 'nullable|exists:smtp_profiles,id',
             'smtp_host' => 'nullable|string|max:255',
             'smtp_port' => 'nullable|string|max:255',
             'smtp_username' => 'nullable|string|max:255',
@@ -94,7 +98,9 @@ class OperatingLocationController extends Controller
             ->orderBy('name')
             ->get();
 
-        return view('admin.operating-locations.edit', compact('operatingLocation', 'companies'));
+        $smtpProfiles = SmtpProfile::all();
+
+        return view('admin.operating-locations.edit', compact('operatingLocation', 'companies', 'smtpProfiles'));
     }
 
     /**
@@ -111,6 +117,7 @@ class OperatingLocationController extends Controller
             'site_contact_phone' => 'nullable|string|max:20',
             'site_contact_email' => 'nullable|email|max:255',
             'is_active' => 'boolean',
+            'smtp_profile_id' => 'nullable|exists:smtp_profiles,id',
             'smtp_host' => 'nullable|string|max:255',
             'smtp_port' => 'nullable|string|max:255',
             'smtp_username' => 'nullable|string|max:255',

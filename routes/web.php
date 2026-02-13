@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\OperatingLocationController;
 use App\Http\Controllers\CompanyRenewalController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\SmtpProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -76,6 +77,9 @@ Route::middleware('auth')->name('admin.')->group(function () {
     Route::get('/settings', [SettingController::class, 'index'])->middleware('ensure.permission:settings')->name('settings.index');
     Route::put('/settings', [SettingController::class, 'update'])->middleware('ensure.permission:settings,edit')->name('settings.update');
     Route::post('/settings/test', [SettingController::class, 'testSmtp'])->middleware('ensure.permission:settings,view')->name('settings.test');
+
+    // SMTP Profiles routes
+    Route::resource('smtp-profiles', SmtpProfileController::class)->middleware('ensure.permission:smtp-profiles');
 
     // User OTP and Password Reset
     Route::post('/users/send-otp', [UserController::class, 'sendOtp'])->name('users.send-otp');

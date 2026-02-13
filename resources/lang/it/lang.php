@@ -35,7 +35,7 @@ return [
     // --------------------------------------------------------------------------------------------------
     //                                 Signup
     // --------------------------------------------------------------------------------------------------
-    'registration_page_title' => 'Registration - Management Software',
+    'registration_page_title' => 'Registration - SAFEGEST',
     'register_your_company' => 'Registra la tua azienda',
     'signup_instructions' => 'Inserisci i dati della tua azienda per registrarti!',
     'company_name' => "Nome dell'azienda",
@@ -260,6 +260,7 @@ return [
     'days_prior_health_insurance' => 'Giorni prima dell\'assicurazione sanitaria',
     'days_prior_maintenance_deadline' => 'Giorni prima della scadenza di manutenzione',
     'smtp_configuration' => 'Configurazione SMTP',
+    'smtp_profiles' => 'Profili SMTP',
     'address_notification_sent' => 'Indirizzo a cui verrà inviata la notifica',
     'alias_notification_sent' => 'Alias con cui verrà inviata la notifica',
     'replyto_address' => 'Indirizzo ReplyTo a cui verranno inviate le risposte',

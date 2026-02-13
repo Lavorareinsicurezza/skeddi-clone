@@ -1,6 +1,6 @@
 @extends('layouts.auth')
 
-@section('title', 'Reset Password - Management Software')
+@section('title', 'Reset Password - SAFEGEST')
 
 @section('content')
 <div class="bg-white rounded-2xl shadow-lg p-8">

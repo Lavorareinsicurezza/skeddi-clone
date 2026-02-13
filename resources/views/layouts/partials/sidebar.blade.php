@@ -165,6 +165,14 @@
                 </a>
             </li>
             @endcan
+            @can('view smtp-profiles')
+            <li>
+                <a href="{{ route('admin.smtp-profiles.index') }}" class="flex items-center p-2 rounded-[20px] {{ request()->routeIs('admin.smtp-profiles.*')? 'text-[#0C3183] bg-blue-50': 'text-gray-500' }} hover:text-[#0C3183] hover:bg-blue-50 group">
+                    <i class="fas fa-envelope w-5 h-5 {{ request()->routeIs('admin.smtp-profiles.*')? 'text-[#0C3183]': 'text-gray-500'}} transition duration-75 group-hover:text-[#0C3183]"></i>
+                    <span class="ms-3">{{ __('lang.smtp_profiles') }}</span>
+                </a>
+            </li>
+            @endcan
             @can( 'view roles')
             <li>
                 <a href="{{ route('admin.roles.index') }}" class="flex items-center p-2 rounded-[20px] {{ request()->routeIs('admin.roles.*')? 'text-[#0C3183] bg-blue-50': 'text-gray-500' }} hover:text-[#0C3183] hover:bg-blue-50 group">

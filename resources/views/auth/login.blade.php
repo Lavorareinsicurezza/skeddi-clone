@@ -1,6 +1,6 @@
 @extends('layouts.auth')
 
-@section('title', 'Login - Management Software')
+@section('title', 'Login - SAFEGEST')
 
 @section('content')
     <div class="w-full max-w-xl items-center">

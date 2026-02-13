@@ -13,6 +13,7 @@ class OperatingLocation extends Model
 
     protected $fillable = [
         'company_id',
+        'smtp_profile_id',
         'name',
         'address',
         'site_contact_name',
@@ -35,6 +36,11 @@ class OperatingLocation extends Model
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function smtpProfile(): BelongsTo
+    {
+        return $this->belongsTo(SmtpProfile::class);
     }
 
     public function workers(): HasMany

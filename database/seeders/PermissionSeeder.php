@@ -24,7 +24,8 @@ class PermissionSeeder extends Seeder
             'company-workers',
             'company-course-types',
             'company-visit-types',
-            'operating-locations'
+            'operating-locations',
+            'smtp-profiles'
         ];
 
         // Page based modules (no CRUD)

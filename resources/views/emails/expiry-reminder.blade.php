@@ -12,14 +12,6 @@
             <td align="center">
                 <table width="600" style="background:#ffffff; padding:20px; border-radius:6px;">
 
-                    <tr>
-                        <td>
-                            <h2 style="color:#0C3183; margin-bottom:10px;">
-                                {{ $module }} Expiry Reminder
-                            </h2>
-                        </td>
-                    </tr>
-
                     @if(!empty($customBody) && $customBody != '<br>')
                         <tr>
                             <td style="font-size:14px; color:#333;">

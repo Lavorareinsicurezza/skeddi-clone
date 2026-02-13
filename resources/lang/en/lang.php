@@ -4,7 +4,7 @@ return [
     // --------------------------------------------------------------------------------------------------
     //                                 Login
     // --------------------------------------------------------------------------------------------------
-    'management_software' => 'Management Software',
+    'management_software' => 'SAFEGEST',
     'login_to_your_account' => 'Login to your account!',
     'login_instructions' => 'Enter your registered email address and password to login!',
     'email_address' => 'Email Address',
@@ -35,7 +35,7 @@ return [
     // --------------------------------------------------------------------------------------------------
     //                                 Signup
     // --------------------------------------------------------------------------------------------------
-    'registration_page_title' => 'Registration - Management Software',
+    'registration_page_title' => 'Registration - SAFEGEST',
     'register_your_company' => 'Register your company',
     'signup_instructions' => 'Enter your company details to register!',
     'company_name' => 'Company Name',
@@ -259,6 +259,7 @@ return [
     'days_prior_health_insurance' => 'Days prior to health insurance',
     'days_prior_maintenance_deadline' => 'Days prior to maintenance deadline',
     'smtp_configuration' => 'SMTP Configuration',
+    'smtp_profiles' => 'SMTP Profiles',
     'address_notification_sent' => 'Address to which notification will be sent',
     'alias_notification_sent' => 'Alias under which notification will be sent',
     'replyto_address' => 'ReplyTo Address to which replies will be sent',

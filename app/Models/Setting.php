@@ -26,6 +26,11 @@ class Setting extends Model
         'whatsapp_smtp_address',
         'whatsapp_smtp_alias',
         'whatsapp_smtp_reply_to',
+        'whatsapp_api_url',
+        'whatsapp_api_key',
+        'whatsapp_phone_number_id',
+        'whatsapp_business_account_id',
+        'whatsapp_template_name',
     ];
 
     protected $casts = [

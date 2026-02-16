@@ -11,6 +11,7 @@ class Worker extends Model
         'operating_location_id',
         'first_name',
         'surname',
+        'phone_number',
         'job_title',
         'department',
         'workplace_safety_risk',

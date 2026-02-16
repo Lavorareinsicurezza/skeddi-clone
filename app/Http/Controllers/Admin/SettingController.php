@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
+use App\Services\WhatsAppService;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
@@ -63,6 +64,11 @@ class SettingController extends Controller
             'whatsapp_smtp_address' => 'nullable|string|max:255',
             'whatsapp_smtp_alias' => 'nullable|string|max:255',
             'whatsapp_smtp_reply_to' => 'nullable|string|max:255',
+            'whatsapp_api_url' => 'nullable|string|max:500',
+            'whatsapp_api_key' => 'nullable|string',
+            'whatsapp_phone_number_id' => 'nullable|string|max:255',
+            'whatsapp_business_account_id' => 'nullable|string|max:255',
+            'whatsapp_template_name' => 'nullable|string|max:255',
         ]);
 
        $validated['notification_periods'] = array_map('intval', $validated['notification_periods']);
@@ -170,6 +176,59 @@ class SettingController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'SMTP test failed: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Test WhatsApp API connection.
+     */
+    public function testWhatsApp(Request $request)
+    {
+        try {
+            // Get current settings from database for this company
+            $setting = Setting::where('company_id', auth()->user()->company_id)->first();
+
+            if (!$setting || !$setting->whatsapp_api_url) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'WhatsApp configuration not found. Please configure WhatsApp settings first.'
+                ], 400);
+            }
+
+            // Validate required fields
+            if (!$setting->whatsapp_api_key || !$setting->whatsapp_phone_number_id) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'WhatsApp API Key and Phone Number ID are required for testing.'
+                ], 400);
+            }
+
+            // Test connection using WhatsApp service
+            $whatsappService = app(WhatsAppService::class);
+            $result = $whatsappService->testConnection(
+                $setting->whatsapp_api_url,
+                $setting->whatsapp_api_key,
+                $setting->whatsapp_phone_number_id
+            );
+
+            if ($result['success']) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'WhatsApp API connection successful! Your configuration is working correctly.',
+                    'data' => $result['data'] ?? null,
+                ]);
+            }
+
+            return response()->json([
+                'success' => false,
+                'message' => $result['message']
+            ], 500);
+
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'WhatsApp test failed: ' . $e->getMessage()
             ], 500);
         }
     }

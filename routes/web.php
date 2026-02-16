@@ -46,6 +46,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
     Route::get('/deadlines', [DashboardController::class, 'deadlines'])->middleware('ensure.permission:deadlines')->name('deadlines');
     Route::get('/deadlines/export', [DashboardController::class, 'exportDeadlines'])->middleware('ensure.permission:deadlines,view')->name('deadlines.export');
     Route::post('/send-emails', [DashboardController::class, 'sendEmails'])->middleware('ensure.permission:dashboard')->name('send-emails');
+    Route::post('/send-whatsapps', [DashboardController::class, 'sendWhatsApps'])->middleware('ensure.permission:dashboard')->name('send-whatsapps');
 
     // Company import/export routes
     Route::get('/companies/export', [CompanyController::class, 'export'])->middleware('ensure.permission:companies,view')->name('companies.export');
@@ -77,6 +78,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
     Route::get('/settings', [SettingController::class, 'index'])->middleware('ensure.permission:settings')->name('settings.index');
     Route::put('/settings', [SettingController::class, 'update'])->middleware('ensure.permission:settings,edit')->name('settings.update');
     Route::post('/settings/test', [SettingController::class, 'testSmtp'])->middleware('ensure.permission:settings,view')->name('settings.test');
+    Route::post('/settings/test-whatsapp', [SettingController::class, 'testWhatsApp'])->middleware('ensure.permission:settings,view')->name('settings.test-whatsapp');
 
     // SMTP Profiles routes
     Route::resource('smtp-profiles', SmtpProfileController::class)->middleware('ensure.permission:smtp-profiles');

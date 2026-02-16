@@ -10,6 +10,7 @@ use App\Models\Document;
 use App\Models\TrainingPlanRecord;
 use App\Models\OperatingLocation;
 use App\Models\Setting;
+use App\Services\WhatsAppService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -788,5 +789,162 @@ class DashboardController extends Controller
             'success' => true,
             'message' => 'Company selected successfully'
         ]);
+    }
+
+    /**
+     * Send WhatsApp messages to selected records from dashboard.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function sendWhatsApps(Request $request)
+    {
+        $data = $request->validate([
+            'items' => 'required|array|min:1',
+            'items.*.module' => 'required|string|in:training_plan,course,document,visit',
+            'items.*.id' => 'required|integer',
+        ]);
+
+        $results = [];
+        $user = Auth::user();
+        $whatsappService = app(WhatsAppService::class);
+
+        foreach ($data['items'] as $item) {
+            $module = $item['module'];
+            $id = $item['id'];
+            $record = null;
+            $expiryDate = null;
+
+            try {
+                switch ($module) {
+                    case 'training_plan':
+                        $record = TrainingPlanRecord::with(['company', 'worker.operatingLocation', 'companyCourseType'])->find($id);
+                        $expiryDate = $record->expiration_date ?? null;
+                        break;
+                    case 'course':
+                        $record = CompanyCourseType::with('company')->find($id);
+                        $expiryDate = $record->expiration_date ?? null;
+                        break;
+                    case 'document':
+                        $record = Document::with('company')->find($id);
+                        $expiryDate = $record->expiration_date ?? null;
+                        break;
+                    case 'visit':
+                        $record = CompanyVisitType::with('company')->find($id);
+                        $expiryDate = $record->expiry_date ?? null;
+                        break;
+                }
+
+                if (!$record) {
+                    $results[] = ['id' => $id, 'module' => $module, 'success' => false, 'message' => 'Record not found'];
+                    continue;
+                }
+
+                // Check authorization
+                $companyIds = Company::where('id', $user->company_id)
+                    ->orWhere('company_id', $user->company_id)
+                    ->pluck('id');
+
+                if (!$companyIds->contains($record->company_id)) {
+                    $results[] = ['id' => $id, 'module' => $module, 'success' => false, 'message' => 'Unauthorized'];
+                    continue;
+                }
+
+                $sent = $this->sendWhatsAppNotification($whatsappService, $module, $record, $expiryDate);
+                $results[] = ['id' => $id, 'module' => $module, 'success' => $sent];
+            } catch (\Exception $e) {
+                Log::error('sendWhatsApps error: ' . $e->getMessage());
+                $results[] = ['id' => $id, 'module' => $module, 'success' => false, 'message' => $e->getMessage()];
+            }
+        }
+
+        return response()->json(['success' => true, 'results' => $results]);
+    }
+
+    /**
+     * Send WhatsApp notification for a single record.
+     *
+     * @param WhatsAppService $whatsappService
+     * @param string $module
+     * @param mixed $record
+     * @param string|null $expiryDate
+     * @return bool
+     */
+    private function sendWhatsAppNotification($whatsappService, $module, $record, $expiryDate)
+    {
+        try {
+            $company = Company::find($record->company_id);
+            if (!$company) {
+                Log::warning('Company not found for record: ' . $record->id);
+                return false;
+            }
+
+            $setting = Setting::where('company_id', $company->company_id)->first();
+            if (!$setting) {
+                Log::warning('Settings missing for company: ' . $company->id);
+                return false;
+            }
+
+            // Check if WhatsApp is configured
+            if (!$setting->whatsapp_notification) {
+                Log::warning('WhatsApp notifications disabled for company: ' . $company->id);
+                return false;
+            }
+
+            if (!$setting->whatsapp_api_url || !$setting->whatsapp_api_key || !$setting->whatsapp_phone_number_id) {
+                Log::warning('WhatsApp not properly configured for company: ' . $company->id);
+                return false;
+            }
+
+            // Get recipient phone number
+            $recipientPhone = null;
+
+            if (isset($record->worker) && $record->worker && $record->worker->phone_number) {
+                $recipientPhone = $record->worker->phone_number;
+            } elseif ($company->phone) {
+                $recipientPhone = $company->phone;
+            }
+
+            if (!$recipientPhone) {
+                Log::warning('No phone number found for WhatsApp notification: ' . $record->id);
+                return false;
+            }
+
+            // Calculate days left
+            $daysLeft = 'manual';
+            if ($expiryDate) {
+                $days = Carbon::today()->diffInDays(Carbon::parse($expiryDate), false);
+                $daysLeft = $days > 0 ? (string)$days : 'scaduto';
+            }
+
+            // Build template parameters
+            $templateParams = $whatsappService->buildTemplateParams($record, $module, $daysLeft);
+
+            // Send WhatsApp message
+            $templateName = $setting->whatsapp_template_name ?? 'expiry_reminder';
+            $sent = $whatsappService->sendMessage(
+                $setting->whatsapp_api_url,
+                $setting->whatsapp_api_key,
+                $setting->whatsapp_phone_number_id,
+                $recipientPhone,
+                $templateName,
+                $templateParams
+            );
+
+            if ($sent) {
+                Log::info('Dashboard WhatsApp sent', [
+                    'module' => $module,
+                    'record_id' => $record->id,
+                    'recipient' => $recipientPhone
+                ]);
+                return true;
+            }
+
+            return false;
+
+        } catch (\Exception $e) {
+            Log::error('sendWhatsAppNotification error: ' . $e->getMessage());
+            return false;
+        }
     }
 }

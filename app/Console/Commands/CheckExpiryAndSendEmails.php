@@ -13,6 +13,7 @@ use App\Models\CompanyCourseType;
 use App\Models\Document;
 use App\Models\CompanyVisitType;
 use App\Models\Setting;
+use App\Services\WhatsAppService;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\Mailer\Mailer;
@@ -43,15 +44,16 @@ class CheckExpiryAndSendEmails extends Command
         $this->info('Expiry check completed.');
     }
 
-    private function shouldSendMail($module, $recordId, $type)
+    private function shouldSendMail($module, $recordId, $type, $channel = 'email')
     {
         $shouldSend = !DB::table('expiry_mail_logs')
             ->where('module', $module)
             ->where('record_id', $recordId)
             ->where('mail_type', $type)
+            ->where('channel', $channel)
             ->exists();
 
-        Log::info('Checking if mail should be sent for module: ' . $module . ', record_id: ' . $recordId . ', type: ' . $type . '. Result: ' . $shouldSend);
+        Log::info('Checking if notification should be sent for module: ' . $module . ', record_id: ' . $recordId . ', type: ' . $type . ', channel: ' . $channel . '. Result: ' . $shouldSend);
 
         return $shouldSend;
     }
@@ -216,10 +218,98 @@ class CheckExpiryAndSendEmails extends Command
             'record_id'  => $record->id,
             'company_id' => $record->company_id ?? null,
             'mail_type'  => $mailType,
+            'channel'    => 'email',
             'sent_at'    => now(),
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        // Check if WhatsApp notifications are enabled and send
+        if ($setting->whatsapp_notification) {
+            $this->sendWhatsAppNotification($module, $record, $expiryDate, $setting, $mailType);
+        }
+    }
+
+    /**
+     * Send WhatsApp notification for expiring record
+     */
+    private function sendWhatsAppNotification($module, $record, $expiryDate, $setting, $mailType)
+    {
+        Log::info('Attempting to send WhatsApp notification', [
+            'module' => $module,
+            'record_id' => $record->id,
+            'mail_type' => $mailType
+        ]);
+
+        // Check if WhatsApp is configured
+        if (!$setting->whatsapp_api_url || !$setting->whatsapp_api_key || !$setting->whatsapp_phone_number_id) {
+            Log::warning('WhatsApp not properly configured for company', [
+                'company_id' => $setting->company_id
+            ]);
+            return;
+        }
+
+        // Get recipient phone number
+        $recipientPhone = null;
+
+        if (isset($record->worker) && $record->worker && $record->worker->phone_number) {
+            $recipientPhone = $record->worker->phone_number;
+        } elseif (isset($record->company) && $record->company->phone) {
+            $recipientPhone = $record->company->phone;
+        }
+
+        if (!$recipientPhone) {
+            Log::warning('No phone number found for WhatsApp notification', [
+                'module' => $module,
+                'record_id' => $record->id
+            ]);
+            return;
+        }
+
+        // Check if already sent
+        if (!$this->shouldSendMail($module, $record->id, $mailType, 'whatsapp')) {
+            Log::info('WhatsApp notification already sent', [
+                'module' => $module,
+                'record_id' => $record->id,
+                'mail_type' => $mailType
+            ]);
+            return;
+        }
+
+        // Build template parameters
+        $whatsappService = app(WhatsAppService::class);
+        $templateParams = $whatsappService->buildTemplateParams($record, $module, $mailType);
+
+        // Send WhatsApp message
+        $templateName = $setting->whatsapp_template_name ?? 'expiry_reminder';
+        $sent = $whatsappService->sendMessage(
+            $setting->whatsapp_api_url,
+            $setting->whatsapp_api_key,
+            $setting->whatsapp_phone_number_id,
+            $recipientPhone,
+            $templateName,
+            $templateParams
+        );
+
+        if ($sent) {
+            // Log WhatsApp notification
+            DB::table('expiry_mail_logs')->insert([
+                'module'     => $module,
+                'record_id'  => $record->id,
+                'company_id' => $record->company_id ?? null,
+                'mail_type'  => $mailType,
+                'channel'    => 'whatsapp',
+                'sent_at'    => now(),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            Log::info('WhatsApp notification sent successfully', [
+                'module' => $module,
+                'record_id' => $record->id,
+                'recipient' => $recipientPhone
+            ]);
+        }
     }
 
 

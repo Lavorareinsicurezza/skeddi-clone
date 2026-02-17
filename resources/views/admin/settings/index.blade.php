@@ -651,7 +651,7 @@
         });
 
         // Test WhatsApp SMTP Button Handler
-        document.getElementById('testWhatsAppSmtpBtn').addEventListener('click', function () {
+        document.getElementById('testWhatsAppBtn').addEventListener('click', function () {
             const btn = this;
             const originalText = btn.innerHTML;
 

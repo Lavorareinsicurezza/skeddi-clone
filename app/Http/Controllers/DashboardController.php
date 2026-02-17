@@ -377,7 +377,8 @@ class DashboardController extends Controller
             'operating_locations.name as location_name',
             'workers.first_name',
             'workers.surname',
-            'training_plan_records.training_date'
+            'training_plan_records.training_date',
+            DB::raw("(SELECT note FROM training_plan_documents WHERE training_plan_record_id = training_plan_records.id AND note IS NOT NULL AND note != '' ORDER BY created_at DESC LIMIT 1) as notes")
         )
             ->leftJoin('workers', 'workers.id', 'training_plan_records.worker_id')
             ->leftJoin('company_course_types', 'company_course_types.id', 'training_plan_records.company_course_type_id')
@@ -411,7 +412,8 @@ class DashboardController extends Controller
             DB::raw("NULL as location_name"),
             DB::raw("NULL as first_name"),
             DB::raw("NULL as surname"),
-            DB::raw("NULL as training_date")
+            DB::raw("NULL as training_date"),
+            DB::raw("NULL as notes")
         )
             ->leftJoin('companies', 'companies.id', 'company_course_types.company_id')
             ->where('company_course_types.company_id', $companyId)
@@ -441,7 +443,8 @@ class DashboardController extends Controller
             'operating_locations.name as location_name',
             DB::raw("NULL as first_name"),
             DB::raw("NULL as surname"),
-            DB::raw("NULL as training_date")
+            DB::raw("NULL as training_date"),
+            DB::raw("NULL as notes")
         )
             ->leftJoin('companies', 'companies.id', 'documents.company_id')
             ->leftJoin('operating_locations', 'operating_locations.id', 'documents.operating_location_id')
@@ -475,7 +478,8 @@ class DashboardController extends Controller
             DB::raw("NULL as location_name"),
             DB::raw("NULL as first_name"),
             DB::raw("NULL as surname"),
-            DB::raw("NULL as training_date")
+            DB::raw("NULL as training_date"),
+            DB::raw("NULL as notes")
         )
             ->leftJoin('companies', 'companies.id', 'company_visit_types.company_id')
             ->where('company_visit_types.company_id', $companyId)

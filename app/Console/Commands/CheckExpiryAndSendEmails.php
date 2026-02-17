@@ -225,7 +225,7 @@ class CheckExpiryAndSendEmails extends Command
         ]);
 
         // Check if WhatsApp notifications are enabled and send
-        if ($setting->whatsapp_notification) {
+        if ($setting->whatsapp_api_key) {
             $this->sendWhatsAppNotification($module, $record, $expiryDate, $setting, $mailType);
         }
     }
@@ -340,6 +340,7 @@ class CheckExpiryAndSendEmails extends Command
     //         'updated_at' => now(),
     //     ]);
     // }
+
 
     private function checkTrainingPlans()
     {

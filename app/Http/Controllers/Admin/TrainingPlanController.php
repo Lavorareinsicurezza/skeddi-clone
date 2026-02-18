@@ -29,7 +29,7 @@ class TrainingPlanController extends Controller
         $workers = Worker::query()->company()->where('is_active', true)->get();
 
         // Get all company course types
-        $courseTypes = CompanyCourseType::query()->company()->with('courseType')->get();
+        $courseTypes = CompanyCourseType::query()->company()->with('courseType')->orderBy('sort_order')->orderBy('id')->get();
 
         // Get all existing training plan records
         $trainingRecords = TrainingPlanRecord::query()

@@ -16,6 +16,7 @@ class CompanyCourseType extends Model
         'expiration_column_name',
         'is_generic',
         'notes',
+        'sort_order',
     ];
 
     protected $casts = [

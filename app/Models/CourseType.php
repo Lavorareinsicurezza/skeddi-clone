@@ -20,6 +20,7 @@ class CourseType extends Model
         'generic',
         'expiration',
         'notes',
+        'sort_order',
     ];
 
     /**

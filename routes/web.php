@@ -62,6 +62,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
     Route::get('/users/template', [UserController::class, 'downloadTemplate'])->middleware('ensure.permission:users,view')->name('users.template');
 
     //Cource Type routes
+    Route::post('/course-types/reorder', [CourceTypeController::class, 'reorder'])->middleware('ensure.permission:course-types,edit')->name('course-types.reorder');
     Route::resource('course-types', CourceTypeController::class)->middleware('ensure.permission:course-types');
 
     //Document Type routes

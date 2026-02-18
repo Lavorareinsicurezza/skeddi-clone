@@ -14,7 +14,7 @@ class CompanyCourseTypeController extends Controller
      */
     public function index()
     {
-        $companyCourseTypes = CompanyCourseType::query()->company()->with('courseType')->paginate(20);
+        $companyCourseTypes = CompanyCourseType::query()->company()->with('courseType')->orderBy('sort_order')->orderBy('id')->paginate(20);
         return view('company.course-type.index', compact('companyCourseTypes'));
     }
 
@@ -23,7 +23,7 @@ class CompanyCourseTypeController extends Controller
      */
     public function create()
     {
-        $courseTypes = CourseType::all();
+        $courseTypes = CourseType::orderBy('sort_order')->orderBy('id')->get();
         return view('company.course-type.create', compact('courseTypes'));
     }
 
@@ -58,6 +58,7 @@ class CompanyCourseTypeController extends Controller
             'expiration_column_name' => $request->input('expiration_column_name'),
             'is_generic' => $request->has('is_generic') ? 1 : 0,
             'notes' => $request->input('notes'),
+            'sort_order' => $courseType->sort_order,
         ]);
 
         return redirect()->route('admin.company-course-types.index')->with('success', __('lang.course_type_created_successfully'));
@@ -82,7 +83,7 @@ class CompanyCourseTypeController extends Controller
         $companyCourseType = CompanyCourseType::with(['trainingPlanRecords' => function ($q) {
             return $q->with('worker');
         }])->company()->with('courseType')->findOrFail($id);
-        $courseTypes = CourseType::all();
+        $courseTypes = CourseType::orderBy('sort_order')->orderBy('id')->get();
         return view('company.course-type.create', compact('companyCourseType', 'courseTypes'));
     }
 

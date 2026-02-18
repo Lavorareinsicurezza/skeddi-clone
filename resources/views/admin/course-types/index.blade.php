@@ -17,20 +17,33 @@
     <div class="mb-6 flex items-center justify-between">
         <h1 class="text-3xl font-bold text-gray-900">{{ __('lang.course_types_management') }}</h1>
 
-        @can('create course-types')
-        <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden shadow-sm">
-            <a href="{{ route('admin.course-types.create') }}"
-                class="px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm flex" title="{{ __('lang.create_course_type') }}">
-                <i class="text-gray-500 fa fa-plus"></i>
-            </a>
+        <div class="flex items-center gap-2">
+            @can('edit course-types')
+            <button id="saveOrderBtn"
+                class="hidden px-4 py-2 bg-[#0C3183] text-white text-sm font-semibold rounded-lg hover:bg-[#0A2869] flex items-center gap-2">
+                <i class="fa fa-save"></i>
+                {{ __('lang.save_order') }}
+            </button>
+            @endcan
+
+            @can('create course-types')
+            <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+                <a href="{{ route('admin.course-types.create') }}"
+                    class="px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm flex" title="{{ __('lang.create_course_type') }}">
+                    <i class="text-gray-500 fa fa-plus"></i>
+                </a>
+            </div>
+            @endcan
         </div>
-        @endcan
     </div>
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 bg-white">
             <thead class="text-xs text-gray-900 uppercase bg-white border-b">
                 <tr>
+                    <th scope="col" class="px-4 py-3 w-24">
+                        {{ __('lang.order') }}
+                    </th>
                     <th scope="col" class="px-6 py-3">
                         {{ __('lang.course_type') }}
                     </th>
@@ -45,7 +58,18 @@
             <tbody>
                 @if ($courseTypes->count() > 0)
                     @foreach ($courseTypes as $courseType)
-                        <tr class="bg-white border-b border-gray-200">
+                        <tr class="bg-white border-b border-gray-200" data-id="{{ $courseType->id }}">
+                            <td class="px-4 py-4">
+                                @can('edit course-types')
+                                <input type="number" min="1"
+                                    class="sort-order-input w-16 text-center border border-gray-300 rounded px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-[#0C3183]"
+                                    value="{{ $courseType->sort_order }}"
+                                    data-id="{{ $courseType->id }}"
+                                    data-original="{{ $courseType->sort_order }}">
+                                @else
+                                    {{ $courseType->sort_order }}
+                                @endcan
+                            </td>
                             <td class="px-6 py-4">
                                 {{ $courseType->course_name }}
                             </td>
@@ -83,7 +107,7 @@
                     @endforeach
                 @else
                     <tr class="bg-white border-b border-gray-200">
-                        <td colspan="3" class="px-6 py-4 text-center text-gray-500">
+                        <td colspan="4" class="px-6 py-4 text-center text-gray-500">
                             {{ __('lang.no_data_available') }}
                         </td>
                     </tr>
@@ -97,4 +121,64 @@
         {{ $courseTypes->onEachSide(1)->links('pagination::tailwind') }}
     </div>
 
+@endsection
+
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const saveBtn = document.getElementById('saveOrderBtn');
+        const inputs = document.querySelectorAll('.sort-order-input');
+
+        if (!saveBtn || !inputs.length) return;
+
+        // Show Save button when any input changes
+        inputs.forEach(function (input) {
+            input.addEventListener('input', function () {
+                saveBtn.classList.remove('hidden');
+            });
+        });
+
+        saveBtn.addEventListener('click', function () {
+            const order = [];
+            inputs.forEach(function (input) {
+                order.push({
+                    id: parseInt(input.dataset.id),
+                    sort_order: parseInt(input.value) || 1
+                });
+            });
+
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Saving...';
+
+            fetch('{{ route('admin.course-types.reorder') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({ order: order })
+            })
+            .then(function (res) { return res.json(); })
+            .then(function (data) {
+                if (data.success) {
+                    // Update original values and hide button
+                    inputs.forEach(function (input) {
+                        input.dataset.original = input.value;
+                    });
+                    saveBtn.classList.add('hidden');
+                    saveBtn.innerHTML = '<i class="fa fa-save"></i> {{ __('lang.save_order') }}';
+                    saveBtn.disabled = false;
+
+                    // Reload to reflect sorted order
+                    window.location.reload();
+                }
+            })
+            .catch(function () {
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = '<i class="fa fa-save"></i> {{ __('lang.save_order') }}';
+                alert('Error saving order. Please try again.');
+            });
+        });
+    });
+</script>
 @endsection

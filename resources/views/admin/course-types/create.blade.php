@@ -22,7 +22,14 @@
             <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
 
                 <!-- Row 1 -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.order') }}</label>
+                        <input type="number" name="sort_order" min="1" value="{{ old('sort_order') }}"
+                            placeholder="{{ __('lang.auto') }}"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
+                        <p class="text-xs text-gray-400 mt-1">{{ __('lang.sort_order_hint') }}</p>
+                    </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.course_name') }} <span class="text-red-500">*</span></label>
                         <input type="text" name="course_name" placeholder="{{ __('lang.enter_course_name') }}" value="{{ old('course_name') }}" required

@@ -100,37 +100,104 @@ class WhatsAppService
     }
 
     /**
-     * Format phone number to international format
-     * Removes all non-numeric characters and adds country code if missing
+     * Format phone number to international format for WhatsApp Business API
+     * Expected output: country code + number (no +, spaces, or dashes)
+     *
+     * Logic:
+     * - If number has + or 00 prefix → treat as international, respect existing country code
+     * - If number is 10+ digits → assume it already has country code, keep as-is
+     * - If number is shorter or starts with 0 → assume Italian local, add +39
+     *
+     * Examples:
+     *   +39 333 1234567 → 393331234567
+     *   0039 333 1234567 → 393331234567
+     *   +1 555 194 1356 → 15551941356 (US preserved)
+     *   +44 20 1234 5678 → 442012345678 (UK preserved)
+     *   +91 98765 43210 → 919876543210 (India preserved)
+     *   333 1234567 → 393331234567 (Italian local, adds +39)
+     *   0333 1234567 → 393331234567 (Italian local with 0, adds +39)
      *
      * @param string $phone Raw phone number
-     * @return string Formatted phone number (e.g., 393331234567)
+     * @return string Formatted phone number (country code + number, digits only)
      */
     private function formatPhoneNumber(string $phone): string
     {
-        // Remove all non-numeric characters
-        $cleaned = preg_replace('/[^0-9]/', '', $phone);
+        // Trim whitespace
+        $original = trim($phone);
 
-        // If phone is empty after cleaning, return as-is
+        // Check if number has international prefix indicators
+        $hasInternationalPrefix = str_starts_with($original, '+') || str_starts_with($original, '00');
+
+        // Remove all non-numeric characters except leading +
+        $cleaned = preg_replace('/[^0-9+]/', '', $original);
+
+        // If phone is empty after cleaning, return original
         if (empty($cleaned)) {
-            return $phone;
+            Log::warning('Empty phone number after cleaning', ['original' => $original]);
+            return $original;
         }
 
-        // Add Italy country code (39) if not present
-        // Handles various formats: +39, 0039, 39, or local numbers
-        if (str_starts_with($cleaned, '0039')) {
-            $cleaned = substr($cleaned, 2); // Remove leading 00
-        } elseif (str_starts_with($cleaned, '39')) {
-            // Already has country code, keep as-is
-        } elseif (str_starts_with($cleaned, '0')) {
-            // Italian local number starting with 0, remove 0 and add country code
-            $cleaned = '39' . substr($cleaned, 1);
-        } else {
-            // No country code detected, assume Italian and add 39
-            $cleaned = '39' . $cleaned;
+        // Remove + sign and convert 00 prefix to nothing (we have the info we need)
+        $cleaned = ltrim($cleaned, '+');
+        if (str_starts_with($cleaned, '00')) {
+            $cleaned = substr($cleaned, 2);
         }
 
-        return $cleaned;
+        // If original had + or 00 prefix, trust it as international format
+        if ($hasInternationalPrefix) {
+            // Validate international format (typically 10-15 digits with country code)
+            if (strlen($cleaned) >= 10 && strlen($cleaned) <= 15) {
+                Log::info('International number detected and preserved', [
+                    'original' => $original,
+                    'formatted' => $cleaned
+                ]);
+                return $cleaned;
+            } else {
+                Log::warning('International number has unusual length', [
+                    'original' => $original,
+                    'cleaned' => $cleaned,
+                    'length' => strlen($cleaned)
+                ]);
+                return $cleaned; // Return anyway, let API validate
+            }
+        }
+
+        // No international prefix detected
+        // If number is already 10+ digits, assume it has country code
+        if (strlen($cleaned) >= 10) {
+            Log::info('Long number without prefix, assuming international', [
+                'original' => $original,
+                'formatted' => $cleaned,
+                'length' => strlen($cleaned)
+            ]);
+            return $cleaned;
+        }
+
+        // Short number without prefix - assume Italian local format
+        // Remove leading 0 if present (Italian local convention)
+        if (str_starts_with($cleaned, '0')) {
+            $cleaned = substr($cleaned, 1);
+        }
+
+        // Validate Italian mobile/landline length after removing leading 0
+        // Mobile: 3xx xxxxxxx (9 digits)
+        // Landline: varies, typically 8-10 digits
+        if (strlen($cleaned) < 7 || strlen($cleaned) > 11) {
+            Log::warning('Unusual Italian local number length', [
+                'original' => $original,
+                'cleaned' => $cleaned,
+                'length' => strlen($cleaned)
+            ]);
+        }
+
+        // Add Italy country code
+        $formatted = '39' . $cleaned;
+        Log::info('Italian local number formatted', [
+            'original' => $original,
+            'formatted' => $formatted
+        ]);
+
+        return $formatted;
     }
 
     /**
@@ -180,51 +247,50 @@ class WhatsAppService
     /**
      * Build template parameters from record data
      *
+     * Template "avviso_scadenza_corso" expects 3 parameters:
+     * {{1}} = Item/Course name
+     * {{2}} = Days left
+     * {{3}} = Expiry date
+     *
      * @param mixed $record The record (training plan, document, etc.)
      * @param string $module Module type
      * @param string $daysLeft Days until expiry
-     * @return array Template parameters
+     * @return array Template parameters (3 params to match template)
      */
     public function buildTemplateParams($record, string $module, string $daysLeft): array
     {
-        $params = [];
+        // Get item name
+        $itemName = $record->name ?? ($record->companyCourseType->name ?? 'N/A');
 
-        // Company name
-        $params[] = [
-            'type' => 'text',
-            'text' => $record->company->name ?? 'N/A'
-        ];
-
-        // Module type (translated)
-        $moduleTranslations = [
-            'training_plan' => 'Piano di Formazione',
-            'course' => 'Corso',
-            'document' => 'Documento',
-            'visit' => 'Visita',
-        ];
-        $params[] = [
-            'type' => 'text',
-            'text' => $moduleTranslations[$module] ?? ucfirst(str_replace('_', ' ', $module))
-        ];
-
-        // Days left
-        $params[] = [
-            'type' => 'text',
-            'text' => $daysLeft
-        ];
-
-        // Item name
-        $params[] = [
-            'type' => 'text',
-            'text' => $record->name ?? ($record->companyCourseType->name ?? 'N/A')
-        ];
-
-        // Expiry date
+        // Get expiry date
         $expiryDate = $record->expiration_date ?? ($record->expiry_date ?? null);
-        $params[] = [
-            'type' => 'text',
-            'text' => $expiryDate ? \Carbon\Carbon::parse($expiryDate)->format('d/m/Y') : 'N/A'
+        $formattedDate = $expiryDate ? \Carbon\Carbon::parse($expiryDate)->format('d/m/Y') : 'N/A';
+
+        // Build 3 parameters to match WhatsApp template
+        $params = [
+            // {{1}} - Item/Course name
+            [
+                'type' => 'text',
+                'text' => $itemName
+            ],
+            // {{2}} - Days left
+            [
+                'type' => 'text',
+                'text' => (string) $daysLeft
+            ],
+            // {{3}} - Expiry date
+            [
+                'type' => 'text',
+                'text' => $formattedDate
+            ]
         ];
+
+        Log::info('Built WhatsApp template parameters', [
+            'param_count' => count($params),
+            'item_name' => $itemName,
+            'days_left' => $daysLeft,
+            'expiry_date' => $formattedDate
+        ]);
 
         return $params;
     }

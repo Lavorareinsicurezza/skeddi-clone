@@ -247,49 +247,54 @@ class WhatsAppService
     /**
      * Build template parameters from record data
      *
-     * Template "avviso_scadenza_corso" expects 3 parameters:
-     * {{1}} = Item/Course name
-     * {{2}} = Days left
-     * {{3}} = Expiry date
+     * Template "Avviso_scadenza_corso" (MARKETING category) expects 3 parameters:
+     * {{1}} = Training course name (Nome del corso di formazione)
+     * {{2}} = Course expiration date (Data di scadenza del corso)
+     * {{3}} = Participant first and last name (Nome e cognome del partecipante/dipendente)
      *
      * @param mixed $record The record (training plan, document, etc.)
-     * @param string $module Module type
-     * @param string $daysLeft Days until expiry
+     * @param string $module Module type (unused, kept for compatibility)
+     * @param string $daysLeft Days until expiry (unused, kept for compatibility)
      * @return array Template parameters (3 params to match template)
      */
     public function buildTemplateParams($record, string $module, string $daysLeft): array
     {
-        // Get item name
-        $itemName = $record->name ?? ($record->companyCourseType->name ?? 'N/A');
+        // {{1}} - Training course name
+        $courseName = $record->name ?? ($record->companyCourseType->name ?? 'N/A');
 
-        // Get expiry date
+        // {{2}} - Course expiration date (formatted as DD/MM/YYYY)
         $expiryDate = $record->expiration_date ?? ($record->expiry_date ?? null);
         $formattedDate = $expiryDate ? \Carbon\Carbon::parse($expiryDate)->format('d/m/Y') : 'N/A';
 
+        // {{3}} - Participant/employee full name (first name + surname)
+        $workerFirstName = $record->worker->first_name ?? '';
+        $workerSurname = $record->worker->surname ?? '';
+        $workerFullName = trim($workerFirstName . ' ' . $workerSurname) ?: 'N/A';
+
         // Build 3 parameters to match WhatsApp template
         $params = [
-            // {{1}} - Item/Course name
+            // {{1}} - Nome del corso di formazione
             [
                 'type' => 'text',
-                'text' => $itemName
+                'text' => $courseName
             ],
-            // {{2}} - Days left
-            [
-                'type' => 'text',
-                'text' => (string) $daysLeft
-            ],
-            // {{3}} - Expiry date
+            // {{2}} - Data di scadenza del corso
             [
                 'type' => 'text',
                 'text' => $formattedDate
+            ],
+            // {{3}} - Nome e cognome del partecipante/dipendente
+            [
+                'type' => 'text',
+                'text' => $workerFullName
             ]
         ];
 
         Log::info('Built WhatsApp template parameters', [
             'param_count' => count($params),
-            'item_name' => $itemName,
-            'days_left' => $daysLeft,
-            'expiry_date' => $formattedDate
+            'course_name' => $courseName,
+            'expiry_date' => $formattedDate,
+            'worker_name' => $workerFullName
         ]);
 
         return $params;

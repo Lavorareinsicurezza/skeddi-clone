@@ -136,7 +136,11 @@
                         </td>
 
                         <td class="px-3 md:px-6 py-4">
-                            {{ \Carbon\Carbon::parse($plan->expiry_date)->format('d F Y') }}
+                            @if(is_null($plan->training_date) && in_array($plan->deadline_type, ['Training Plan', 'Course']))
+                                <span class="text-gray-400 italic text-xs">{{ __('lang.to_be_scheduled') }}</span>
+                            @else
+                                {{ \Carbon\Carbon::parse($plan->expiry_date)->format('d F Y') }}
+                            @endif
                         </td>
 
                         <td class="px-3 md:px-6 py-4 whitespace-nowrap">

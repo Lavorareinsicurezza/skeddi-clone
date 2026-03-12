@@ -53,7 +53,8 @@ class DashboardController extends Controller
             'company_course_types.name as name',
             DB::raw("'Training Plan' as deadline_type"),
             'training_plan_records.expiration_date as expiry_date',
-            'operating_locations.name as location_name'
+            'operating_locations.name as location_name',
+            'training_plan_records.training_date'
         )
             ->leftJoin('workers', 'workers.id', 'training_plan_records.worker_id')
             ->leftJoin('company_course_types', 'company_course_types.id', 'training_plan_records.company_course_type_id')
@@ -84,7 +85,8 @@ class DashboardController extends Controller
             'company_course_types.name as name',
             DB::raw("'Course' as deadline_type"),
             DB::raw("expiration_date as expiry_date"),
-            DB::raw("NULL as location_name")
+            DB::raw("NULL as location_name"),
+            DB::raw("NULL as training_date")
         )
             ->leftJoin('companies', 'companies.id', 'company_course_types.company_id')
             ->whereIn('company_course_types.company_id', $companyIds)
@@ -111,7 +113,8 @@ class DashboardController extends Controller
             'documents.name as name',
             DB::raw("'Document' as deadline_type"),
             'documents.expiration_date as expiry_date',
-            'operating_locations.name as location_name'
+            'operating_locations.name as location_name',
+            DB::raw("NULL as training_date")
         )
             ->leftJoin('companies', 'companies.id', 'documents.company_id')
             ->leftJoin('operating_locations', 'operating_locations.id', 'documents.operating_location_id')
@@ -142,7 +145,8 @@ class DashboardController extends Controller
             'company_visit_types.name as name',
             DB::raw("'Visit Type' as deadline_type"),
             'company_visit_types.expiry_date as expiry_date',
-            DB::raw("NULL as location_name")
+            DB::raw("NULL as location_name"),
+            DB::raw("NULL as training_date")
         )
             ->leftJoin('companies', 'companies.id', 'company_visit_types.company_id')
             ->whereIn('company_visit_types.company_id', $companyIds)
@@ -214,7 +218,8 @@ class DashboardController extends Controller
             'company_course_types.name as name',
             DB::raw("'Training Plan' as deadline_type"),
             'training_plan_records.expiration_date as expiry_date',
-            'operating_locations.name as location_name'
+            'operating_locations.name as location_name',
+            'training_plan_records.training_date'
         )
             ->leftJoin('workers', 'workers.id', 'training_plan_records.worker_id')
             ->leftJoin('company_course_types', 'company_course_types.id', 'training_plan_records.company_course_type_id')
@@ -245,7 +250,8 @@ class DashboardController extends Controller
             'company_course_types.name as name',
             DB::raw("'Course' as deadline_type"),
             DB::raw("expiration_date as expiry_date"),
-            DB::raw("NULL as location_name")
+            DB::raw("NULL as location_name"),
+            DB::raw("NULL as training_date")
         )
             ->leftJoin('companies', 'companies.id', 'company_course_types.company_id')
             ->whereIn('company_course_types.company_id', $companyIds)
@@ -272,7 +278,8 @@ class DashboardController extends Controller
             'documents.name as name',
             DB::raw("'Document' as deadline_type"),
             'documents.expiration_date as expiry_date',
-            'operating_locations.name as location_name'
+            'operating_locations.name as location_name',
+            DB::raw("NULL as training_date")
         )
             ->leftJoin('companies', 'companies.id', 'documents.company_id')
             ->leftJoin('operating_locations', 'operating_locations.id', 'documents.operating_location_id')
@@ -303,7 +310,8 @@ class DashboardController extends Controller
             'company_visit_types.name as name',
             DB::raw("'Visit Type' as deadline_type"),
             'company_visit_types.expiry_date as expiry_date',
-            DB::raw("NULL as location_name")
+            DB::raw("NULL as location_name"),
+            DB::raw("NULL as training_date")
         )
             ->leftJoin('companies', 'companies.id', 'company_visit_types.company_id')
             ->whereIn('company_visit_types.company_id', $companyIds)

@@ -4,21 +4,56 @@ namespace App\Imports;
 
 use App\Models\Company;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
-use Maatwebsite\Excel\Concerns\SkipsOnFailure;
-use Maatwebsite\Excel\Validators\Failure;
+use Maatwebsite\Excel\Concerns\WithMapping;
 
-class CompaniesImport implements ToModel, WithHeadingRow, WithValidation
+class CompaniesImport implements ToModel, WithHeadingRow, WithValidation, WithMapping
 {
+    /**
+     * @param array $row
+     * @return array
+     */
+    public function map($row): array
+    {
+        $row = array_map(fn($value) => is_string($value) ? trim($value) : $value, $row);
+
+        if (!empty($row['partita_iva'])) {
+            $row['partita_iva'] = preg_replace('/\D/', '', $row['partita_iva']);
+        }
+
+        if (!empty($row['email_principale']) && preg_match('/[,;]/', $row['email_principale'])) {
+            $row['email_principale'] = trim(preg_split('/[,;]/', $row['email_principale'])[0]);
+        }
+
+        return $row;
+    }
+
     /**
      * @param array $row
      * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function model(array $row)
     {
+        $vatNumber  = $row['partita_iva'] ?? null;
+        $taxCode    = $row['codice_fiscale'] ?? null;
+        $mainEmail  = $row['email_principale'] ?? null;
+        $pecEmail   = $row['pec'] ?? null;
+
+        $duplicate = Company::query()
+            ->where(function ($q) use ($vatNumber, $taxCode, $mainEmail, $pecEmail) {
+                if ($vatNumber)  $q->orWhere('vat_number', $vatNumber);
+                if ($taxCode)    $q->orWhere('tax_code', $taxCode);
+                if ($mainEmail)  $q->orWhere('main_email', $mainEmail);
+                if ($pecEmail)   $q->orWhere('pec_email', $pecEmail);
+            })
+            ->exists();
+
+        if ($duplicate) {
+            return null;
+        }
+
         return new Company([
             'company_id'                    => Auth::user()->company_id,
             'name'                          => $row['ragione_sociale'],
@@ -58,43 +93,13 @@ class CompaniesImport implements ToModel, WithHeadingRow, WithValidation
     public function rules(): array
     {
         return [
-            'ragione_sociale'        => 'required|string|max:255',
-            'partita_iva'            => [
-                'nullable',
-                'numeric',
-                Rule::unique('companies', 'vat_number')->whereNotNull('vat_number'),
-            ],
-            'codice_fiscale'         => [
-                'nullable',
-                'string',
-                'max:255',
-                Rule::unique('companies', 'tax_code')->whereNotNull('tax_code'),
-            ],
-            'email_principale'       => [
-                'nullable',
-                'email',
-                Rule::unique('companies', 'main_email')->whereNotNull('main_email'),
-            ],
-            'pec'                    => [
-                'nullable',
-                'email',
-                Rule::unique('companies', 'pec_email')->whereNotNull('pec_email'),
-            ],
-            'email_commercialista'   => 'nullable|email',
+            'ragione_sociale'             => 'required|string|max:255',
+            'partita_iva'                 => 'nullable|numeric',
+            'codice_fiscale'               => 'nullable|string|max:255',
+            'email_principale'            => 'nullable|email',
+            'pec'                         => 'nullable|email',
+            'email_commercialista'        => 'nullable|email',
             'email_consulente_del_lavoro' => 'nullable|email',
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function customValidationMessages()
-    {
-        return [
-            'partita_iva.unique'      => 'The VAT number :input already exists in the database.',
-            'codice_fiscale.unique'   => 'The tax code :input already exists in the database.',
-            'email_principale.unique' => 'The main email :input already exists in the database.',
-            'pec.unique'              => 'The PEC email :input already exists in the database.',
         ];
     }
 

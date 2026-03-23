@@ -155,12 +155,36 @@
                                                 </div>
 
                                                 <div class="flex items-center text-[#0C3183] pt-5 justify-center gap-1">
-                                                    <i class="fa fa-file-lines cursor-pointer hover:text-[#0A2869] document-icon"
-                                                       data-worker-id="{{ $worker->id }}"
-                                                       data-course-type-id="{{ $courseType->id }}"
-                                                       data-worker-name="{{ $worker->first_name }} {{ $worker->surname }}"
-                                                       data-course-name="{{ $courseType->name }}"
-                                                       onclick="openDocumentModal(this)"></i>
+                                                    @php
+                                                        $notes = $record ? $record->documents->whereNotNull('note')->where('note', '!=', '')->pluck('note') : collect();
+                                                    @endphp
+                                                    @if($notes->isNotEmpty())
+                                                        <div class="relative inline-block group">
+                                                            <i class="fa fa-file-lines cursor-pointer hover:text-[#0A2869] document-icon"
+                                                               data-worker-id="{{ $worker->id }}"
+                                                               data-course-type-id="{{ $courseType->id }}"
+                                                               data-worker-name="{{ $worker->first_name }} {{ $worker->surname }}"
+                                                               data-course-name="{{ $courseType->name }}"
+                                                               onclick="openDocumentModal(this)"></i>
+                                                            <span class="absolute top-0 right-0 -mt-1 -mr-2 w-0 h-0 border-t-[7px] border-r-[7px] border-t-transparent border-r-red-500"></span>
+                                                            <div class="absolute z-50 hidden group-hover:block bottom-full left-1/2 -translate-x-1/2 pb-2 w-56">
+                                                                <div class="bg-yellow-50 border border-yellow-300 shadow-lg rounded text-xs text-gray-700 px-3 py-2">
+                                                                    <div class="font-semibold text-gray-500 mb-1">📝 Note</div>
+                                                                    @foreach($notes as $note)
+                                                                        <p class="{{ !$loop->last ? 'mb-1 pb-1 border-b border-yellow-200' : '' }}">{{ $note }}</p>
+                                                                    @endforeach
+                                                                    <div class="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-yellow-300"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @else
+                                                        <i class="fa fa-file-lines cursor-pointer hover:text-[#0A2869] document-icon"
+                                                           data-worker-id="{{ $worker->id }}"
+                                                           data-course-type-id="{{ $courseType->id }}"
+                                                           data-worker-name="{{ $worker->first_name }} {{ $worker->surname }}"
+                                                           data-course-name="{{ $courseType->name }}"
+                                                           onclick="openDocumentModal(this)"></i>
+                                                    @endif
                                                 </div>
                                             </div>
 

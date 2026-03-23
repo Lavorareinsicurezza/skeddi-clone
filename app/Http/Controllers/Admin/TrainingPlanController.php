@@ -34,6 +34,7 @@ class TrainingPlanController extends Controller
         // Get all existing training plan records
         $trainingRecords = TrainingPlanRecord::query()
             ->company()
+            ->with('documents')
             ->get()
             ->keyBy(function ($item) {
                 return $item->worker_id . '_' . $item->company_course_type_id;

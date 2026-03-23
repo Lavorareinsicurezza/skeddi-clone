@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\TrainingPlanDocument;
 
 class TrainingPlanRecord extends Model
 {
@@ -40,5 +41,10 @@ class TrainingPlanRecord extends Model
     public function companyCourseType()
     {
         return $this->belongsTo(CompanyCourseType::class);
+    }
+
+    public function documents()
+    {
+        return $this->hasMany(TrainingPlanDocument::class, 'training_plan_record_id');
     }
 }

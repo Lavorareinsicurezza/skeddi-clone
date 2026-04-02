@@ -673,17 +673,18 @@ class DashboardController extends Controller
             $fromAddress = $setting->smtp_address ?? $setting->smtp_username;
             $fromName = config('app.name');
 
-            // Check for Operating Location Override
+            // Check for Operating Location SMTP Profile Override
             if (isset($record->worker) && $record->worker && $record->worker->operatingLocation) {
                 $opLocation = $record->worker->operatingLocation;
-                if (!empty($opLocation->smtp_host) && !empty($opLocation->smtp_username) && !empty($opLocation->smtp_password)) {
-                    $smtpHost = $opLocation->smtp_host;
-                    $smtpPort = $opLocation->smtp_port;
-                    $smtpUsername = $opLocation->smtp_username;
-                    $smtpPassword = $opLocation->smtp_password;
-                    $fromAddress = $opLocation->smtp_from_address ?? $opLocation->smtp_username;
-                    if (!empty($opLocation->smtp_from_name)) {
-                        $fromName = $opLocation->smtp_from_name;
+                if ($opLocation->smtp_profile_id && $opLocation->smtpProfile) {
+                    $profile = $opLocation->smtpProfile;
+                    $smtpHost = $profile->host;
+                    $smtpPort = $profile->port;
+                    $smtpUsername = $profile->username;
+                    $smtpPassword = $profile->password;
+                    $fromAddress = $profile->from_address ?? $profile->username;
+                    if (!empty($profile->from_name)) {
+                        $fromName = $profile->from_name;
                     }
                 }
             }

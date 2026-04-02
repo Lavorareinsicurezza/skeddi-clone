@@ -53,13 +53,6 @@ class OperatingLocationController extends Controller
             'site_contact_email' => 'nullable|email|max:255',
             'is_active' => 'boolean',
             'smtp_profile_id' => 'nullable|exists:smtp_profiles,id',
-            'smtp_host' => 'nullable|string|max:255',
-            'smtp_port' => 'nullable|string|max:255',
-            'smtp_username' => 'nullable|string|max:255',
-            'smtp_password' => 'nullable|string|max:255',
-            'smtp_encryption' => 'nullable|string|in:tls,ssl',
-            'smtp_from_address' => 'nullable|email|max:255',
-            'smtp_from_name' => 'nullable|string|max:255',
         ], [
             'name.required' => 'Location name is required.',
             'site_contact_email.email' => 'Please enter a valid email address for site contact.'
@@ -118,25 +111,16 @@ class OperatingLocationController extends Controller
             'site_contact_email' => 'nullable|email|max:255',
             'is_active' => 'boolean',
             'smtp_profile_id' => 'nullable|exists:smtp_profiles,id',
-            'smtp_host' => 'nullable|string|max:255',
-            'smtp_port' => 'nullable|string|max:255',
-            'smtp_username' => 'nullable|string|max:255',
-            'smtp_password' => 'nullable|string|max:255',
-            'smtp_encryption' => 'nullable|string|in:tls,ssl',
-            'smtp_from_address' => 'nullable|email|max:255',
-            'smtp_from_name' => 'nullable|string|max:255',
         ], [
             'name.required' => 'Location name is required.',
             'site_contact_email.email' => 'Please enter a valid email address for site contact.'
         ]);
-
 
         $companyId = session('selectedCompanyId');
         if(!$companyId){
             return redirect()->back()->with('error', 'Please select a company.');
         }
         $validated['company_id'] = $companyId;
-
 
         $operatingLocation->update($validated);
 

@@ -286,39 +286,19 @@
                             <!-- SMTP Configuration -->
                             <div class="md:col-span-3 border-t border-gray-200 pt-4 mt-2">
                                 <h4 class="text-sm font-semibold text-gray-800 mb-2">{{ __('lang.smtp_configuration') }}</h4>
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">SMTP Host</label>
-                                        <input type="text" name="operating_locations[{{ $loop->index }}][smtp_host]" value="{{ $loc->smtp_host }}" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">SMTP Port</label>
-                                        <input type="text" name="operating_locations[{{ $loop->index }}][smtp_port]" value="{{ $loc->smtp_port }}" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">SMTP Username</label>
-                                        <input type="text" name="operating_locations[{{ $loop->index }}][smtp_username]" value="{{ $loc->smtp_username }}" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">SMTP Password</label>
-                                        <input type="password" name="operating_locations[{{ $loop->index }}][smtp_password]" value="{{ $loc->smtp_password }}" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">SMTP Encryption</label>
-                                        <select name="operating_locations[{{ $loop->index }}][smtp_encryption]" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
-                                            <option value="">None</option>
-                                            <option value="tls" {{ $loc->smtp_encryption == 'tls' ? 'selected' : '' }}>TLS</option>
-                                            <option value="ssl" {{ $loc->smtp_encryption == 'ssl' ? 'selected' : '' }}>SSL</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">From Address</label>
-                                        <input type="email" name="operating_locations[{{ $loop->index }}][smtp_from_address]" value="{{ $loc->smtp_from_address }}" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">From Name</label>
-                                        <input type="text" name="operating_locations[{{ $loop->index }}][smtp_from_name]" value="{{ $loc->smtp_from_name }}" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
-                                    </div>
+                                <div class="flex items-center gap-3">
+                                    <select name="operating_locations[{{ $loop->index }}][smtp_profile_id]" class="flex-1 border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
+                                        <option value="">-- {{ __('lang.select_smtp_profile') }} --</option>
+                                        @foreach($smtpProfiles as $profile)
+                                            <option value="{{ $profile->id }}" {{ $loc->smtp_profile_id == $profile->id ? 'selected' : '' }}>{{ $profile->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @can('create smtp-profiles')
+                                    <a href="{{ route('admin.smtp-profiles.create') }}" target="_blank"
+                                        class="px-4 py-2 bg-[#0C3183] text-white rounded-lg hover:bg-blue-800 transition-colors text-sm whitespace-nowrap flex items-center gap-1">
+                                        <i class="fa fa-plus"></i> {{ __('lang.add') }}
+                                    </a>
+                                    @endcan
                                 </div>
                             </div>
 
@@ -355,39 +335,19 @@
                         <!-- SMTP Configuration -->
                         <div class="md:col-span-3 border-t border-gray-200 pt-4 mt-2">
                             <h4 class="text-sm font-semibold text-gray-800 mb-2">{{ __('lang.smtp_configuration') }}</h4>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">SMTP Host</label>
-                                    <input type="text" name="operating_locations[IDX][smtp_host]" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">SMTP Port</label>
-                                    <input type="text" name="operating_locations[IDX][smtp_port]" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">SMTP Username</label>
-                                    <input type="text" name="operating_locations[IDX][smtp_username]" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">SMTP Password</label>
-                                    <input type="password" name="operating_locations[IDX][smtp_password]" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">SMTP Encryption</label>
-                                    <select name="operating_locations[IDX][smtp_encryption]" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
-                                        <option value="">None</option>
-                                        <option value="tls">TLS</option>
-                                        <option value="ssl">SSL</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">From Address</label>
-                                    <input type="email" name="operating_locations[IDX][smtp_from_address]" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">From Name</label>
-                                    <input type="text" name="operating_locations[IDX][smtp_from_name]" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
-                                </div>
+                            <div class="flex items-center gap-3">
+                                <select name="operating_locations[IDX][smtp_profile_id]" class="flex-1 border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
+                                    <option value="">-- {{ __('lang.select_smtp_profile') }} --</option>
+                                    @foreach($smtpProfiles as $profile)
+                                        <option value="{{ $profile->id }}">{{ $profile->name }}</option>
+                                    @endforeach
+                                </select>
+                                @can('create smtp-profiles')
+                                <a href="{{ route('admin.smtp-profiles.create') }}" target="_blank"
+                                    class="px-4 py-2 bg-[#0C3183] text-white rounded-lg hover:bg-blue-800 transition-colors text-sm whitespace-nowrap flex items-center gap-1">
+                                    <i class="fa fa-plus"></i> {{ __('lang.add') }}
+                                </a>
+                                @endcan
                             </div>
                         </div>
 

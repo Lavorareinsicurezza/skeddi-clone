@@ -21,6 +21,7 @@ use App\Models\TrainingPlanDocument;
 use App\Models\TrainingPlanRecord;
 use App\Models\VisitType;
 use App\Models\Worker;
+use App\Models\SmtpProfile;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Validators\ValidationException;
 
@@ -43,8 +44,9 @@ class CompanyController extends Controller
     public function create()
     {
         $userEmails = User::select('email')->company()->where('role', '!=', 'superadmin')->get();
+        $smtpProfiles = SmtpProfile::orderBy('name')->get();
         // return $userEmails;
-        return view('admin.company.create', compact('userEmails'));
+        return view('admin.company.create', compact('userEmails', 'smtpProfiles'));
     }
 
     /**
@@ -118,13 +120,7 @@ class CompanyController extends Controller
                     'site_contact_name' => $loc['site_contact_name'] ?? null,
                     'site_contact_phone' => $loc['site_contact_phone'] ?? null,
                     'site_contact_email' => $loc['site_contact_email'] ?? null,
-                    'smtp_host' => $loc['smtp_host'] ?? null,
-                    'smtp_port' => $loc['smtp_port'] ?? null,
-                    'smtp_username' => $loc['smtp_username'] ?? null,
-                    'smtp_password' => $loc['smtp_password'] ?? null,
-                    'smtp_encryption' => $loc['smtp_encryption'] ?? null,
-                    'smtp_from_address' => $loc['smtp_from_address'] ?? null,
-                    'smtp_from_name' => $loc['smtp_from_name'] ?? null,
+                    'smtp_profile_id' => $loc['smtp_profile_id'] ?? null,
                 ]);
             }
         }
@@ -166,7 +162,8 @@ class CompanyController extends Controller
         $userEmails = $userEmails->map(function ($u) {
             return $u->email;
         });
-        return view('admin.company.edit', compact('company', 'userEmails'));
+        $smtpProfiles = SmtpProfile::orderBy('name')->get();
+        return view('admin.company.edit', compact('company', 'userEmails', 'smtpProfiles'));
     }
 
     /**
@@ -239,13 +236,7 @@ class CompanyController extends Controller
                         'site_contact_name' => $loc['site_contact_name'] ?? $existing->site_contact_name,
                         'site_contact_phone' => $loc['site_contact_phone'] ?? $existing->site_contact_phone,
                         'site_contact_email' => $loc['site_contact_email'] ?? $existing->site_contact_email,
-                        'smtp_host' => $loc['smtp_host'] ?? $existing->smtp_host,
-                        'smtp_port' => $loc['smtp_port'] ?? $existing->smtp_port,
-                        'smtp_username' => $loc['smtp_username'] ?? $existing->smtp_username,
-                        'smtp_password' => $loc['smtp_password'] ?? $existing->smtp_password,
-                        'smtp_encryption' => $loc['smtp_encryption'] ?? $existing->smtp_encryption,
-                        'smtp_from_address' => $loc['smtp_from_address'] ?? $existing->smtp_from_address,
-                        'smtp_from_name' => $loc['smtp_from_name'] ?? $existing->smtp_from_name,
+                        'smtp_profile_id' => $loc['smtp_profile_id'] ?? null,
                     ]);
                 }
             } else {
@@ -257,13 +248,7 @@ class CompanyController extends Controller
                         'site_contact_name' => $loc['site_contact_name'] ?? null,
                         'site_contact_phone' => $loc['site_contact_phone'] ?? null,
                         'site_contact_email' => $loc['site_contact_email'] ?? null,
-                        'smtp_host' => $loc['smtp_host'] ?? null,
-                        'smtp_port' => $loc['smtp_port'] ?? null,
-                        'smtp_username' => $loc['smtp_username'] ?? null,
-                        'smtp_password' => $loc['smtp_password'] ?? null,
-                        'smtp_encryption' => $loc['smtp_encryption'] ?? null,
-                        'smtp_from_address' => $loc['smtp_from_address'] ?? null,
-                        'smtp_from_name' => $loc['smtp_from_name'] ?? null,
+                        'smtp_profile_id' => $loc['smtp_profile_id'] ?? null,
                     ]);
                 }
             }

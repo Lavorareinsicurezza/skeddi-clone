@@ -490,5 +490,15 @@ return [
     'contact_support' => 'If you have any questions, please feel free to contact our support team.',
     'best_regards' => 'Best regards,',
 
-    'permissions' => 'Permissions'
+    'permissions' => 'Permissions',
+
+    // --------------------------------------------------------------------------------------------------
+    //                                 Roles & Permissions
+    // --------------------------------------------------------------------------------------------------
+    'create_role' => 'Create Role',
+    'edit_role' => 'Edit Role',
+    'create_permission' => 'Create Permission',
+    'edit_permission' => 'Edit Permission',
+    'permission_details' => 'Permission Details',
+    'updated_at' => 'Updated At',
 ];

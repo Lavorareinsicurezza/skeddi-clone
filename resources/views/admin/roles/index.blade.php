@@ -8,7 +8,7 @@
     @endif
 
     <div class="mb-6 flex items-center justify-between">
-        <h1 class="text-3xl font-bold text-gray-900">Roles</h1>
+        <h1 class="text-3xl font-bold text-gray-900">{{ __('lang.roles') }}</h1>
         @can('create roles')
         <a href="{{ route('admin.roles.create') }}" class="px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm flex" title="Create Role">
             <i class="text-gray-500 fa fa-plus"></i>
@@ -52,7 +52,7 @@
                     </tr>
                 @empty
                     <tr class="bg-white border-b border-gray-200">
-                        <td colspan="2" class="px-6 py-4 text-center text-gray-500">No data available</td>
+                        <td colspan="2" class="px-6 py-4 text-center text-gray-500">{{ __('lang.no_data_available') }}</td>
                     </tr>
                 @endforelse
             </tbody>

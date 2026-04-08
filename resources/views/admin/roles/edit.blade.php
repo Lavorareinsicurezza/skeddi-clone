@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="mb-6 flex items-center justify-between">
-        <h1 class="text-3xl font-bold text-gray-900">Edit Role</h1>
+        <h1 class="text-3xl font-bold text-gray-900">{{ __('lang.edit_role') }}</h1>
     </div>
 
     <form action="{{ route('admin.roles.update', $role->id) }}" method="POST" class="bg-white p-6 rounded-lg border border-gray-200">
@@ -32,8 +32,8 @@
         </div>
 
         <div class="flex justify-end gap-2">
-            <a href="{{ route('admin.roles.index') }}" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">Cancel</a>
-            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Update</button>
+            <a href="{{ route('admin.roles.index') }}" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">{{ __('lang.cancel') }}</a>
+            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">{{ __('lang.update') }}</button>
         </div>
     </form>
 @endsection

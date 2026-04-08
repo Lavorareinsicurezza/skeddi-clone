@@ -44,14 +44,14 @@ return [
     'legal_headquarters' => 'Sede legale',
     'street' => 'Via',
     'no' => 'No',
-    'postal_code' => 'Via',
-    'city' => 'City',
+    'postal_code' => 'CAP',
+    'city' => 'Città',
     'operating_headquarters' => 'Sede Operativa',
     'owner_name' => 'Nome del titolare',
     'confirm_password' => 'Conferma Password',
     'i_accept_the' => 'Accetto il',
     'license_terms' => 'Termini di licenza',
-    'cancel' => 'Cancellare',
+    'cancel' => 'Annulla',
     'submit_registration' => 'Invia registrazione',
 
     // --------------------------------------------------------------------------------------------------
@@ -67,7 +67,7 @@ return [
     'course_types' => 'Tipi di Corso',
     'training_plan' => 'Piano di formazione',
     'types_of_visit' => 'Tipi di Visita',
-    'renewals' => "Salve, nome dell'azienda",
+    'renewals' => 'Rinnovi',
     'content_management' => 'Gestione dei contenuti',
     'dashboard' => 'Dashboard',
     'companies' => 'Aziende',
@@ -495,4 +495,14 @@ return [
     'best_regards' => 'Cordiali saluti,',
 
     'permissions' => 'Permessi',
+
+    // --------------------------------------------------------------------------------------------------
+    //                                 Roles & Permissions
+    // --------------------------------------------------------------------------------------------------
+    'create_role' => 'Crea Ruolo',
+    'edit_role' => 'Modifica Ruolo',
+    'create_permission' => 'Crea Permesso',
+    'edit_permission' => 'Modifica Permesso',
+    'permission_details' => 'Dettagli Permesso',
+    'updated_at' => 'Aggiornato Il',
 ];

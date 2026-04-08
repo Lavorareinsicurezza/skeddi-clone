@@ -8,8 +8,8 @@
     @endif
 
     <div class="mb-6 flex items-center justify-between">
-        <h1 class="text-3xl font-bold text-gray-900">Permissions</h1>
-        <a href="{{ route('admin.permissions.create') }}" class="px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm flex" title="Create Permission">
+        <h1 class="text-3xl font-bold text-gray-900">{{ __('lang.permissions') }}</h1>
+        <a href="{{ route('admin.permissions.create') }}" class="px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm flex" title="{{ __('lang.create_permission') }}">
             <i class="text-gray-500 fa fa-plus"></i>
         </a>
     </div>
@@ -18,8 +18,8 @@
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 bg-white">
             <thead class="text-xs text-gray-900 uppercase bg-white border-b">
                 <tr>
-                    <th scope="col" class="px-6 py-3">Name</th>
-                    <th scope="col" class="px-6 py-3">Actions</th>
+                    <th scope="col" class="px-6 py-3">{{ __('lang.name') }}</th>
+                    <th scope="col" class="px-6 py-3">{{ __('lang.actions') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,16 +27,16 @@
                     <tr class="bg-white border-b border-gray-200">
                         <td class="px-6 py-4">{{ $permission->name }}</td>
                         <td class="px-6 py-4">
-                            <a href="{{ route('admin.permissions.show', $permission->id) }}" class="font-medium text-gray-500 p-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]" title="View">
+                            <a href="{{ route('admin.permissions.show', $permission->id) }}" class="font-medium text-gray-500 p-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]" title="{{ __('lang.view') }}">
                                 <i class="fa-regular fa-eye"></i>
                             </a>
-                            <a href="{{ route('admin.permissions.edit', $permission->id) }}" class="font-medium text-gray-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]" title="Edit">
+                            <a href="{{ route('admin.permissions.edit', $permission->id) }}" class="font-medium text-gray-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]" title="{{ __('lang.edit') }}">
                                 <i class="fa fa-edit"></i>
                             </a>
                             <form action="{{ route('admin.permissions.destroy', $permission->id) }}" method="POST" class="inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="font-medium text-red-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]" title="Delete">
+                                <button type="submit" class="font-medium text-red-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]" title="{{ __('lang.delete') }}">
                                     <i class="fa fa-trash"></i>
                                 </button>
                             </form>
@@ -44,7 +44,7 @@
                     </tr>
                 @empty
                     <tr class="bg-white border-b border-gray-200">
-                        <td colspan="2" class="px-6 py-4 text-center text-gray-500">No data available</td>
+                        <td colspan="2" class="px-6 py-4 text-center text-gray-500">{{ __('lang.no_data_available') }}</td>
                     </tr>
                 @endforelse
             </tbody>

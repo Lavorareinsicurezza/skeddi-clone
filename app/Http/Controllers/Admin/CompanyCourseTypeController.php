@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CompanyCourseType;
 use App\Models\CourseType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CompanyCourseTypeController extends Controller
 {
@@ -23,8 +24,9 @@ class CompanyCourseTypeController extends Controller
      */
     public function create()
     {
+        $companyId = Auth::user()->company_id;
         $assignedIds = CompanyCourseType::query()->company()->pluck('course_type_id');
-        $courseTypes = CourseType::whereNotIn('id', $assignedIds)->orderBy('sort_order')->orderBy('id')->get();
+        $courseTypes = CourseType::where('company_id', $companyId)->whereNotIn('id', $assignedIds)->orderBy('sort_order')->orderBy('id')->get();
         return view('company.course-type.create', compact('courseTypes'));
     }
 

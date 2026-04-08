@@ -104,19 +104,13 @@
 
                         <td class="px-3 md:px-6 py-4">
                             @if($plan->notes)
-                                <div class="relative inline-block group">
-                                    <span class="border-b border-dashed border-gray-400 cursor-help">{{ $plan->name }}</span>
+                                <div class="relative inline-block">
+                                    <span class="border-b border-dashed border-gray-400 cursor-help"
+                                          data-notes="{{ json_encode([$plan->notes]) }}"
+                                          onmouseenter="showNoteTooltip(this)"
+                                          onmouseleave="hideNoteTooltip()">{{ $plan->name }}</span>
                                     <!-- Red triangle indicator (Excel-style) -->
-                                    <span class="absolute top-0 right-0 -mt-1 -mr-2 w-0 h-0 border-t-[7px] border-r-[7px] border-t-transparent border-r-red-500"></span>
-                                    <!-- Tooltip bubble — pb-2 extends invisible hit area to bridge the gap below tooltip -->
-                                    <div class="absolute z-50 hidden group-hover:block bottom-full left-0 pb-2 w-56">
-                                        <div class="bg-yellow-50 border border-yellow-300 shadow-lg rounded text-xs text-gray-700 px-3 py-2">
-                                            <div class="font-semibold text-gray-500 mb-1">📝 Note</div>
-                                            {{ $plan->notes }}
-                                            <!-- Arrow pointing down -->
-                                            <div class="absolute top-full left-4 w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-yellow-300"></div>
-                                        </div>
-                                    </div>
+                                    <span class="absolute top-0 right-0 -mt-1 -mr-2 w-0 h-0 border-t-[7px] border-r-[7px] border-t-transparent border-r-red-500 pointer-events-none"></span>
                                 </div>
                             @else
                                 {{ $plan->name }}

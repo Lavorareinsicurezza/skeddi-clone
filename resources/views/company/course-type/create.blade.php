@@ -65,6 +65,7 @@
         </div>
         @endif
 
+        @if(isset($companyCourseType))
         <!-- Generic Column Name and Expiration Column Name -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
@@ -107,6 +108,7 @@
                 class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0C3183] text-sm"
                 placeholder="{{ __('lang.notes') }}">{{ old('notes', $companyCourseType->notes ?? '') }}</textarea>
         </div>
+        @endif
 
         <!-- Upcoming Deadlines Section (Static for now) -->
         @if(isset($companyCourseType) && $companyCourseType->trainingPlanRecords->count() > 0)

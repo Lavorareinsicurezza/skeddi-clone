@@ -23,7 +23,9 @@ class CompanyCourseTypeController extends Controller
      */
     public function create()
     {
-        $courseTypes = CourseType::orderBy('sort_order')->orderBy('id')->get();
+        $companyId = session('selectedCompanyId') ?? \Illuminate\Support\Facades\Auth::user()->company_id;
+        $assignedIds = CompanyCourseType::query()->company()->pluck('course_type_id');
+        $courseTypes = CourseType::where('company_id', $companyId)->whereNotIn('id', $assignedIds)->orderBy('sort_order')->orderBy('id')->get();
         return view('company.course-type.create', compact('courseTypes'));
     }
 

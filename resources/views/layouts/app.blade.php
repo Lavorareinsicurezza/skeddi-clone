@@ -105,6 +105,36 @@
 
     @yield('scripts')
 
+    <!-- Global note tooltip (fixed-position, escapes overflow containers) -->
+    <div id="global-note-tooltip" class="hidden fixed z-[9999] bg-yellow-50 border border-yellow-300 shadow-lg rounded text-xs text-gray-700 px-3 py-2 w-56 pointer-events-none" style="transform: translate(-50%, calc(-100% - 8px))">
+        <div id="global-note-tooltip-content"></div>
+        <div class="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-yellow-300"></div>
+    </div>
+    <script>
+        function showNoteTooltip(el) {
+            const tooltip = document.getElementById('global-note-tooltip');
+            const content = document.getElementById('global-note-tooltip-content');
+            const notesJson = el.getAttribute('data-notes');
+            if (!notesJson) return;
+            let notes;
+            try { notes = JSON.parse(notesJson); } catch(e) { notes = [notesJson]; }
+            notes = notes.filter(n => n && n.trim());
+            if (!notes.length) return;
+            let html = '<div class="font-semibold text-gray-500 mb-1">📝 Note</div>';
+            notes.forEach((note, i) => {
+                html += `<p class="${i < notes.length - 1 ? 'mb-1 pb-1 border-b border-yellow-200' : ''}">${note}</p>`;
+            });
+            content.innerHTML = html;
+            const rect = el.getBoundingClientRect();
+            tooltip.style.left = (rect.left + rect.width / 2 + window.scrollX) + 'px';
+            tooltip.style.top = (rect.top + window.scrollY) + 'px';
+            tooltip.classList.remove('hidden');
+        }
+        function hideNoteTooltip() {
+            document.getElementById('global-note-tooltip').classList.add('hidden');
+        }
+    </script>
+
 </body>
 
 </html>

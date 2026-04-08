@@ -90,6 +90,7 @@ class DashboardController extends Controller
         )
             ->leftJoin('companies', 'companies.id', 'company_course_types.company_id')
             ->whereIn('company_course_types.company_id', $companyIds)
+            ->whereHas('trainingPlanRecords')
             ->when($fromDate && $toDate, function ($q) use ($fromDate, $toDate) {
                 $q->whereBetween(
                     DB::raw("expiration_date"),
@@ -255,6 +256,7 @@ class DashboardController extends Controller
         )
             ->leftJoin('companies', 'companies.id', 'company_course_types.company_id')
             ->whereIn('company_course_types.company_id', $companyIds)
+            ->whereHas('trainingPlanRecords')
             ->when($fromDate && $toDate, function ($q) use ($fromDate, $toDate) {
                 $q->whereBetween(
                     DB::raw("expiration_date"),
@@ -425,6 +427,7 @@ class DashboardController extends Controller
         )
             ->leftJoin('companies', 'companies.id', 'company_course_types.company_id')
             ->where('company_course_types.company_id', $companyId)
+            ->whereHas('trainingPlanRecords')
             ->when($fromDate && $toDate, function ($q) use ($fromDate, $toDate) {
                 $q->whereBetween(
                     DB::raw("expiration_date"),

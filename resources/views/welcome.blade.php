@@ -62,10 +62,9 @@
                     <select name="deadline_type" id="deadline-type-filter"
                         class="bg-transparent border-0 border-b border-gray-300 px-1 py-0.5 text-gray-600 font-medium focus:outline-none w-full sm:w-auto text-xs">
                         <option value="all">{{ __('lang.all') }}</option>
-                        <option value="courses" {{ request('deadline_type') == 'courses' ? 'selected': '' }}>{{ __('lang.courses') }}</option>
+                        <option value="training_plan" {{ request('deadline_type') == 'training_plan' ? 'selected': '' }}>{{ __('lang.training_plan') }}</option>
                         <option value="visits" {{ request('deadline_type') == 'visits' ? 'selected': '' }}>{{ __('lang.visit_type') }}</option>
                         <option value="documents" {{ request('deadline_type') == 'documents' ? 'selected': '' }}>{{ __('lang.documents') }}</option>
-                        <option value="training_plan" {{ request('deadline_type') == 'training_plan' ? 'selected': '' }}>{{ __('lang.training_plan') }}</option>
                     </select>
 
                 </div>

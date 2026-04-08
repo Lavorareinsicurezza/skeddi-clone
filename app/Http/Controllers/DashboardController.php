@@ -77,35 +77,6 @@ class DashboardController extends Controller
             });
         }
 
-        /* COURSES */
-        $coursesQuery = CompanyCourseType::select(
-            'company_course_types.id',
-            'company_course_types.company_id',
-            DB::raw('NULL as employee_name'),
-            'company_course_types.name as name',
-            DB::raw("'Course' as deadline_type"),
-            DB::raw("expiration_date as expiry_date"),
-            DB::raw("NULL as location_name"),
-            DB::raw("NULL as training_date")
-        )
-            ->leftJoin('companies', 'companies.id', 'company_course_types.company_id')
-            ->whereIn('company_course_types.company_id', $companyIds)
-            ->whereHas('trainingPlanRecords')
-            ->when($fromDate && $toDate, function ($q) use ($fromDate, $toDate) {
-                $q->whereBetween(
-                    DB::raw("expiration_date"),
-                    [$fromDate, $toDate]
-                );
-            });
-
-        if ($search) {
-            $coursesQuery->where(function ($q) use ($search) {
-                $q->where('company_course_types.name', 'like', "%{$search}%")
-                    ->orWhere('companies.name', 'like', "%{$search}%")
-                    ->orWhere(DB::raw("'Course'"), 'like', "%{$search}%");
-            });
-        }
-
         /* DOCUMENTS */
         $documentsQuery = Document::select(
             'documents.id',
@@ -167,9 +138,6 @@ class DashboardController extends Controller
         $queries = collect([]);
         if ($deadlineType === 'all' || $deadlineType === 'training_plan') {
             $queries->push($trainingPlansQuery);
-        }
-        if ($deadlineType === 'all' || $deadlineType === 'courses') {
-            $queries->push($coursesQuery);
         }
         if ($deadlineType === 'all' || $deadlineType === 'documents') {
             $queries->push($documentsQuery);
@@ -243,35 +211,6 @@ class DashboardController extends Controller
             });
         }
 
-        /* COURSES */
-        $coursesQuery = CompanyCourseType::select(
-            'company_course_types.id',
-            'company_course_types.company_id',
-            DB::raw('NULL as employee_name'),
-            'company_course_types.name as name',
-            DB::raw("'Course' as deadline_type"),
-            DB::raw("expiration_date as expiry_date"),
-            DB::raw("NULL as location_name"),
-            DB::raw("NULL as training_date")
-        )
-            ->leftJoin('companies', 'companies.id', 'company_course_types.company_id')
-            ->whereIn('company_course_types.company_id', $companyIds)
-            ->whereHas('trainingPlanRecords')
-            ->when($fromDate && $toDate, function ($q) use ($fromDate, $toDate) {
-                $q->whereBetween(
-                    DB::raw("expiration_date"),
-                    [$fromDate, $toDate]
-                );
-            });
-
-        if ($search) {
-            $coursesQuery->where(function ($q) use ($search) {
-                $q->where('company_course_types.name', 'like', "%{$search}%")
-                    ->orWhere('companies.name', 'like', "%{$search}%")
-                    ->orWhere(DB::raw("'Course'"), 'like', "%{$search}%");
-            });
-        }
-
         /* DOCUMENTS */
         $documentsQuery = Document::select(
             'documents.id',
@@ -334,9 +273,6 @@ class DashboardController extends Controller
         if ($deadlineType === 'all' || $deadlineType === 'training_plan') {
             $queries->push($trainingPlansQuery);
         }
-        if ($deadlineType === 'all' || $deadlineType === 'courses') {
-            $queries->push($coursesQuery);
-        }
         if ($deadlineType === 'all' || $deadlineType === 'documents') {
             $queries->push($documentsQuery);
         }
@@ -356,8 +292,6 @@ class DashboardController extends Controller
 
         return Excel::download(new DeadlinesExport($records), 'deadlines.xlsx');
     }
-
-
 
     /**
      * Display the deadlines page.
@@ -408,38 +342,6 @@ class DashboardController extends Controller
                     ->orWhere('company_course_types.name', 'like', "%{$search}%")
                     ->orWhere('companies.name', 'like', "%{$search}%")
                     ->orWhere(DB::raw("'Training Plan'"), 'like', "%{$search}%");
-            });
-        }
-
-        /* COURSES */
-        $coursesQuery = CompanyCourseType::select(
-            'company_course_types.id',
-            'company_course_types.company_id',
-            DB::raw('NULL as employee_name'),
-            'company_course_types.name as name',
-            DB::raw("'Course' as deadline_type"),
-            DB::raw("expiration_date as expiry_date"),
-            DB::raw("NULL as location_name"),
-            DB::raw("NULL as first_name"),
-            DB::raw("NULL as surname"),
-            DB::raw("NULL as training_date"),
-            DB::raw("NULL as notes")
-        )
-            ->leftJoin('companies', 'companies.id', 'company_course_types.company_id')
-            ->where('company_course_types.company_id', $companyId)
-            ->whereHas('trainingPlanRecords')
-            ->when($fromDate && $toDate, function ($q) use ($fromDate, $toDate) {
-                $q->whereBetween(
-                    DB::raw("expiration_date"),
-                    [$fromDate, $toDate]
-                );
-            });
-
-        if ($search) {
-            $coursesQuery->where(function ($q) use ($search) {
-                $q->where('company_course_types.name', 'like', "%{$search}%")
-                    ->orWhere('companies.name', 'like', "%{$search}%")
-                    ->orWhere(DB::raw("'Course'"), 'like', "%{$search}%");
             });
         }
 
@@ -511,9 +413,6 @@ class DashboardController extends Controller
         if ($deadlineType === 'all' || $deadlineType === 'training_plan') {
             $queries->push($trainingPlansQuery);
         }
-        if ($deadlineType === 'all' || $deadlineType === 'courses') {
-            $queries->push($coursesQuery);
-        }
         if ($deadlineType === 'all' || $deadlineType === 'documents') {
             $queries->push($documentsQuery);
         }
@@ -540,8 +439,6 @@ class DashboardController extends Controller
             'search' => $search,
         ]);
     }
-
-
 
     /**
      * Get all companies for AJAX request.

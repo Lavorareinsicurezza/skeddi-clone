@@ -21,13 +21,13 @@
 
         <div class="flex items-center gap-3">
             <a href="{{ route('admin.training-plan.export') }}"
-                class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium">
+                class="px-6 py-3 border border-gray-300 rounded-lg text-gray-900 hover:bg-gray-50 font-medium">
                 <i class="fa fa-download mr-2"></i>
                 {{ __('lang.export') }}
             </a>
             <!-- Edit Button (Hidden in edit mode) -->
             <button type="button" id="editButton" onclick="toggleEditMode()"
-                class="px-6 py-3 bg-[#0C3183] text-white rounded-lg hover:bg-[#0A2869] font-medium">
+                class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium">
                 <i class="fa fa-edit mr-2"></i>
                 {{ __('lang.edit') }}
             </button>
@@ -35,11 +35,11 @@
             <!-- Save and Cancel Buttons (Hidden in view mode) -->
             <div id="editButtons" class="hidden flex items-center gap-3">
                 <button type="button" onclick="cancelEdit()"
-                    class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium">
+                    class="px-6 py-3 border border-gray-300 rounded-lg text-gray-900 hover:bg-gray-50 font-medium">
                     {{ __('lang.cancel') }}
                 </button>
                 <button type="button" onclick="saveTrainingPlan()"
-                    class="px-6 py-3 bg-[#0C3183] text-white rounded-lg hover:bg-[#0A2869] font-medium">
+                    class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium">
                     <i class="fa fa-save mr-2"></i>
                     {{ __('lang.save') }}
                 </button>
@@ -52,35 +52,35 @@
         <form id="trainingPlanForm" action="{{ route('admin.training-plan.save') }}" method="POST">
             @csrf
             <table class=" min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr class="border-b">
+                <thead>
+                    <tr class="bg-blue-600 border-b">
                         <!-- Static Columns -->
                         <th scope="col"
-                            class="px-4 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider sticky left-0 bg-gray-50 z-10">
+                            class="px-4 py-4 text-left text-xs font-bold text-white uppercase tracking-wider sticky left-0 bg-blue-600 z-10">
                             {{ __('lang.employee') }}
                         </th>
                         <th scope="col"
-                            class="px-4 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider bg-gray-50">
+                            class="px-4 py-4 text-left text-xs font-bold text-white uppercase tracking-wider bg-blue-600">
                             {{ __('lang.job_title') }}
                         </th>
 
                         <!-- Dynamic Course Type Columns -->
                         @foreach ($courseTypes as $courseType)
                             <th scope="col"
-                                class="px-4 py-4 text-center text-xs font-bold text-gray-700 uppercase tracking-wider bg-gray-50"
+                                class="px-4 py-4 text-center text-xs font-bold text-white uppercase tracking-wider bg-blue-600"
                                 colspan="2">
                                 {{ $courseType->name }}
                             </th>
                         @endforeach
                     </tr>
-                    <tr class="bg-gray-100 border-b">
+                    <tr class="bg-blue-500 border-b">
                         <th colspan="2"></th>
                         <!-- Sub-headers for each course type -->
                         @foreach ($courseTypes as $courseType)
-                            <th class="px-2 py-2 text-xs font-semibold text-gray-600 uppercase">
+                            <th class="px-2 py-2 text-xs font-bold text-white uppercase">
                                 {{ __('lang.training') }}
                             </th>
-                            <th class="px-2 py-2 text-xs font-semibold text-gray-600 uppercase">
+                            <th class="px-2 py-2 text-xs font-bold text-white uppercase">
                                 {{ __('lang.expiration') }}
                             </th>
                         @endforeach
@@ -90,12 +90,12 @@
                     @forelse($workers as $worker)
                         <tr class="hover:bg-gray-50 transition-colors">
                             <!-- Employee Name -->
-                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900 font-medium sticky left-0 bg-white">
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900 font-bold sticky left-0 bg-white">
                                 {{ $worker->first_name }} <br />{{ $worker->surname }}
                             </td>
 
                             <!-- Job Title -->
-                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-700">
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
                                 {{ $worker->job_title ?? '-' }}
                             </td>
 
@@ -124,7 +124,7 @@
                                                 $notes = $record ? $record->documents->whereNotNull('note')->where('note', '!=', '')->pluck('note') : collect();
                                             @endphp
                                             <div class="flex items-center justify-center gap-2">
-                                                <span class="text-xs text-gray-500">{{ __('lang.to_be_scheduled') }}</span>
+                                                <span class="text-xs text-gray-600 font-medium">{{ __('lang.to_be_scheduled') }}</span>
                                                 <div class="flex items-center text-[#0C3183] justify-center">
                                                     @if($notes->isNotEmpty())
                                                         <div class="relative inline-block">
@@ -153,33 +153,31 @@
                                         @elseif($trainingDate || $expirationDate)
                                             @php
                                                 if (!$expirationDate)
-                                                    $expirationClass = 'text-gray-400';
+                                                    $expirationClass = 'bg-gray-100 text-gray-600';
                                                 else {
                                                     $expDate = $record->expiration_date;
                                                     $now = \Carbon\Carbon::now();
                                                     $daysUntilExpiry = $now->diffInDays($expDate, false);
 
                                                     if ($daysUntilExpiry < 0)
-                                                        $expirationClass = 'text-red-600';
+                                                        $expirationClass = 'bg-red-200 text-red-700 font-bold';
                                                     elseif ($daysUntilExpiry <= 30)
-                                                        $expirationClass = 'text-orange-500';
+                                                        $expirationClass = 'bg-yellow-200 text-orange-700 font-bold';
                                                     else
-                                                        $expirationClass = 'text-green-600';
+                                                        $expirationClass = 'bg-green-200 text-green-700 font-bold';
                                                 }
                                             @endphp
 
                                             <div class="flex items-center justify-center gap-1">
 
                                                 <!-- Training -->
-                                                <div class="flex items-center justify-center gap-1">
+                                                <div class="flex items-center justify-center gap-1 px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs font-medium">
                                                     <span>{{ $trainingDate ?: '-' }}</span>
-                                                    {{-- <i class="fa fa-calendar text-xs text-gray-400"></i> --}}
                                                 </div>
 
                                                 <!-- Expiration -->
-                                                <div class="flex items-center  justify-center gap-1 {{ $expirationClass }}">
+                                                <div class="flex items-center justify-center gap-1 px-2 py-1 rounded text-xs {{ $expirationClass }}">
                                                     <span>{{ $expirationDate ?: '-' }}</span>
-                                                    {{-- <i class="fa fa-calendar text-xs"></i> --}}
                                                 </div>
 
                                                 <div class="flex items-center text-[#0C3183] pt-5 justify-center gap-1">
@@ -211,7 +209,7 @@
                                             </div>
 
                                         @else
-                                            <span class="text-gray-400">-</span>
+                                            <span class="text-gray-400 font-medium">-</span>
                                         @endif
                                     </div>
 
@@ -220,7 +218,7 @@
                                         <div class="flex flex-col items-center gap-2">
 
                                             <!-- Checkbox Center -->
-                                            <label class="flex items-center gap-1 text-xs text-gray-600 justify-center">
+                                            <label class="flex items-center gap-1 text-xs text-gray-900 font-medium justify-center">
                                                 <input type="checkbox" class="toBeScheduledCheckbox" value="1"
                                                     data-target="{{ $rowId }}"
                                                     name="records[{{ $worker->id }}_{{ $courseType->id }}][to_be_scheduled]" {{ $toBeScheduled ? 'checked' : '' }}>
@@ -260,7 +258,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="{{ 2 + ($courseTypes->count() * 2) }}" class="px-6 py-12 text-center text-gray-500">
+                            <td colspan="{{ 2 + ($courseTypes->count() * 2) }}" class="px-6 py-12 text-center text-gray-600 font-medium">
                                 {{ __('lang.no_data_available') }}
                             </td>
                         </tr>
@@ -272,13 +270,13 @@
 
     <!-- Document Management Modal -->
     <div id="documentModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-        <div class="relative top-20 mx-auto p-8 border w-full max-w-2xl shadow-lg bg-white">
+        <div class="relative top-20 mx-auto p-8 border w-full max-w-2xl shadow-lg bg-white rounded-lg">
             <!-- Modal Header -->
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-xl font-bold text-gray-900" id="modalTitle">
                     {{ __('lang.document_management_for_deadline') }}
                 </h3>
-                <button onclick="closeDocumentModal()" class="text-gray-400 hover:text-gray-600 text-2xl font-bold">
+                <button onclick="closeDocumentModal()" class="text-gray-400 hover:text-red-600 text-2xl font-bold transition">
                     <i class="fa fa-times-circle"></i>
                 </button>
             </div>
@@ -291,17 +289,17 @@
 
                 <!-- Add Note -->
                 <div class="mb-6">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                    <label class="block text-sm font-bold text-gray-900 mb-2">
                         {{ __('lang.add_note') }}
                     </label>
                     <textarea name="note" id="document_note" rows="1"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0C3183]"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                         placeholder="{{ __('lang.add_note') }}"></textarea>
                 </div>
 
                 <!-- Add New Document -->
                 <div class="mb-6">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                    <label class="block text-sm font-bold text-gray-900 mb-2">
                         {{ __('lang.add_new_document') }}
                     </label>
                     <div class="relative">
@@ -318,7 +316,7 @@
 
                 <!-- Existing Documents List -->
                 <div class="mb-6">
-                    <h4 class="text-sm font-medium text-gray-700 mb-3">{{ __('lang.documents') }}</h4>
+                    <h4 class="text-sm font-bold text-gray-900 mb-3">{{ __('lang.documents') }}</h4>
                     <div id="documentsList" class="space-y-2 max-h-60 overflow-y-auto">
                         <!-- Documents will be loaded here -->
                     </div>
@@ -327,11 +325,11 @@
                 <!-- Modal Footer -->
                 <div class="flex justify-end gap-3">
                     <button type="button" onclick="closeDocumentModal()"
-                        class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium">
+                        class="px-6 py-2 border border-gray-300 rounded-lg text-gray-900 hover:bg-gray-50 font-medium">
                         {{ __('lang.cancel') }}
                     </button>
                     <button type="submit"
-                        class="px-6 py-2 bg-[#0C3183] text-white rounded-lg hover:bg-[#0A2869] font-medium">
+                        class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium">
                         {{ __('lang.save') }}
                     </button>
                 </div>
@@ -495,21 +493,21 @@
                     `;
                 } else {
                     documentsList.innerHTML = data.map(doc => `
-                        <div class="flex items-start justify-between p-3 bg-gray-50 rounded-lg">
+                        <div class="flex items-start justify-between p-3 bg-gray-50 rounded-lg border-l-4 border-blue-500">
                             <div class="flex-1">
                                 ${doc.file_name ? `
                                     <div class="flex items-center gap-2 mb-1">
-                                        <i class="fa fa-file text-[#0C3183]"></i>
+                                        <i class="fa fa-file text-blue-600"></i>
                                         <a href="${getDownloadUrl(doc.id)}"
-                                           class="text-sm font-medium text-[#0C3183] hover:underline">
+                                           class="text-sm font-bold text-blue-600 hover:text-blue-800 hover:underline">
                                             ${doc.file_name}
                                         </a>
                                     </div>
                                 ` : ''}
                                 ${doc.note ? `
-                                    <p class="text-sm text-gray-600 mt-1">${doc.note}</p>
+                                    <p class="text-sm text-gray-900 font-medium mt-1">${doc.note}</p>
                                 ` : ''}
-                                <p class="text-xs text-gray-400 mt-1">
+                                <p class="text-xs text-gray-600 mt-1">
                                     {{ __('lang.uploaded_on') }} ${new Date(doc.created_at).toLocaleDateString()}
                                 </p>
                             </div>
@@ -576,8 +574,16 @@
                     // Reload documents list
                     loadDocuments();
 
-                    // Show success message
-                    alert(data.message);
+                    // Update icon's data-notes attribute with new notes
+                    if (data.notes && data.notes.length > 0) {
+                        const icon = document.querySelector(`i[data-worker-id="${currentWorkerId}"][data-course-type-id="${currentCourseTypeId}"]`);
+                        if (icon) {
+                            icon.setAttribute('data-notes', JSON.stringify(data.notes));
+                        }
+                    }
+
+                    // Close modal
+                    closeDocumentModal();
                 } else {
                     alert(data.message);
                 }

@@ -49,6 +49,7 @@ class DashboardController extends Controller
         $trainingPlansQuery = TrainingPlanRecord::select(
             'training_plan_records.id',
             'training_plan_records.company_id',
+            'companies.name as company_name',
             'workers.surname as employee_name',
             'company_course_types.name as name',
             DB::raw("'Training Plan' as deadline_type"),
@@ -81,6 +82,7 @@ class DashboardController extends Controller
         $documentsQuery = Document::select(
             'documents.id',
             'documents.company_id',
+            'companies.name as company_name',
             DB::raw('NULL as employee_name'),
             'documents.name as name',
             DB::raw("'Document' as deadline_type"),
@@ -113,6 +115,7 @@ class DashboardController extends Controller
         $visitsQuery = CompanyVisitType::select(
             'company_visit_types.id',
             'company_visit_types.company_id',
+            'companies.name as company_name',
             DB::raw('NULL as employee_name'),
             'company_visit_types.name as name',
             DB::raw("'Visit Type' as deadline_type"),
@@ -183,6 +186,7 @@ class DashboardController extends Controller
         $trainingPlansQuery = TrainingPlanRecord::select(
             'training_plan_records.id',
             'training_plan_records.company_id',
+            'companies.name as company_name',
             'workers.surname as employee_name',
             'company_course_types.name as name',
             DB::raw("'Training Plan' as deadline_type"),
@@ -215,6 +219,7 @@ class DashboardController extends Controller
         $documentsQuery = Document::select(
             'documents.id',
             'documents.company_id',
+            'companies.name as company_name',
             DB::raw('NULL as employee_name'),
             'documents.name as name',
             DB::raw("'Document' as deadline_type"),
@@ -247,6 +252,7 @@ class DashboardController extends Controller
         $visitsQuery = CompanyVisitType::select(
             'company_visit_types.id',
             'company_visit_types.company_id',
+            'companies.name as company_name',
             DB::raw('NULL as employee_name'),
             'company_visit_types.name as name',
             DB::raw("'Visit Type' as deadline_type"),
@@ -314,6 +320,7 @@ class DashboardController extends Controller
         $trainingPlansQuery = TrainingPlanRecord::select(
             'training_plan_records.id',
             'training_plan_records.company_id',
+            'companies.name as company_name',
             'workers.surname as employee_name',
             'company_course_types.name as name',
             DB::raw("'Training Plan' as deadline_type"),
@@ -349,6 +356,7 @@ class DashboardController extends Controller
         $documentsQuery = Document::select(
             'documents.id',
             'documents.company_id',
+            'companies.name as company_name',
             DB::raw('NULL as employee_name'),
             'documents.name as name',
             DB::raw("'Document' as deadline_type"),
@@ -384,6 +392,7 @@ class DashboardController extends Controller
         $visitsQuery = CompanyVisitType::select(
             'company_visit_types.id',
             'company_visit_types.company_id',
+            'companies.name as company_name',
             DB::raw('NULL as employee_name'),
             'company_visit_types.name as name',
             DB::raw("'Visit Type' as deadline_type"),

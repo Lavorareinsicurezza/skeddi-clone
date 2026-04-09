@@ -145,9 +145,20 @@ class TrainingPlanController extends Controller
             'note' => $request->note,
         ]);
 
+        // Fetch updated notes for tooltip
+        $notes = TrainingPlanDocument::where('company_id', $companyId)
+            ->where('worker_id', $request->worker_id)
+            ->where('company_course_type_id', $request->course_type_id)
+            ->whereNotNull('note')
+            ->where('note', '!=', '')
+            ->pluck('note')
+            ->values()
+            ->all();
+
         return response()->json([
             'success' => true,
-            'message' => __('lang.document_saved_successfully')
+            'message' => __('lang.document_saved_successfully'),
+            'notes' => $notes
         ]);
     }
 

@@ -15,9 +15,9 @@
 
                 <!-- Operating Location -->
                 <div class="px-3 py-2 flex items-center space-x-2 sm:border-r border-b sm:border-b-0 border-gray-200 text-xs">
-                    <label for="operatingLocation" class="text-gray-600 font-medium whitespace-nowrap">{{ __('lang.operating_location') }}:</label>
+                    <label for="operatingLocation" class="text-gray-900 font-bold whitespace-nowrap">{{ __('lang.operating_location') }}:</label>
                     <select name="operating_location_id" id="operatingLocation"
-                        class="bg-transparent border-0 border-b border-gray-300 px-1 py-0.5 text-gray-600 font-medium focus:outline-none w-full sm:w-auto text-xs">
+                        class="bg-transparent border-0 border-b border-gray-300 px-1 py-0.5 text-gray-900 font-medium focus:outline-none w-full sm:w-auto text-xs">
                         <option value="">{{ __('lang.all') }}</option>
                         @foreach($operatingLocations as $location)
                             <option value="{{ $location->id }}" {{ (string)($selectedOperatingLocationId ?? '') === (string)$location->id ? 'selected' : '' }}>
@@ -30,7 +30,7 @@
                 <!-- Deadline Type -->
                 <div class="px-3 py-2 flex items-center space-x-2 sm:border-r border-b sm:border-b-0 border-gray-200 text-xs">
                     <select name="deadline_type" id="deadline-type-filter"
-                        class="bg-transparent border-0 border-b border-gray-300 px-1 py-0.5 text-gray-600 font-medium focus:outline-none w-full sm:w-auto text-xs">
+                        class="bg-transparent border-0 border-b border-gray-300 px-1 py-0.5 text-gray-900 font-medium focus:outline-none w-full sm:w-auto text-xs">
                         <option value="all">{{ __('lang.all') }}</option>
                         <option value="training_plan" {{ request('deadline_type') == 'training_plan' ? 'selected': '' }}>{{ __('lang.training_plan') }}</option>
                         <option value="visits" {{ request('deadline_type') == 'visits' ? 'selected': '' }}>{{ __('lang.visit_type') }}</option>
@@ -41,14 +41,14 @@
                 <!-- Search -->
                 <div class="px-3 py-2 flex items-center space-x-2 sm:border-r border-b sm:border-b-0 border-gray-200 text-xs">
                     <input type="text" name="search" id="search"
-                        class="bg-transparent border-0 border-b border-gray-300 px-1 py-0.5 text-gray-600 font-medium focus:outline-none w-full sm:w-auto text-xs"
+                        class="bg-transparent border-0 border-b border-gray-300 px-1 py-0.5 text-gray-900 font-medium focus:outline-none w-full sm:w-auto text-xs"
                         placeholder="{{ __('lang.search') }}" value="{{ request('search') }}">
                 </div>
 
                 <!-- Export -->
                 <div class="px-3 py-2 flex items-center sm:border-r border-b sm:border-b-0 border-gray-200 text-xs">
                     <a href="{{ route('admin.deadlines.export', ['operating_location_id' => $selectedOperatingLocationId]) }}"
-                       class="font-semibold text-gray-600 hover:text-[#0C3183] flex items-center gap-2">
+                       class="font-bold text-blue-600 hover:text-blue-800 flex items-center gap-2">
                         <i class="fa fa-download"></i>
                         <span>{{ __('lang.export') }}</span>
                     </a>
@@ -70,25 +70,22 @@
 
     <!-- Table Section -->
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 bg-white">
-            <thead class="text-xs text-gray-900 uppercase bg-white border-b">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-900 bg-white">
+            <thead class="text-xs text-white uppercase bg-blue-600 border-b">
                 <tr>
-                    <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap">
+                    <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap font-bold">
                         {{ __('lang.company_name') }}
                     </th>
-                    <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap">
-                        {{ __('lang.name') }}
-                    </th>
-                    <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap">
+                    <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap font-bold">
                         {{ __('lang.deadline_type') }}
                     </th>
-                    <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap">
+                    <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap font-bold">
                         {{ __('lang.employee_name') }}
                     </th>
-                    <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap">
+                    <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap font-bold">
                         {{ __('lang.expiry_date') }}
                     </th>
-                    <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap">
+                    <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap font-bold">
                         {{ __('lang.actions') }}
                     </th>
                 </tr>
@@ -98,7 +95,7 @@
                     <tr class="bg-white border-b">
 
                         <td class="px-3 md:px-6 py-4">
-                            {{ $currentCompany->name }}
+                            {{ $plan->company_name }}
                         </td>
 
                         <td class="px-3 md:px-6 py-4">
@@ -117,10 +114,6 @@
                         </td>
 
                         <td class="px-3 md:px-6 py-4">
-                            {{ $plan->deadline_type }}
-                        </td>
-
-                        <td class="px-3 md:px-6 py-4">
                             @if($plan->employee_name)
                                 {{ $plan->employee_name }}{{ $plan->location_name ? ' - ' . $plan->location_name : '' }}
                             @else
@@ -130,9 +123,9 @@
 
                         <td class="px-3 md:px-6 py-4">
                             @if(is_null($plan->training_date) && in_array($plan->deadline_type, ['Training Plan', 'Course']))
-                                <span class="text-gray-400 italic text-xs">{{ __('lang.to_be_scheduled') }}</span>
+                                <span class="text-gray-600 italic text-xs font-medium">{{ __('lang.to_be_scheduled') }}</span>
                             @else
-                                {{ \Carbon\Carbon::parse($plan->expiry_date)->format('d F Y') }}
+                                <span class="font-medium">{{ \Carbon\Carbon::parse($plan->expiry_date)->format('d F Y') }}</span>
                             @endif
                         </td>
 
@@ -140,7 +133,7 @@
                             <div class="flex items-center space-x-2">
                                 <a href="javascript:void(0)"
                                     onclick="openRenewalModal({{ $plan->id }}, '{{ $currentCompany->name }}', '{{ $plan->name }}', '{{ $plan->first_name ?? '' }}', '{{ $plan->surname ?? '' }}', '{{ $plan->deadline_type }}')"
-                                    class="font-medium text-[#0C3183] p-2 cursor-pointer hover:underline">
+                                    class="font-bold text-blue-600 p-2 cursor-pointer hover:text-blue-800 hover:underline">
                                     {{ __('lang.renew') }}
                                 </a>
                             </div>
@@ -149,7 +142,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="text-center py-4 text-gray-500">
+                        <td colspan="6" class="text-center py-4 text-gray-600 font-medium">
                             {{ __('lang.no_data_available') }}
                         </td>
                     </tr>
@@ -170,14 +163,14 @@
                     </div>
                     <h3 class="text-xl font-bold text-gray-900" id="modalCompanyName"></h3>
                 </div>
-                <button onclick="closeRenewalModal()" class="text-gray-400 hover:text-gray-600">
+                <button onclick="closeRenewalModal()" class="text-gray-400 hover:text-red-600 transition">
                     <i class="fa fa-times text-xl"></i>
                 </button>
             </div>
 
             <!-- Modal Body -->
             <div class="mb-6">
-                <p class="text-gray-700 text-sm mb-4" id="modalCourseWorkerInfo"></p>
+                <p class="text-gray-900 text-sm mb-4 font-medium" id="modalCourseWorkerInfo"></p>
 
                 <form id="renewalForm">
                     @csrf
@@ -185,7 +178,7 @@
                     <input type="hidden" id="deadline_type" name="deadline_type">
 
                     <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <label class="block text-sm font-bold text-gray-900 mb-2">
                             {{ __('lang.renewal_date') }}
                         </label>
                         <input type="date" id="renewal_date" name="renewal_date" required
@@ -195,11 +188,11 @@
                     <!-- Modal Footer -->
                     <div class="flex justify-end gap-3 mt-6">
                         <button type="button" onclick="closeRenewalModal()"
-                            class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium">
+                            class="px-6 py-2 border border-gray-300 rounded-lg text-gray-900 hover:bg-gray-50 font-medium">
                             {{ __('lang.close') }}
                         </button>
                         <button type="submit"
-                            class="px-6 py-2 bg-[#0C3183] text-white rounded-lg hover:bg-[#0A2869] font-medium">
+                            class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-bold">
                             {{ __('lang.renews') }}
                         </button>
                     </div>

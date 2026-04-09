@@ -112,28 +112,25 @@
 
     <!-- Table Section -->
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 bg-white">
-            <thead class="text-xs text-gray-900 uppercase bg-white border-b">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-900 bg-white">
+            <thead class="text-xs text-white uppercase bg-blue-600 border-b">
                 <tr>
-                    <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap">
+                    <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap font-bold">
                         <input type="checkbox" id="masterCheckbox" title="Select all">
                     </th>
-                    <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap">
+                    <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap font-bold">
                         {{ __('lang.company_name') }}
                     </th>
-                    <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap">
-                        {{ __('lang.name') }}
-                    </th>
-                    <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap">
+                    <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap font-bold">
                         {{ __('lang.deadline_type') }}
                     </th>
-                    <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap">
+                    <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap font-bold">
                         {{ __('lang.employee_name') }}
                     </th>
-                    <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap">
+                    <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap font-bold">
                         {{ __('lang.expiry_date') }}
                     </th>
-                    <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap">
+                    <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap font-bold">
                         {{ __('lang.actions') }}
                     </th>
                 </tr>
@@ -156,15 +153,11 @@
                         </td>
 
                         <td class="px-3 md:px-6 py-4">
-                            {{ \App\Models\Company::find($plan->company_id)?->name }}
+                            {{ $plan->company_name }}
                         </td>
 
                         <td class="px-3 md:px-6 py-4">
                             {{ $plan->name }}
-                        </td>
-
-                        <td class="px-3 md:px-6 py-4">
-                            {{ $plan->deadline_type }}
                         </td>
 
                         <td class="px-3 md:px-6 py-4">
@@ -177,9 +170,9 @@
 
                         <td class="px-3 md:px-6 py-4">
                             @if(is_null($plan->training_date) && in_array($plan->deadline_type, ['Training Plan', 'Course']))
-                                <span class="text-gray-400 italic text-xs">{{ __('lang.to_be_scheduled') }}</span>
+                                <span class="text-gray-600 italic text-xs font-medium">{{ __('lang.to_be_scheduled') }}</span>
                             @else
-                                {{ \Carbon\Carbon::parse($plan->expiry_date)->format('d F Y') }}
+                                <span class="font-bold">{{ \Carbon\Carbon::parse($plan->expiry_date)->format('d F Y') }}</span>
                             @endif
                         </td>
 
@@ -187,7 +180,7 @@
                             <div class="flex items-center space-x-2">
                                 <a href="javascript:void(0)"
                                     onclick="openRenewalModal({{ $plan->id }}, '{{ $plan->company?->name ?? null}}', '{{ $plan->name }}', '{{ $plan->worker?->first_name ?? null }}', '{{ $plan->worker?->surname ?? null }}', '{{ $plan->deadline_type }}')"
-                                    class="font-medium text-[#0C3183] p-2 cursor-pointer hover:underline">
+                                    class="font-bold text-blue-600 p-2 cursor-pointer hover:text-blue-800 hover:underline">
                                     {{ __('lang.renew') }}
                                 </a>
                             </div>
@@ -196,8 +189,8 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7" class="text-center py-4 text-gray-500">
-                            No Data Available
+                        <td colspan="6" class="text-center py-4 text-gray-600 font-medium">
+                            {{ __('lang.no_data_available') }}
                         </td>
                     </tr>
                 @endforelse
@@ -212,19 +205,19 @@
             <!-- Modal Header -->
             <div class="flex justify-between items-center mb-6">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
-                        <i class="fas fa-sync-alt text-[#0C3183]"></i>
+                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-sync-alt text-blue-600"></i>
                     </div>
                     <h3 class="text-xl font-bold text-gray-900" id="modalCompanyName"></h3>
                 </div>
-                <button onclick="closeRenewalModal()" class="text-gray-400 hover:text-gray-600">
+                <button onclick="closeRenewalModal()" class="text-gray-400 hover:text-red-600 transition">
                     <i class="fa fa-times text-xl"></i>
                 </button>
             </div>
 
             <!-- Modal Body -->
             <div class="mb-6">
-                <p class="text-gray-700 text-sm mb-4" id="modalCourseWorkerInfo"></p>
+                <p class="text-gray-900 text-sm mb-4 font-medium" id="modalCourseWorkerInfo"></p>
 
                 <form id="renewalForm">
                     @csrf
@@ -232,21 +225,21 @@
                     <input type="hidden" id="deadline_type" name="deadline_type">
 
                     <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <label class="block text-sm font-bold text-gray-900 mb-2">
                             {{ __('lang.renewal_date') }}
                         </label>
                         <input type="date" id="renewal_date" name="renewal_date" required
-                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0C3183] text-sm">
+                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900">
                     </div>
 
                     <!-- Modal Footer -->
                     <div class="flex justify-end gap-3 mt-6">
                         <button type="button" onclick="closeRenewalModal()"
-                            class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium">
+                            class="px-6 py-2 border border-gray-300 rounded-lg text-gray-900 hover:bg-gray-50 font-medium">
                             {{ __('lang.close') }}
                         </button>
                         <button type="submit"
-                            class="px-6 py-2 bg-[#0C3183] text-white rounded-lg hover:bg-[#0A2869] font-medium">
+                            class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-bold">
                             {{ __('lang.renews') }}
                         </button>
                     </div>

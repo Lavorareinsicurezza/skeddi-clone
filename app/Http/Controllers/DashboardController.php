@@ -50,7 +50,7 @@ class DashboardController extends Controller
             'training_plan_records.id',
             'training_plan_records.company_id',
             'companies.name as company_name',
-            'workers.surname as employee_name',
+            DB::raw("CONCAT(workers.first_name, ' ', workers.surname) as employee_name"),
             'company_course_types.name as name',
             DB::raw("'Training Plan' as deadline_type"),
             'training_plan_records.expiration_date as expiry_date',
@@ -72,6 +72,7 @@ class DashboardController extends Controller
         if ($search) {
             $trainingPlansQuery->where(function ($q) use ($search) {
                 $q->where('workers.surname', 'like', "%{$search}%")
+                    ->orWhere('workers.first_name', 'like', "%{$search}%")
                     ->orWhere('company_course_types.name', 'like', "%{$search}%")
                     ->orWhere('companies.name', 'like', "%{$search}%")
                     ->orWhere(DB::raw("'Training Plan'"), 'like', "%{$search}%"); // optional: search by deadline_type
@@ -187,7 +188,7 @@ class DashboardController extends Controller
             'training_plan_records.id',
             'training_plan_records.company_id',
             'companies.name as company_name',
-            'workers.surname as employee_name',
+            DB::raw("CONCAT(workers.first_name, ' ', workers.surname) as employee_name"),
             'company_course_types.name as name',
             DB::raw("'Training Plan' as deadline_type"),
             'training_plan_records.expiration_date as expiry_date',
@@ -209,6 +210,7 @@ class DashboardController extends Controller
         if ($search) {
             $trainingPlansQuery->where(function ($q) use ($search) {
                 $q->where('workers.surname', 'like', "%{$search}%")
+                    ->orWhere('workers.first_name', 'like', "%{$search}%")
                     ->orWhere('company_course_types.name', 'like', "%{$search}%")
                     ->orWhere('companies.name', 'like', "%{$search}%")
                     ->orWhere(DB::raw("'Training Plan'"), 'like', "%{$search}%"); // optional: search by deadline_type
@@ -321,7 +323,7 @@ class DashboardController extends Controller
             'training_plan_records.id',
             'training_plan_records.company_id',
             'companies.name as company_name',
-            'workers.surname as employee_name',
+            DB::raw("CONCAT(workers.first_name, ' ', workers.surname) as employee_name"),
             'company_course_types.name as name',
             DB::raw("'Training Plan' as deadline_type"),
             'training_plan_records.expiration_date as expiry_date',

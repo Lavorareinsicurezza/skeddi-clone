@@ -7,8 +7,8 @@
 
     <div class="bg-white p-6 rounded-lg border border-gray-200">
         <div class="mb-4">
-            <span class="text-sm text-gray-500">{{ __('lang.name') }}</span>
-            <div class="text-gray-900 font-semibold">{{ $permission->name }}</div>
+            <span class="text-sm text-gray-900">{{ __('lang.name') }}</span>
+            <div class="text-gray-900 font-bold">{{ $permission->name }}</div>
         </div>
 
         <div class="flex justify-end">

@@ -19,24 +19,24 @@
         @can('create visit-types')
         <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden shadow-sm">
             <a href="{{ route('admin.visit-types.create') }}"
-                class="px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm flex" title="{{ __('lang.create_visit_type') }}">
-                <i class="text-gray-500 fa fa-plus"></i>
+                class="px-5 py-3 font-bold text-gray-900 hover:text-blue-700 hover:bg-blue-50 text-sm flex" title="{{ __('lang.create_visit_type') }}">
+                <i class="text-gray-900 fa fa-plus"></i>
             </a>
         </div>
         @endcan
     </div>
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 bg-white">
-            <thead class="text-xs text-gray-900 uppercase bg-white border-b">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-900 bg-white">
+            <thead class="text-xs text-white uppercase bg-blue-600 border-b">
                 <tr>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 font-bold">
                         {{ __('lang.visit_type') }}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 font-bold">
                         {{ __('lang.years_of_validity') }}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 font-bold">
                         {{ __('lang.actions') }}
                     </th>
                 </tr>
@@ -54,14 +54,14 @@
                             <td class="px-6 py-4">
                                 @can('view visit-types')
                                 <a href="{{ route('admin.visit-types.show', $visitType->id) }}"
-                                    class="font-medium text-gray-500 p-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
+                                    class="font-bold text-gray-900 p-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
                                     title="{{ __('lang.view') }}">
                                     <i class="fa-regular fa-eye"></i>
                                 </a>
                                 @endcan
                                 @can('edit visit-types')
                                 <a href="{{ route('admin.visit-types.edit', $visitType->id) }}"
-                                    class="font-medium text-gray-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
+                                    class="font-bold text-gray-900 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
                                     title="{{ __('lang.edit') }}">
                                     <i class="fa fa-edit"></i>
                                 </a>
@@ -71,7 +71,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
-                                        class="font-medium text-red-500 p-2 hover:bg-red-50 border border-gray-200 rounded-[10px]"
+                                        class="font-bold text-red-500 p-2 hover:bg-red-50 border border-gray-200 rounded-[10px]"
                                         title="{{ __('lang.actions') }}">
                                         <i class="fa fa-trash"></i>
                                     </button>
@@ -82,7 +82,7 @@
                     @endforeach
                 @else
                     <tr class="bg-white border-b border-gray-200">
-                        <td colspan="3" class="px-6 py-4 text-center text-gray-500">
+                        <td colspan="3" class="px-6 py-4 text-center text-gray-900">
                             {{ __('lang.no_data_available') }}
                         </td>
                     </tr>

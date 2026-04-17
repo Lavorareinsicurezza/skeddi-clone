@@ -24,43 +24,43 @@
                 <!-- Row 1 -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.order') }}</label>
+                        <label class="block text-sm font-bold text-gray-900 mb-2">{{ __('lang.order') }}</label>
                         <input type="number" name="sort_order" min="1" value="{{ old('sort_order') }}"
                             placeholder="{{ __('lang.auto') }}"
-                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
-                        <p class="text-xs text-gray-400 mt-1">{{ __('lang.sort_order_hint') }}</p>
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <p class="text-xs text-gray-900 mt-1">{{ __('lang.sort_order_hint') }}</p>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.course_name') }} <span class="text-red-500">*</span></label>
+                        <label class="block text-sm font-bold text-gray-900 mb-2">{{ __('lang.course_name') }} <span class="text-red-500">*</span></label>
                         <input type="text" name="course_name" placeholder="{{ __('lang.enter_course_name') }}" value="{{ old('course_name') }}" required
-                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.validity_year') }} <span class="text-red-500">*</span></label>
+                        <label class="block text-sm font-bold text-gray-900 mb-2">{{ __('lang.validity_year') }} <span class="text-red-500">*</span></label>
                         <input type="number" name="validity_year" placeholder="{{ __('lang.enter_validity_years') }}" value="{{ old('validity_year') }}" min="1" required
-                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     </div>
                 </div>
 
                 <!-- Row 2 -->
                 {{-- <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.generic') }}</label>
+                        <label class="block text-sm font-bold text-gray-900 mb-2">{{ __('lang.generic') }}</label>
                         <input type="text" name="generic" placeholder="{{ __('lang.enter_generic') }}" value="{{ old('generic') }}"
-                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.expiration') }}</label>
+                        <label class="block text-sm font-bold text-gray-900 mb-2">{{ __('lang.expiration') }}</label>
                         <input type="date" name="expiration" value="{{ old('expiration') }}"
-                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     </div>
                 </div> --}}
 
                 <!-- Row 3 -->
                 <div class="mb-6">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.notes') }}</label>
+                    <label class="block text-sm font-bold text-gray-900 mb-2">{{ __('lang.notes') }}</label>
                     <textarea name="notes" placeholder="{{ __('lang.enter_notes') }}" rows="4"
-                        class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">{{ old('notes') }}</textarea>
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">{{ old('notes') }}</textarea>
                 </div>
 
                 <!-- Action Buttons -->
@@ -70,7 +70,7 @@
                         {{ __('lang.cancel') }}
                     </a>
                     <button type="submit"
-                        class="bg-[#0C3183] text-white px-6 py-2.5 rounded-lg hover:bg-[#0a2766]">
+                        class="bg-blue-700 text-white px-6 py-2.5 rounded-lg hover:bg-blue-800">
                         {{ __('lang.create') }}
                     </button>
                 </div>

@@ -10,18 +10,18 @@
     <div class="mb-6 flex items-center justify-between">
         <h1 class="text-3xl font-bold text-gray-900">{{ __('lang.roles') }}</h1>
         @can('create roles')
-        <a href="{{ route('admin.roles.create') }}" class="px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm flex" title="Create Role">
-            <i class="text-gray-500 fa fa-plus"></i>
+        <a href="{{ route('admin.roles.create') }}" class="px-5 py-3 font-bold text-gray-900 hover:text-blue-700 hover:bg-blue-50 text-sm flex" title="Create Role">
+            <i class="text-gray-900 fa fa-plus"></i>
         </a>
         @endcan
     </div>
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 bg-white">
-            <thead class="text-xs text-gray-900 uppercase bg-white border-b">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-900 bg-white">
+            <thead class="text-xs text-white uppercase bg-blue-600 border-b">
                 <tr>
-                    <th scope="col" class="px-6 py-3">{{ __('lang.name') }}</th>
-                    <th scope="col" class="px-6 py-3">{{ __('lang.actions') }}</th>
+                    <th scope="col" class="px-6 py-3 font-bold">{{ __('lang.name') }}</th>
+                    <th scope="col" class="px-6 py-3 font-bold">{{ __('lang.actions') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,12 +30,12 @@
                         <td class="px-6 py-4">{{ $role->name }}</td>
                         <td class="px-6 py-4">
                             @can('view roles')
-                            <a href="{{ route('admin.roles.show', $role->id) }}" class="font-medium text-gray-500 p-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]" title="View">
+                            <a href="{{ route('admin.roles.show', $role->id) }}" class="font-bold text-gray-900 p-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]" title="View">
                                 <i class="fa-regular fa-eye"></i>
                             </a>
                             @endcan
                             @can('edit roles')
-                            <a href="{{ route('admin.roles.edit', $role->id) }}" class="font-medium text-gray-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]" title="Edit">
+                            <a href="{{ route('admin.roles.edit', $role->id) }}" class="font-bold text-gray-900 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]" title="Edit">
                                 <i class="fa fa-edit"></i>
                             </a>
                             @endcan
@@ -43,7 +43,7 @@
                             <form action="{{ route('admin.roles.destroy', $role->id) }}" method="POST" class="inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="font-medium text-red-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]" title="Delete">
+                                <button type="submit" class="font-bold text-red-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]" title="Delete">
                                     <i class="fa fa-trash"></i>
                                 </button>
                             </form>
@@ -52,7 +52,7 @@
                     </tr>
                 @empty
                     <tr class="bg-white border-b border-gray-200">
-                        <td colspan="2" class="px-6 py-4 text-center text-gray-500">{{ __('lang.no_data_available') }}</td>
+                        <td colspan="2" class="px-6 py-4 text-center text-gray-900">{{ __('lang.no_data_available') }}</td>
                     </tr>
                 @endforelse
             </tbody>

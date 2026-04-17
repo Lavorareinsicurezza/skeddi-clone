@@ -25,7 +25,7 @@
                         d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                         clip-rule="evenodd" />
                 </svg>
-                <span class="text-green-700 font-semibold text-lg">Test</span>
+                <span class="text-green-700 font-bold text-lg">Test</span>
             </div>
         </div>
     </div>
@@ -33,7 +33,7 @@
     <div class="mb-6 flex items-center justify-between">
         <h1 class="text-3xl font-bold text-gray-900">{{ __('lang.system_settings') }}</h1>
         <button type="button" id="updateHistoryBtn"
-            class="px-5 py-3 bg-[#0C9488] hover:bg-[#0a7d73] text-white font-semibold rounded-lg shadow-sm">
+            class="px-5 py-3 bg-[#0C9488] hover:bg-[#0a7d73] text-white font-bold rounded-lg shadow-sm">
             {{ __('lang.update_history') }}
         </button>
     </div>
@@ -44,9 +44,9 @@
 
         <!-- UI Version -->
         <div class="px-6 py-3">
-            <h2 class="text-sm font-semibold text-gray-700 mb-3">{{ __('lang.ui_version') }}</h2>
+            <h2 class="text-sm font-bold text-gray-900 mb-3">{{ __('lang.ui_version') }}</h2>
             <input type="text" value="{{ $uiVersion }}" readonly
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-600 text-sm">
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-900 text-sm">
         </div>
 
         <!-- Alert Notifications Settings -->
@@ -59,9 +59,9 @@
                 this.periods.splice(index, 1);
             }
         }">
-            <h2 class="text-sm font-semibold text-gray-700 mb-4">{{ __('lang.alert_notifications_settings') }}</h2>
+            <h2 class="text-sm font-bold text-gray-900 mb-4">{{ __('lang.alert_notifications_settings') }}</h2>
             <div class="mb-4">
-                <label class="block text-xs text-gray-500 mb-2">Notification Periods (Days before expiry)</label>
+                <label class="block text-xs text-gray-900 mb-2">Notification Periods (Days before expiry)</label>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 space-y-3">
                     <template x-for="(period, index) in periods" :key="index">
                         <div class="flex items-center gap-3 p-2 rounded-lg bg-blue-100">
@@ -78,7 +78,7 @@
                     </template>
                 </div>
                 <button type="button" @click="addPeriod()"
-                    class="mt-3 flex items-center px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 text-sm font-medium transition-colors">
+                    class="mt-3 flex items-center px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 text-sm font-bold transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
                     </svg>
@@ -89,49 +89,49 @@
 
         <!-- SMTP Configuration -->
         <div class="px-6 py-3">
-            <h2 class="text-sm font-semibold text-gray-700 mb-4">{{ __('lang.smtp_configuration') }}</h2>
+            <h2 class="text-sm font-bold text-gray-900 mb-4">{{ __('lang.smtp_configuration') }}</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                 <div>
-                    <label class="block text-xs text-gray-500 mb-2">{{ __('lang.address_notification_sent') }}</label>
+                    <label class="block text-xs text-gray-900 mb-2">{{ __('lang.address_notification_sent') }}</label>
                     <input type="text" name="smtp_address" value="{{ old('smtp_address', $setting->smtp_address) }}"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-500 mb-2">{{ __('lang.alias_notification_sent') }}</label>
+                    <label class="block text-xs text-gray-900 mb-2">{{ __('lang.alias_notification_sent') }}</label>
                     <input type="text" name="smtp_alias" value="{{ old('smtp_alias', $setting->smtp_alias) }}"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-500 mb-2">{{ __('lang.replyto_address') }}</label>
+                    <label class="block text-xs text-gray-900 mb-2">{{ __('lang.replyto_address') }}</label>
                     <input type="text" name="smtp_reply_to" value="{{ old('smtp_reply_to', $setting->smtp_reply_to) }}"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-500 mb-2">{{ __('lang.smtp_host') }}</label>
+                    <label class="block text-xs text-gray-900 mb-2">{{ __('lang.smtp_host') }}</label>
                     <input type="text" name="smtp_host" value="{{ old('smtp_host', $setting->smtp_host) }}"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                 <div>
-                    <label class="block text-xs text-gray-500 mb-2">{{ __('lang.smtp_port') }}</label>
+                    <label class="block text-xs text-gray-900 mb-2">{{ __('lang.smtp_port') }}</label>
                     <input type="text" name="smtp_port" value="{{ old('smtp_port', $setting->smtp_port) }}"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-500 mb-2">{{ __('lang.smtp_username') }}</label>
+                    <label class="block text-xs text-gray-900 mb-2">{{ __('lang.smtp_username') }}</label>
                     <input type="text" name="smtp_username" value="{{ old('smtp_username', $setting->smtp_username) }}"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-500 mb-2">{{ __('lang.smtp_password') }}</label>
+                    <label class="block text-xs text-gray-900 mb-2">{{ __('lang.smtp_password') }}</label>
                     <input type="password" name="smtp_password" value="{{ old('smtp_password', $setting->smtp_password) }}"
                         placeholder="**********"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
             </div>
             <button type="button" id="testSmtpBtn"
-                class="px-6 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 font-medium text-sm">
+                class="px-6 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-50 font-bold text-sm">
                 {{ __('lang.test_smtp') }}
             </button>
             <div id="smtp-test-message-box" class="mt-4 w-[50%]"></div>
@@ -139,13 +139,13 @@
 
         <!-- Notification Settings -->
         <div class="px-6 py-3">
-            <h2 class="text-sm font-semibold text-gray-700 mb-4">Notification Settings</h2>
+            <h2 class="text-sm font-bold text-gray-900 mb-4">Notification Settings</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="flex items-center justify-between p-4 border border-gray-300 rounded-lg">
                     <div>
-                        <p class="text-sm font-medium text-gray-900">Email automatically generated</p>
-                        <p class="text-xs text-gray-500">by the system</p>
-                        <p class="text-xs text-gray-500">Do not reply to this email</p>
+                        <p class="text-sm font-bold text-gray-900">Email automatically generated</p>
+                        <p class="text-xs text-gray-900">by the system</p>
+                        <p class="text-xs text-gray-900">Do not reply to this email</p>
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" name="email_auto_generated" value="1" {{ old('email_auto_generated', $setting->email_auto_generated) ? 'checked' : '' }} class="sr-only peer">
@@ -155,7 +155,7 @@
                     </label>
                 </div>
                 <div class="flex items-center justify-between p-4 border border-gray-300 rounded-lg">
-                    <p class="text-sm font-medium text-gray-900">WhatsApp Notification</p>
+                    <p class="text-sm font-bold text-gray-900">WhatsApp Notification</p>
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" name="whatsapp_notification" value="1" {{ old('whatsapp_notification', $setting->whatsapp_notification) ? 'checked' : '' }} class="sr-only peer">
                         <div
@@ -168,59 +168,59 @@
 
         <!-- WhatsApp Business API Configuration -->
         <div class="px-6 py-3">
-            <h2 class="text-sm font-semibold text-gray-700 mb-4">WhatsApp Business API Configuration</h2>
+            <h2 class="text-sm font-bold text-gray-900 mb-4">WhatsApp Business API Configuration</h2>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
-                    <label class="block text-xs text-gray-500 mb-2">WhatsApp API URL</label>
+                    <label class="block text-xs text-gray-900 mb-2">WhatsApp API URL</label>
                     <input type="text" name="whatsapp_api_url"
                         value="{{ old('whatsapp_api_url', $setting->whatsapp_api_url) }}"
                         placeholder="https://graph.facebook.com/v21.0"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <p class="text-xs text-gray-400 mt-1">Example: https://graph.facebook.com/v21.0</p>
+                    <p class="text-xs text-gray-900 mt-1">Example: https://graph.facebook.com/v21.0</p>
                 </div>
 
                 <div>
-                    <label class="block text-xs text-gray-500 mb-2">WhatsApp API Key (Access Token)</label>
+                    <label class="block text-xs text-gray-900 mb-2">WhatsApp API Key (Access Token)</label>
                     <input type="password" name="whatsapp_api_key"
                         value="{{ old('whatsapp_api_key', $setting->whatsapp_api_key) }}"
                         placeholder="Enter your WhatsApp access token"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <p class="text-xs text-gray-400 mt-1">Your WhatsApp Business API access token</p>
+                    <p class="text-xs text-gray-900 mt-1">Your WhatsApp Business API access token</p>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                 <div>
-                    <label class="block text-xs text-gray-500 mb-2">Phone Number ID</label>
+                    <label class="block text-xs text-gray-900 mb-2">Phone Number ID</label>
                     <input type="text" name="whatsapp_phone_number_id"
                         value="{{ old('whatsapp_phone_number_id', $setting->whatsapp_phone_number_id) }}"
                         placeholder="1037061176149420"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <p class="text-xs text-gray-400 mt-1">From WhatsApp Business API Setup</p>
+                    <p class="text-xs text-gray-900 mt-1">From WhatsApp Business API Setup</p>
                 </div>
 
                 <div>
-                    <label class="block text-xs text-gray-500 mb-2">Business Account ID</label>
+                    <label class="block text-xs text-gray-900 mb-2">Business Account ID</label>
                     <input type="text" name="whatsapp_business_account_id"
                         value="{{ old('whatsapp_business_account_id', $setting->whatsapp_business_account_id) }}"
                         placeholder="1419330036360397"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <p class="text-xs text-gray-400 mt-1">Optional: For template management</p>
+                    <p class="text-xs text-gray-900 mt-1">Optional: For template management</p>
                 </div>
 
                 <div>
-                    <label class="block text-xs text-gray-500 mb-2">Message Template Name</label>
+                    <label class="block text-xs text-gray-900 mb-2">Message Template Name</label>
                     <input type="text" name="whatsapp_template_name"
                         value="{{ old('whatsapp_template_name', $setting->whatsapp_template_name) }}"
                         placeholder="expiry_reminder"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <p class="text-xs text-gray-400 mt-1">Template name approved in Meta Business Manager</p>
+                    <p class="text-xs text-gray-900 mt-1">Template name approved in Meta Business Manager</p>
                 </div>
             </div>
 
             <button type="button" id="testWhatsAppBtn"
-                class="px-6 py-2 bg-green-600 text-white border border-green-700 rounded-lg hover:bg-green-700 font-medium text-sm">
+                class="px-6 py-2 bg-green-600 text-white border border-green-700 rounded-lg hover:bg-green-700 font-bold text-sm">
                 <svg class="w-4 h-4 inline-block mr-2" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
                 </svg>
@@ -231,10 +231,10 @@
 
         <!-- Notification Settings (Read-only sections) -->
         <div class="px-6">
-            <h1 class="text-sm font-semibold text-gray-700 mb-4">Notification Settings</h1>
+            <h1 class="text-sm font-bold text-gray-900 mb-4">Notification Settings</h1>
         </div>
         <div class="px-6">
-            <label class="block text-xs text-gray-500 mb-2">Subject of the notification</label>
+            <label class="block text-xs text-gray-900 mb-2">Subject of the notification</label>
             <input type="text" name="notification_subject"
                 value="{{ old('notification_subject', $setting->notification_subject) }}"
                 placeholder="Enter notification subject"
@@ -242,7 +242,7 @@
         </div>
 
         <div class="pt-6 px-6">
-            <label class="block text-xs text-gray-500 mb-2">Notification body</label>
+            <label class="block text-xs text-gray-900 mb-2">Notification body</label>
 
             <div class="w-full border border-gray-300 rounded-lg bg-white">
                 <!-- Toolbar -->
@@ -250,54 +250,54 @@
                     <!-- First Row -->
                     <div class="flex flex-wrap items-center gap-1 mb-2 pb-2 border-b border-gray-200">
                         <button type="button" id="boldBtn" title="Bold"
-                            class="p-2 text-gray-600 rounded hover:text-gray-900 hover:bg-gray-200">
+                            class="p-2 text-gray-900 rounded hover:text-gray-900 hover:bg-gray-200">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path
                                     d="M6 4v12h4.5a4.5 4.5 0 003.256-7.606A4 4 0 0011 4H6zm2 2h3a2 2 0 110 4H8V6zm0 6h4a2.5 2.5 0 110 5H8v-5z" />
                             </svg>
                         </button>
                         <button type="button" id="italicBtn" title="Italic"
-                            class="p-2 text-gray-600 rounded hover:text-gray-900 hover:bg-gray-200">
+                            class="p-2 text-gray-900 rounded hover:text-gray-900 hover:bg-gray-200">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M10 4v3h2.21l-3.42 8H6v3h8v-3h-2.21l3.42-8H18V4z" />
                             </svg>
                         </button>
                         <button type="button" id="underlineBtn" title="Underline"
-                            class="p-2 text-gray-600 rounded hover:text-gray-900 hover:bg-gray-200">
+                            class="p-2 text-gray-900 rounded hover:text-gray-900 hover:bg-gray-200">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M10 17a5 5 0 01-5-5V4h2v8a3 3 0 006 0V4h2v8a5 5 0 01-5 5zm-8 1h16v2H2z" />
                             </svg>
                         </button>
                         <button type="button" id="strikeBtn" title="Strikethrough"
-                            class="p-2 text-gray-600 rounded hover:text-gray-900 hover:bg-gray-200">
+                            class="p-2 text-gray-900 rounded hover:text-gray-900 hover:bg-gray-200">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M10 4a6 6 0 00-6 6h2a4 4 0 018 0h2a6 6 0 00-6-6zM4 11h12v2H4z" />
                             </svg>
                         </button>
                         <div class="w-px h-6 bg-gray-300 mx-1"></div>
                         <button type="button" id="textColorBtn" title="Text Color"
-                            class="p-2 text-gray-600 rounded hover:text-gray-900 hover:bg-gray-200">
+                            class="p-2 text-gray-900 rounded hover:text-gray-900 hover:bg-gray-200">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path
                                     d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                             </svg>
                         </button>
                         <button type="button" id="codeBtn" title="Code"
-                            class="p-2 text-gray-600 rounded hover:text-gray-900 hover:bg-gray-200">
+                            class="p-2 text-gray-900 rounded hover:text-gray-900 hover:bg-gray-200">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"
                                     d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" />
                             </svg>
                         </button>
                         <button type="button" id="linkBtn" title="Insert Link"
-                            class="p-2 text-gray-600 rounded hover:text-gray-900 hover:bg-gray-200">
+                            class="p-2 text-gray-900 rounded hover:text-gray-900 hover:bg-gray-200">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"
                                     d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" />
                             </svg>
                         </button>
                         <button type="button" id="unlinkBtn" title="Remove Link"
-                            class="p-2 text-gray-600 rounded hover:text-gray-900 hover:bg-gray-200">
+                            class="p-2 text-gray-900 rounded hover:text-gray-900 hover:bg-gray-200">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"
                                     d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z" />
@@ -307,14 +307,14 @@
                         </button>
                         <div class="w-px h-6 bg-gray-300 mx-1"></div>
                         <select id="fontSizeSelect" title="Font Size"
-                            class="text-xs border border-gray-300 rounded px-2 py-1 text-gray-600 hover:bg-gray-200">
+                            class="text-xs border border-gray-300 rounded px-2 py-1 text-gray-900 hover:bg-gray-200">
                             <option value="1">Small</option>
                             <option value="3" selected>Normal</option>
                             <option value="5">Large</option>
                             <option value="7">Huge</option>
                         </select>
                         <button type="button" id="highlightBtn" title="Highlight"
-                            class="p-2 text-gray-600 rounded hover:text-gray-900 hover:bg-gray-200">
+                            class="p-2 text-gray-900 rounded hover:text-gray-900 hover:bg-gray-200">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"
                                     d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zM12 2a1 1 0 01.967.744L14.146 7.2 17.5 9.134a1 1 0 010 1.732l-3.354 1.935-1.18 4.455a1 1 0 01-1.933 0L9.854 12.8 6.5 10.866a1 1 0 010-1.732l3.354-1.935 1.18-4.455A1 1 0 0112 2z" />
@@ -322,21 +322,21 @@
                         </button>
                         <div class="w-px h-6 bg-gray-300 mx-1"></div>
                         <button type="button" id="alignLeftBtn" title="Align Left"
-                            class="p-2 text-gray-600 rounded hover:text-gray-900 hover:bg-gray-200">
+                            class="p-2 text-gray-900 rounded hover:text-gray-900 hover:bg-gray-200">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"
                                     d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h8a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h8a1 1 0 110 2H4a1 1 0 01-1-1z" />
                             </svg>
                         </button>
                         <button type="button" id="alignCenterBtn" title="Align Center"
-                            class="p-2 text-gray-600 rounded hover:text-gray-900 hover:bg-gray-200">
+                            class="p-2 text-gray-900 rounded hover:text-gray-900 hover:bg-gray-200">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"
                                     d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3 4a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm-3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3 4a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1z" />
                             </svg>
                         </button>
                         <button type="button" id="alignRightBtn" title="Align Right"
-                            class="p-2 text-gray-600 rounded hover:text-gray-900 hover:bg-gray-200">
+                            class="p-2 text-gray-900 rounded hover:text-gray-900 hover:bg-gray-200">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"
                                     d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm4 4a1 1 0 011-1h8a1 1 0 110 2H8a1 1 0 01-1-1zm-4 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm4 4a1 1 0 011-1h8a1 1 0 110 2H8a1 1 0 01-1-1z" />
@@ -347,7 +347,7 @@
                     <!-- Second Row -->
                     <div class="flex flex-wrap items-center gap-1">
                         <select id="formatSelect" title="Format"
-                            class="text-sm border border-gray-300 rounded px-3 py-1 text-gray-600 hover:bg-gray-200">
+                            class="text-sm border border-gray-300 rounded px-3 py-1 text-gray-900 hover:bg-gray-200">
                             <option value="">Format</option>
                             <option value="h1">Heading 1</option>
                             <option value="h2">Heading 2</option>
@@ -358,7 +358,7 @@
 
                         <!-- Image Upload Button -->
                         <button type="button" id="imageBtn" title="Insert Image"
-                            class="p-2 text-gray-600 rounded hover:text-gray-900 hover:bg-gray-200">
+                            class="p-2 text-gray-900 rounded hover:text-gray-900 hover:bg-gray-200">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"
                                     d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" />
@@ -368,7 +368,7 @@
 
                         <!-- Video Upload Button -->
                         <button type="button" id="videoBtn" title="Insert Video"
-                            class="p-2 text-gray-600 rounded hover:text-gray-900 hover:bg-gray-200">
+                            class="p-2 text-gray-900 rounded hover:text-gray-900 hover:bg-gray-200">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path
                                     d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
@@ -378,28 +378,28 @@
 
                         <div class="w-px h-6 bg-gray-300 mx-1"></div>
                         <button type="button" id="ulBtn" title="Bullet List"
-                            class="p-2 text-gray-600 rounded hover:text-gray-900 hover:bg-gray-200">
+                            class="p-2 text-gray-900 rounded hover:text-gray-900 hover:bg-gray-200">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"
                                     d="M6 4h12v2H6V4zm0 5h12v2H6V9zm0 5h12v2H6v-2zM2 4h2v2H2V4zm0 5h2v2H2V9zm0 5h2v2H2v-2z" />
                             </svg>
                         </button>
                         <button type="button" id="olBtn" title="Numbered List"
-                            class="p-2 text-gray-600 rounded hover:text-gray-900 hover:bg-gray-200">
+                            class="p-2 text-gray-900 rounded hover:text-gray-900 hover:bg-gray-200">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"
                                     d="M3 4h1v1H3V4zm0 3h1v1H3V7zm0 3h1v1H3v-1zM6 4h12v2H6V4zm0 5h12v2H6V9zm0 5h12v2H6v-2zM3 13.5h1v1H3v-1z" />
                             </svg>
                         </button>
                         <button type="button" id="quoteBtn" title="Quote"
-                            class="p-2 text-gray-600 rounded hover:text-gray-900 hover:bg-gray-200">
+                            class="p-2 text-gray-900 rounded hover:text-gray-900 hover:bg-gray-200">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"
                                     d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v3.586L7.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 10.586V7z" />
                             </svg>
                         </button>
                         <button type="button" id="hrBtn" title="Horizontal Rule"
-                            class="p-2 text-gray-600 rounded hover:text-gray-900 hover:bg-gray-200">
+                            class="p-2 text-gray-900 rounded hover:text-gray-900 hover:bg-gray-200">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" />
                             </svg>
@@ -410,7 +410,7 @@
                 <!-- Editor Area -->
                 <div class="px-4 py-3 bg-white rounded-b-lg">
                     <div id="editor" contenteditable="true"
-                        class="block w-full px-0 text-sm text-gray-800 bg-white border-0 focus:ring-0 focus:outline-none min-h-[200px]"
+                        class="block w-full px-0 text-sm text-gray-900 bg-white border-0 focus:ring-0 focus:outline-none min-h-[200px]"
                         style="min-height: 200px;">{!! old('notification_body', $setting->notification_body ?? '') !!}</div>
                     <textarea id="notification_body" name="notification_body"
                         class="hidden">{{ old('notification_body', $setting->notification_body ?? '') }}</textarea>
@@ -419,7 +419,7 @@
         </div>
 
         <div class="mb-6 px-6">
-            <ul class="mt-4 text-sm text-gray-700 list-disc list-inside">
+            <ul class="mt-4 text-sm text-gray-900 list-disc list-inside">
                 <li>{company_name} - Company Name</li>
                 <li>{days_left} - Days remaining until expiry</li>
                 <li>{course_name} - Name of the course/document/item</li>
@@ -432,7 +432,7 @@
         <!-- Save Button -->
         <div class="p-6 bg-gray-50 rounded-b-lg">
             <button type="submit"
-                class="px-6 py-3 bg-[#0C9488] hover:bg-[#0a7d73] text-white font-semibold rounded-lg shadow-sm">
+                class="px-6 py-3 bg-[#0C9488] hover:bg-[#0a7d73] text-white font-bold rounded-lg shadow-sm">
                 {{ __('lang.save_settings') }}
             </button>
         </div>
@@ -595,7 +595,7 @@
                                         <svg class="w-6 h-6 text-green-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                                         </svg>
-                                        <span class="font-semibold">${data.message}</span>
+                                        <span class="font-bold">${data.message}</span>
                                     </div>
                                 </div>
                             `;
@@ -613,7 +613,7 @@
                                         <svg class="w-6 h-6 text-red-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
                                         </svg>
-                                        <span class="font-semibold">${data.message}</span>
+                                        <span class="font-bold">${data.message}</span>
                                     </div>
                                 </div>
                             `;
@@ -633,7 +633,7 @@
                                     <svg class="w-6 h-6 text-red-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
                                     </svg>
-                                    <span class="font-semibold">Network error. Please try again.</span>
+                                    <span class="font-bold">Network error. Please try again.</span>
                                 </div>
                             </div>
                         `;
@@ -657,7 +657,7 @@
 
             // Disable button and show loading
             btn.disabled = true;
-            btn.innerHTML = '<svg class="animate-spin h-5 w-5 text-gray-700 inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Testing...';
+            btn.innerHTML = '<svg class="animate-spin h-5 w-5 text-gray-900 inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Testing...';
 
             fetch('{{ route('admin.settings.test') }}', {
                 method: 'POST',
@@ -677,7 +677,7 @@
                                         <svg class="w-6 h-6 text-green-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                                         </svg>
-                                        <span class="font-semibold">${data.message}</span>
+                                        <span class="font-bold">${data.message}</span>
                                     </div>
                                 </div>
                             `;
@@ -695,7 +695,7 @@
                                         <svg class="w-6 h-6 text-red-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
                                         </svg>
-                                        <span class="font-semibold">${data.message}</span>
+                                        <span class="font-bold">${data.message}</span>
                                     </div>
                                 </div>
                             `;
@@ -715,7 +715,7 @@
                                     <svg class="w-6 h-6 text-red-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
                                     </svg>
-                                    <span class="font-semibold">Network error. Please try again.</span>
+                                    <span class="font-bold">Network error. Please try again.</span>
                                 </div>
                             </div>
                         `;
@@ -759,7 +759,7 @@
                                         <svg class="w-6 h-6 text-green-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                                         </svg>
-                                        <span class="font-semibold">${data.message}</span>
+                                        <span class="font-bold">${data.message}</span>
                                     </div>
                                 </div>
                             `;
@@ -776,7 +776,7 @@
                                         <svg class="w-6 h-6 text-red-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
                                         </svg>
-                                        <span class="font-semibold">${data.message}</span>
+                                        <span class="font-bold">${data.message}</span>
                                     </div>
                                 </div>
                             `;
@@ -795,7 +795,7 @@
                                     <svg class="w-6 h-6 text-red-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
                                     </svg>
-                                    <span class="font-semibold">Network error. Please try again.</span>
+                                    <span class="font-bold">Network error. Please try again.</span>
                                 </div>
                             </div>
                         `;

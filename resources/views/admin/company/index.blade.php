@@ -21,20 +21,20 @@
 
         <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden shadow-sm">
             <a href="{{ route('admin.companies.export') }}"
-                class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm border-r border-gray-200 flex"
+                class=" px-5 py-3 font-bold text-gray-900 hover:text-blue-700 hover:bg-blue-50 text-sm border-r border-gray-200 flex"
                 title="{{ __('lang.export_data') }}">
-                <i class="text-gray-500 fa fa-download"></i>
+                <i class="text-gray-900 fa fa-download"></i>
             </a>
             <button onclick="document.getElementById('importModal').classList.remove('hidden')"
-                class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm border-r border-gray-200 flex"
+                class=" px-5 py-3 font-bold text-gray-900 hover:text-blue-700 hover:bg-blue-50 text-sm border-r border-gray-200 flex"
                 title="{{ __('lang.import_data') }}">
-                <i class="text-gray-500 fa fa-upload"></i>
+                <i class="text-gray-900 fa fa-upload"></i>
             </button>
             @can('create companies')
             <a href="{{ route('admin.companies.create') }}"
-                class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm flex"
+                class=" px-5 py-3 font-bold text-gray-900 hover:text-blue-700 hover:bg-blue-50 text-sm flex"
                 title="{{ __('lang.create_company') }}">
-                <i class="text-gray-500 fa fa-plus"></i>
+                <i class="text-gray-900 fa fa-plus"></i>
             </a>
             @endcan
         </div>
@@ -44,9 +44,9 @@
     <div id="importModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
         <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-semibold text-gray-900">{{ __('lang.import_companies') }}</h3>
+                <h3 class="text-lg font-bold text-gray-900">{{ __('lang.import_companies') }}</h3>
                 <button onclick="document.getElementById('importModal').classList.add('hidden')"
-                    class="text-gray-400 hover:text-gray-600">
+                    class="text-gray-900 hover:text-red-600">
                     <i class="fa fa-times"></i>
                 </button>
             </div>
@@ -54,15 +54,15 @@
             <form action="{{ route('admin.companies.import') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.select_excel_file') }}</label>
+                    <label class="block text-sm font-bold text-gray-900 mb-2">{{ __('lang.select_excel_file') }}</label>
                     <input type="file" name="file" accept=".xlsx,.xls,.csv" required
-                        class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183]">
-                    <p class="text-xs text-gray-500 mt-2">{{ __('lang.supported_formats') }}</p>
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <p class="text-xs text-gray-900 mt-2">{{ __('lang.supported_formats') }}</p>
                 </div>
 
                 <div class="mb-4">
                     <a href="{{ route('admin.companies.template') }}"
-                        class="text-[#0C3183] hover:underline text-sm flex items-center gap-2">
+                        class="text-blue-700 hover:underline text-sm flex items-center gap-2">
                         <i class="fa fa-download"></i>
                         {{ __('lang.download_import_template') }}
                     </a>
@@ -73,7 +73,7 @@
                         class="bg-gray-500 text-white px-6 py-2.5 rounded-lg hover:bg-gray-600">
                         {{ __('lang.cancel') }}
                     </button>
-                    <button type="submit" class="bg-[#0C3183] text-white px-6 py-2.5 rounded-lg hover:bg-[#0a2766]">
+                    <button type="submit" class="bg-blue-700 text-white px-6 py-2.5 rounded-lg hover:bg-blue-800">
                         {{ __('lang.import') }}
                     </button>
                 </div>
@@ -82,25 +82,25 @@
     </div>
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 bg-white">
-            <thead class="text-xs text-gray-900 uppercase bg-white border-b">
-                <tr class="bg-white border-b border-gray-200">
-                    <th scope="col" class="px-6 py-3">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-900 bg-white">
+            <thead class="text-xs text-white uppercase bg-blue-600 border-b">
+                <tr class="border-b border-gray-200">
+                    <th scope="col" class="px-6 py-3 font-bold">
                         {{ __('lang.id') }}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 font-bold">
                         {{ strtoupper(__('lang.company_name')) }}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 font-bold">
                         {{ __('lang.operating_locations') }}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 font-bold">
                         {{ strtoupper(__('lang.vat_number')) }}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 font-bold">
                         {{ strtoupper(__('lang.tax_id_code')) }}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 font-bold">
                         {{ strtoupper(__('lang.actions')) }}
                     </th>
                 </tr>
@@ -109,7 +109,7 @@
                 @if ($companies->count() > 0)
                     @foreach ($companies as $company)
                         <tr class="bg-white border-b border-gray-200">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap">
+                            <th scope="row" class="px-6 py-4 font-bold text-gray-900 whitespace-nowrap">
                                 {{ $company->id }}
                             </th>
                             <td class="px-6 py-4">
@@ -127,14 +127,14 @@
                             <td class="px-6 py-4">
                                 @can('view companies')
                                 <a href="{{ route('admin.companies.show', $company->id) }}"
-                                    class="font-medium text-gray-500 p-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
+                                    class="font-bold text-gray-900 p-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
                                     title="{{ __('lang.view') }}">
                                     <i class="fa-regular fa-eye"></i>
                                 </a>
                                 @endcan
                                 @can('edit companies')
                                 <a href="{{ route('admin.companies.edit', $company->id) }}"
-                                    class="font-medium text-gray-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
+                                    class="font-bold text-gray-900 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
                                     title="{{ __('lang.edit') }}">
                                     <i class="fa fa-edit"></i>
                                 </a>
@@ -146,14 +146,14 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
-                                        class="font-medium text-red-500 p-2 hover:bg-red-50 border border-gray-200 rounded-[10px]"
+                                        class="font-bold text-red-500 p-2 hover:bg-red-50 border border-gray-200 rounded-[10px]"
                                         title="{{ __('lang.actions') }}">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </form>
                                 @endcan
                                 {{-- <a href="#"
-                                    class="font-medium text-red-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]">
+                                    class="font-bold text-red-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]">
                                     <i class="fa fa-trash"></i>
                                 </a> --}}
                             </td>
@@ -161,7 +161,7 @@
                     @endforeach
                 @else
                     <tr class="bg-white border-b border-gray-200">
-                        <td colspan="5" class="px-6 py-4 text-center text-gray-500">
+                        <td colspan="5" class="px-6 py-4 text-center text-gray-900">
                             {{ __('lang.no_data_available') }}
                         </td>
                     </tr>

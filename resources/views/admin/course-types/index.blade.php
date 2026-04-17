@@ -20,7 +20,7 @@
         <div class="flex items-center gap-2">
             @can('edit course-types')
             <button id="saveOrderBtn"
-                class="hidden px-4 py-2 bg-[#0C3183] text-white text-sm font-semibold rounded-lg hover:bg-[#0A2869] flex items-center gap-2">
+                class="hidden px-4 py-2 bg-blue-700 text-white text-sm font-bold rounded-lg hover:bg-[#0A2869] flex items-center gap-2">
                 <i class="fa fa-save"></i>
                 {{ __('lang.save_order') }}
             </button>
@@ -29,8 +29,8 @@
             @can('create course-types')
             <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden shadow-sm">
                 <a href="{{ route('admin.course-types.create') }}"
-                    class="px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm flex" title="{{ __('lang.create_course_type') }}">
-                    <i class="text-gray-500 fa fa-plus"></i>
+                    class="px-5 py-3 font-bold text-gray-900 hover:text-blue-700 hover:bg-blue-50 text-sm flex" title="{{ __('lang.create_course_type') }}">
+                    <i class="text-gray-900 fa fa-plus"></i>
                 </a>
             </div>
             @endcan
@@ -38,19 +38,19 @@
     </div>
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 bg-white">
-            <thead class="text-xs text-gray-900 uppercase bg-white border-b">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-900 bg-white">
+            <thead class="text-xs text-white uppercase bg-blue-600 border-b">
                 <tr>
-                    <th scope="col" class="px-4 py-3 w-24">
+                    <th scope="col" class="px-4 py-3 w-24 font-bold">
                         {{ __('lang.order') }}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 font-bold">
                         {{ __('lang.course_type') }}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 font-bold">
                         {{ __('lang.years_of_validity') }}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 font-bold">
                         {{ __('lang.actions') }}
                     </th>
                 </tr>
@@ -62,7 +62,7 @@
                             <td class="px-4 py-4">
                                 @can('edit course-types')
                                 <input type="number" min="1"
-                                    class="sort-order-input w-16 text-center border border-gray-300 rounded px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-[#0C3183]"
+                                    class="sort-order-input w-16 text-center border border-gray-300 rounded px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-blue-500"
                                     value="{{ $courseType->sort_order }}"
                                     data-id="{{ $courseType->id }}"
                                     data-original="{{ $courseType->sort_order }}">
@@ -79,14 +79,14 @@
                             <td class="px-6 py-4">
                                 @can('view course-types')
                                 <a href="{{ route('admin.course-types.show', $courseType->id) }}"
-                                    class="font-medium text-gray-500 p-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
+                                    class="font-bold text-gray-900 p-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
                                     title="{{ __('lang.view') }}">
                                     <i class="fa-regular fa-eye"></i>
                                 </a>
                                 @endcan
                                 @can('edit course-types')
                                 <a href="{{ route('admin.course-types.edit', $courseType->id) }}"
-                                    class="font-medium text-gray-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
+                                    class="font-bold text-gray-900 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
                                     title="{{ __('lang.edit') }}">
                                     <i class="fa fa-edit"></i>
                                 </a>
@@ -96,7 +96,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
-                                        class="font-medium text-red-500 p-2 hover:bg-red-50 border border-gray-200 rounded-[10px]"
+                                        class="font-bold text-red-500 p-2 hover:bg-red-50 border border-gray-200 rounded-[10px]"
                                         title="{{ __('lang.actions') }}">
                                         <i class="fa fa-trash"></i>
                                     </button>
@@ -107,7 +107,7 @@
                     @endforeach
                 @else
                     <tr class="bg-white border-b border-gray-200">
-                        <td colspan="4" class="px-6 py-4 text-center text-gray-500">
+                        <td colspan="4" class="px-6 py-4 text-center text-gray-900">
                             {{ __('lang.no_data_available') }}
                         </td>
                     </tr>

@@ -7,15 +7,15 @@
             <div class="flex items-center justify-between mb-3">
                 <div>
                     <h1 class="text-3xl font-bold text-gray-900">{{ $company->name }}</h1>
-                    <p class="text-gray-500 text-sm flex items-center gap-2 mt-1">
-                        <i class="fa fa-building text-[#0C3183]"></i>
+                    <p class="text-gray-900 text-sm flex items-center gap-2 mt-1">
+                        <i class="fa fa-building text-blue-700"></i>
                         <span>{{ __('lang.company_information') }}</span>
                     </p>
                 </div>
                 <div class="flex gap-2">
                     @can('view companies')
                     <a href="{{ route('admin.companies.export.single', $company->id) }}"
-                        class="bg-white text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 shadow-sm border border-gray-200 transition-all flex items-center gap-2 text-sm"
+                        class="bg-white text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-50 shadow-sm border border-gray-200 transition-all flex items-center gap-2 text-sm"
                         title="{{ __('lang.export_data') }}">
                         <i class="fa fa-download"></i>
                         <span>{{ __('lang.export') }}</span>
@@ -23,13 +23,13 @@
                     @endcan
                     @can('edit companies')
                     <a href="{{ route('admin.companies.edit', $company->id) }}"
-                        class="bg-[#0C3183] text-white px-4 py-2 rounded-lg hover:bg-blue-800 shadow-sm transition-all flex items-center gap-2 text-sm">
+                        class="bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-800 shadow-sm transition-all flex items-center gap-2 text-sm">
                         <i class="fa fa-edit"></i>
                         <span>{{ __('lang.edit') }}</span>
                     </a>
                     @endcan
                     <a href="{{ route('admin.companies.index') }}"
-                        class="bg-white text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 shadow-sm border border-gray-200 transition-all flex items-center gap-2 text-sm">
+                        class="bg-white text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-50 shadow-sm border border-gray-200 transition-all flex items-center gap-2 text-sm">
                         <i class="fa fa-arrow-left"></i>
                         <span>{{ __('lang.back') }}</span>
                     </a>
@@ -39,19 +39,19 @@
             <!-- Status Badges - Compact -->
             <div class="flex gap-2">
                 @if($company->freeze_company)
-                    <span class="bg-orange-100 text-orange-800 text-xs font-semibold px-3 py-1 rounded-full flex items-center gap-1">
+                    <span class="bg-orange-100 text-orange-800 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
                         <i class="fa fa-lock text-xs"></i>
                         {{ __('lang.company_frozen') }}
                     </span>
                 @else
-                    <span class="bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full flex items-center gap-1">
+                    <span class="bg-green-100 text-green-800 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
                         <i class="fa fa-unlock text-xs"></i>
                         {{ __('lang.active') }}
                     </span>
                 @endif
 
                 @if($company->send_deadline_notification)
-                    <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full flex items-center gap-1">
+                    <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
                         <i class="fa fa-bell text-xs"></i>
                         {{ __('lang.notifications_enabled') }}
                     </span>
@@ -68,7 +68,7 @@
                 <!-- Office Locations - MOVED TO TOP -->
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                     <div class="bg-gradient-to-r from-purple-600 to-purple-700 px-4 py-3">
-                        <h2 class="text-base font-semibold  flex items-center gap-2">
+                        <h2 class="text-base font-bold  flex items-center gap-2">
                             <i class="fa fa-map-marker-alt"></i>
                             {{ __('lang.office_locations') }}
                         </h2>
@@ -80,7 +80,7 @@
                                     <i class="fa fa-building text-purple-600 text-sm"></i>
                                 </div>
                                 <div class="flex-1">
-                                    <p class="text-xs text-gray-500 uppercase font-medium">{{ __('lang.registered_office') }}</p>
+                                    <p class="text-xs text-gray-900 uppercase font-bold">{{ __('lang.registered_office') }}</p>
                                     <p class="text-gray-900 text-sm">{{ $company->registered_office ?? '-' }}</p>
                                 </div>
                             </div>
@@ -93,7 +93,7 @@
                 <!-- Basic Information - Compact -->
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                     <div class="bg-gradient-to-r from-[#0C3183] to-blue-700 px-4 py-3">
-                        <h2 class="text-base font-semibold flex items-center gap-2">
+                        <h2 class="text-base font-bold flex items-center gap-2">
                             <i class="fa fa-info-circle"></i>
                             {{ __('lang.basic_information') }}
                         </h2>
@@ -102,41 +102,41 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="flex items-start gap-2">
                                 <div class="bg-blue-50 p-2 rounded">
-                                    <i class="fa fa-file-text text-[#0C3183] text-sm"></i>
+                                    <i class="fa fa-file-text text-blue-700 text-sm"></i>
                                 </div>
                                 <div>
-                                    <p class="text-xs text-gray-500 uppercase font-medium">{{ __('lang.vat_number') }}</p>
-                                    <p class="text-gray-900 font-semibold text-sm">{{ $company->vat_number ?? '-' }}</p>
+                                    <p class="text-xs text-gray-900 uppercase font-bold">{{ __('lang.vat_number') }}</p>
+                                    <p class="text-gray-900 font-bold text-sm">{{ $company->vat_number ?? '-' }}</p>
                                 </div>
                             </div>
 
                             <div class="flex items-start gap-2">
                                 <div class="bg-blue-50 p-2 rounded">
-                                    <i class="fa fa-hashtag text-[#0C3183] text-sm"></i>
+                                    <i class="fa fa-hashtag text-blue-700 text-sm"></i>
                                 </div>
                                 <div>
-                                    <p class="text-xs text-gray-500 uppercase font-medium">{{ __('lang.tax_code') }}</p>
-                                    <p class="text-gray-900 font-semibold text-sm">{{ $company->tax_code ?? '-' }}</p>
+                                    <p class="text-xs text-gray-900 uppercase font-bold">{{ __('lang.tax_code') }}</p>
+                                    <p class="text-gray-900 font-bold text-sm">{{ $company->tax_code ?? '-' }}</p>
                                 </div>
                             </div>
 
                             <div class="flex items-start gap-2">
                                 <div class="bg-blue-50 p-2 rounded">
-                                    <i class="fa fa-chart-bar text-[#0C3183] text-sm"></i>
+                                    <i class="fa fa-chart-bar text-blue-700 text-sm"></i>
                                 </div>
                                 <div>
-                                    <p class="text-xs text-gray-500 uppercase font-medium">{{ __('lang.ateco') }}</p>
-                                    <p class="text-gray-900 font-semibold text-sm">{{ $company->ateco ?? '-' }}</p>
+                                    <p class="text-xs text-gray-900 uppercase font-bold">{{ __('lang.ateco') }}</p>
+                                    <p class="text-gray-900 font-bold text-sm">{{ $company->ateco ?? '-' }}</p>
                                 </div>
                             </div>
 
                             <div class="flex items-start gap-2">
                                 <div class="bg-blue-50 p-2 rounded">
-                                    <i class="fa fa-barcode text-[#0C3183] text-sm"></i>
+                                    <i class="fa fa-barcode text-blue-700 text-sm"></i>
                                 </div>
                                 <div>
-                                    <p class="text-xs text-gray-500 uppercase font-medium">{{ __('lang.sdi') }}</p>
-                                    <p class="text-gray-900 font-semibold text-sm">{{ $company->sdi ?? '-' }}</p>
+                                    <p class="text-xs text-gray-900 uppercase font-bold">{{ __('lang.sdi') }}</p>
+                                    <p class="text-gray-900 font-bold text-sm">{{ $company->sdi ?? '-' }}</p>
                                 </div>
                             </div>
                         </div>
@@ -146,7 +146,7 @@
                 <!-- Operating Locations - Compact -->
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                     <div class="bg-gradient-to-r from-indigo-600 to-indigo-700 px-4 py-3">
-                        <h2 class="text-base font-semibold flex items-center gap-2">
+                        <h2 class="text-base font-bold flex items-center gap-2">
                             <i class="fa fa-map-marker-alt"></i>
                             {{ __('lang.operating_locations') }}
                             <span class="bg-indigo-800 text-xs px-2 py-1 rounded-full">{{ $company->operatingLocations->count() }}</span>
@@ -158,13 +158,13 @@
                                 @foreach($company->operatingLocations as $location)
                                     <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                                         <div>
-                                            <p class="font-medium text-gray-900 text-sm">{{ $location->name }}</p>
-                                            <p class="text-xs text-gray-500">{{ $location->full_address }}</p>
+                                            <p class="font-bold text-gray-900 text-sm">{{ $location->name }}</p>
+                                            <p class="text-xs text-gray-900">{{ $location->full_address }}</p>
                                         </div>
                                         {{-- <div class="flex items-center gap-2">
-                                            <span class="text-xs text-gray-500">{{ $location->workers->count() }} {{ __('lang.workers') }}</span>
+                                            <span class="text-xs text-gray-900">{{ $location->workers->count() }} {{ __('lang.workers') }}</span>
                                             <a href="{{ route('admin.operating-locations.show', $location->id) }}"
-                                                class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">
+                                                class="text-indigo-600 hover:text-indigo-800 text-sm font-bold">
                                                 {{ __('lang.view') }}
                                             </a>
                                         </div> --}}
@@ -173,16 +173,16 @@
                             </div>
                             {{-- <div class="mt-4">
                                 <a href="{{ route('admin.operating-locations.index') }}?company_id={{ $company->id }}"
-                                    class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">
+                                    class="text-indigo-600 hover:text-indigo-800 text-sm font-bold">
                                     {{ __('lang.view_all') }} →
                                 </a>
                             </div> --}}
                         @else
                             <div class="text-center py-6">
                                 <i class="fa fa-map-marker-alt text-gray-300 text-3xl mb-2"></i>
-                                <p class="text-sm text-gray-500">{{ __('lang.no_operating_locations') }}</p>
+                                <p class="text-sm text-gray-900">{{ __('lang.no_operating_locations') }}</p>
                                 {{-- <a href="{{ route('admin.operating-locations.create') }}?company_id={{ $company->id }}"
-                                    class="text-indigo-600 hover:text-indigo-800 text-sm font-medium mt-2 inline-block">
+                                    class="text-indigo-600 hover:text-indigo-800 text-sm font-bold mt-2 inline-block">
                                     {{ __('lang.create_first_location') }}
                                 </a> --}}
                             </div>
@@ -193,7 +193,7 @@
                 <!-- Contact Information - Compact -->
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                     <div class="bg-gradient-to-r from-green-600 to-green-700 px-4 py-3">
-                        <h2 class="text-base font-semibold  flex items-center gap-2">
+                        <h2 class="text-base font-bold  flex items-center gap-2">
                             <i class="fa fa-address-book"></i>
                             {{ __('lang.contact_information') }}
                         </h2>
@@ -205,7 +205,7 @@
                                     <i class="fa fa-envelope text-green-600 text-sm"></i>
                                 </div>
                                 <div>
-                                    <p class="text-xs text-gray-500 uppercase font-medium">{{ __('lang.main_email') }}</p>
+                                    <p class="text-xs text-gray-900 uppercase font-bold">{{ __('lang.main_email') }}</p>
                                     <p class="text-gray-900 text-sm break-all">{{ $company->main_email ?? '-' }}</p>
                                 </div>
                             </div>
@@ -215,7 +215,7 @@
                                     <i class="fa fa-certificate text-green-600 text-sm"></i>
                                 </div>
                                 <div>
-                                    <p class="text-xs text-gray-500 uppercase font-medium">{{ __('lang.pec_email') }}</p>
+                                    <p class="text-xs text-gray-900 uppercase font-bold">{{ __('lang.pec_email') }}</p>
                                     <p class="text-gray-900 text-sm break-all">{{ $company->pec_email ?? '-' }}</p>
                                 </div>
                             </div>
@@ -225,7 +225,7 @@
                                     <i class="fa fa-phone text-green-600 text-sm"></i>
                                 </div>
                                 <div>
-                                    <p class="text-xs text-gray-500 uppercase font-medium">{{ __('lang.phone') }}</p>
+                                    <p class="text-xs text-gray-900 uppercase font-bold">{{ __('lang.phone') }}</p>
                                     <p class="text-gray-900 text-sm">{{ $company->phone ?? '-' }}</p>
                                 </div>
                             </div>
@@ -235,7 +235,7 @@
                                     <i class="fa fa-phone text-green-600 text-sm"></i>
                                 </div>
                                 <div>
-                                    <p class="text-xs text-gray-500 uppercase font-medium">{{ __('lang.phone_2') }}</p>
+                                    <p class="text-xs text-gray-900 uppercase font-bold">{{ __('lang.phone_2') }}</p>
                                     <p class="text-gray-900 text-sm">{{ $company->phone_2 ?? '-' }}</p>
                                 </div>
                             </div>
@@ -245,7 +245,7 @@
                                     <i class="fa fa-user text-green-600 text-sm"></i>
                                 </div>
                                 <div>
-                                    <p class="text-xs text-gray-500 uppercase font-medium">{{ __('lang.company_contact_person') }}</p>
+                                    <p class="text-xs text-gray-900 uppercase font-bold">{{ __('lang.company_contact_person') }}</p>
                                     <p class="text-gray-900 text-sm">{{ $company->company_contact_person ?? '-' }}</p>
                                 </div>
                             </div>
@@ -256,7 +256,7 @@
                 <!-- Safety Personnel - Compact with Dropdowns -->
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                     <div class="bg-gradient-to-r from-orange-600 to-orange-700 px-4 py-3">
-                        <h2 class="text-base font-semibold  flex items-center gap-2">
+                        <h2 class="text-base font-bold  flex items-center gap-2">
                             <i class="fa fa-shield-alt"></i>
                             {{ __('lang.safety_and_personnel') }}
                         </h2>
@@ -268,7 +268,7 @@
                                     <i class="fa fa-user-tie text-orange-600 text-sm"></i>
                                 </div>
                                 <div>
-                                    <p class="text-xs text-gray-500 uppercase font-medium">{{ __('lang.employer') }}</p>
+                                    <p class="text-xs text-gray-900 uppercase font-bold">{{ __('lang.employer') }}</p>
                                     <p class="text-gray-900 text-sm">{{ $company->employer ?? '-' }}</p>
                                 </div>
                             </div>
@@ -278,7 +278,7 @@
                                     <i class="fa fa-user-shield text-orange-600 text-sm"></i>
                                 </div>
                                 <div>
-                                    <p class="text-xs text-gray-500 uppercase font-medium">{{ __('lang.head_of_prevention') }}</p>
+                                    <p class="text-xs text-gray-900 uppercase font-bold">{{ __('lang.head_of_prevention') }}</p>
                                     <p class="text-gray-900 text-sm">{{ $company->head_of_prevention ?? '-' }}</p>
                                 </div>
                             </div>
@@ -288,7 +288,7 @@
                                     <i class="fa fa-users text-orange-600 text-sm"></i>
                                 </div>
                                 <div>
-                                    <p class="text-xs text-gray-500 uppercase font-medium">{{ __('lang.safety_representative') }}</p>
+                                    <p class="text-xs text-gray-900 uppercase font-bold">{{ __('lang.safety_representative') }}</p>
                                     <p class="text-gray-900 text-sm">{{ $company->workers_safety_representative ?? '-' }}</p>
                                 </div>
                             </div>
@@ -298,7 +298,7 @@
                                     <i class="fa fa-user-md text-orange-600 text-sm"></i>
                                 </div>
                                 <div>
-                                    <p class="text-xs text-gray-500 uppercase font-medium">{{ __('lang.company_doctor') }}</p>
+                                    <p class="text-xs text-gray-900 uppercase font-bold">{{ __('lang.company_doctor') }}</p>
                                     <p class="text-gray-900 text-sm">{{ $company->company_doctor ?? '-' }}</p>
                                 </div>
                             </div>
@@ -309,7 +309,7 @@
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
                                 <!-- Workplace Safety Risk Dropdown -->
                                 <div class="bg-gray-50 rounded-lg p-3">
-                                    <p class="text-xs text-gray-500 uppercase font-medium mb-2">{{ __('lang.workplace_safety_risk') }}</p>
+                                    <p class="text-xs text-gray-900 uppercase font-bold mb-2">{{ __('lang.workplace_safety_risk') }}</p>
                                     <div class="relative">
                                         <select class="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500" disabled>
                                             <option value="low" {{ $company->workplace_safety_risk == 'low' ? 'selected' : '' }}>{{ __('lang.low_risk') }}</option>
@@ -321,14 +321,14 @@
 
                                 <!-- Subject to CPI -->
                                 <div class="bg-gray-50 rounded-lg p-3 text-center flex flex-col justify-center">
-                                    <p class="text-xs text-gray-500 uppercase font-medium mb-2">{{ __('lang.subject_to_cpi') }}</p>
+                                    <p class="text-xs text-gray-900 uppercase font-bold mb-2">{{ __('lang.subject_to_cpi') }}</p>
                                     @if($company->subject_to_cpi)
-                                        <span class="inline-flex items-center justify-center gap-2 text-green-600 font-semibold text-sm">
+                                        <span class="inline-flex items-center justify-center gap-2 text-green-600 font-bold text-sm">
                                             <i class="fa fa-check-circle"></i>
                                             <span>{{ __('lang.yes') }}</span>
                                         </span>
                                     @else
-                                        <span class="inline-flex items-center justify-center gap-2 text-red-600 font-semibold text-sm">
+                                        <span class="inline-flex items-center justify-center gap-2 text-red-600 font-bold text-sm">
                                             <i class="fa fa-times-circle"></i>
                                             <span>{{ __('lang.no') }}</span>
                                         </span>
@@ -337,7 +337,7 @@
 
                                 <!-- Fire Risk Dropdown -->
                                 <div class="bg-gray-50 rounded-lg p-3">
-                                    <p class="text-xs text-gray-500 uppercase font-medium mb-2">{{ __('lang.rischio_antincendio') }}</p>
+                                    <p class="text-xs text-gray-900 uppercase font-bold mb-2">{{ __('lang.rischio_antincendio') }}</p>
                                     <div class="relative">
                                         <select class="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500" disabled>
                                             <option value="level_1" {{ $company->rischio_antincendio == 'level_1' ? 'selected' : '' }}>{{ __('lang.level_1') }}</option>
@@ -355,14 +355,14 @@
                 @if($company->notes)
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                     <div class="bg-gradient-to-r from-[#0C3183] to-blue-700 px-4 py-3">
-                        <h2 class="text-base font-semibold flex items-center gap-2">
+                        <h2 class="text-base font-bold flex items-center gap-2">
                             <i class="fa fa-sticky-note"></i>
                             {{ __('lang.notes') }}
                         </h2>
                     </div>
                     <div class="p-4">
                         <div class="bg-amber-50 border-l-4 border-amber-500 p-3 rounded">
-                            <p class="text-gray-700 text-sm whitespace-pre-wrap">{{ $company->notes }}</p>
+                            <p class="text-gray-900 text-sm whitespace-pre-wrap">{{ $company->notes }}</p>
                         </div>
                     </div>
                 </div>
@@ -376,7 +376,7 @@
                 <!-- External Professional Contacts - Compact -->
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                     <div class="bg-gradient-to-r from-teal-600 to-teal-700 px-4 py-3">
-                        <h2 class="text-base font-semibold  flex items-center gap-2">
+                        <h2 class="text-base font-bold  flex items-center gap-2">
                             <i class="fa fa-user-friends"></i>
                             {{ __('lang.professional_contacts') }}
                         </h2>
@@ -386,27 +386,27 @@
                         <div class="mb-4">
                             <div class="flex items-center gap-2 mb-2">
                                 <i class="fa fa-calculator text-teal-600 text-sm"></i>
-                                <h3 class="text-xs font-semibold text-gray-700 uppercase">{{ __('lang.accountant') }}</h3>
+                                <h3 class="text-xs font-bold text-gray-900 uppercase">{{ __('lang.accountant') }}</h3>
                             </div>
                             <div class="space-y-2 ml-5">
                                 <div class="flex items-start gap-2">
-                                    <i class="fa fa-user text-xs text-gray-400 mt-0.5"></i>
+                                    <i class="fa fa-user text-xs text-gray-900 mt-0.5"></i>
                                     <div>
-                                        <p class="text-xs text-gray-500">{{ __('lang.name') }}</p>
+                                        <p class="text-xs text-gray-900">{{ __('lang.name') }}</p>
                                         <p class="text-gray-900 text-sm">{{ $company->accountant_name ?? '-' }}</p>
                                     </div>
                                 </div>
                                 <div class="flex items-start gap-2">
-                                    <i class="fa fa-phone text-xs text-gray-400 mt-0.5"></i>
+                                    <i class="fa fa-phone text-xs text-gray-900 mt-0.5"></i>
                                     <div>
-                                        <p class="text-xs text-gray-500">{{ __('lang.phone') }}</p>
+                                        <p class="text-xs text-gray-900">{{ __('lang.phone') }}</p>
                                         <p class="text-gray-900 text-sm">{{ $company->accountant_phone ?? '-' }}</p>
                                     </div>
                                 </div>
                                 <div class="flex items-start gap-2">
-                                    <i class="fa fa-envelope text-xs text-gray-400 mt-0.5"></i>
+                                    <i class="fa fa-envelope text-xs text-gray-900 mt-0.5"></i>
                                     <div>
-                                        <p class="text-xs text-gray-500">{{ __('lang.email') }}</p>
+                                        <p class="text-xs text-gray-900">{{ __('lang.email') }}</p>
                                         <p class="text-gray-900 text-sm break-all">{{ $company->accountant_email ?? '-' }}</p>
                                     </div>
                                 </div>
@@ -417,27 +417,27 @@
                         <div class="pt-4 border-t border-gray-200">
                             <div class="flex items-center gap-2 mb-2">
                                 <i class="fa fa-briefcase text-teal-600 text-sm"></i>
-                                <h3 class="text-xs font-semibold text-gray-700 uppercase">{{ __('lang.labor_consultant') }}</h3>
+                                <h3 class="text-xs font-bold text-gray-900 uppercase">{{ __('lang.labor_consultant') }}</h3>
                             </div>
                             <div class="space-y-2 ml-5">
                                 <div class="flex items-start gap-2">
-                                    <i class="fa fa-user text-xs text-gray-400 mt-0.5"></i>
+                                    <i class="fa fa-user text-xs text-gray-900 mt-0.5"></i>
                                     <div>
-                                        <p class="text-xs text-gray-500">{{ __('lang.name') }}</p>
+                                        <p class="text-xs text-gray-900">{{ __('lang.name') }}</p>
                                         <p class="text-gray-900 text-sm">{{ $company->labor_consultant_name ?? '-' }}</p>
                                     </div>
                                 </div>
                                 <div class="flex items-start gap-2">
-                                    <i class="fa fa-phone text-xs text-gray-400 mt-0.5"></i>
+                                    <i class="fa fa-phone text-xs text-gray-900 mt-0.5"></i>
                                     <div>
-                                        <p class="text-xs text-gray-500">{{ __('lang.phone') }}</p>
+                                        <p class="text-xs text-gray-900">{{ __('lang.phone') }}</p>
                                         <p class="text-gray-900 text-sm">{{ $company->labor_consultant_phone ?? '-' }}</p>
                                     </div>
                                 </div>
                                 <div class="flex items-start gap-2">
-                                    <i class="fa fa-envelope text-xs text-gray-400 mt-0.5"></i>
+                                    <i class="fa fa-envelope text-xs text-gray-900 mt-0.5"></i>
                                     <div>
-                                        <p class="text-xs text-gray-500">{{ __('lang.email') }}</p>
+                                        <p class="text-xs text-gray-900">{{ __('lang.email') }}</p>
                                         <p class="text-gray-900 text-sm break-all">{{ $company->labor_consultant_email ?? '-' }}</p>
                                     </div>
                                 </div>
@@ -449,7 +449,7 @@
                 <!-- Selected Contacts - Compact -->
                 {{-- <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                     <div class="bg-gradient-to-r from-indigo-600 to-indigo-700 px-4 py-3">
-                        <h2 class="text-base font-semibold  flex items-center gap-2">
+                        <h2 class="text-base font-bold  flex items-center gap-2">
                             <i class="fa fa-at"></i>
                             {{ __('lang.selected_contacts') }}
                         </h2>
@@ -460,14 +460,14 @@
                                 @foreach($company->contacts as $contact)
                                     <div class="flex items-center gap-2 bg-indigo-50 text-indigo-700 px-3 py-2 rounded-lg">
                                         <i class="fa fa-envelope text-xs"></i>
-                                        <span class="text-xs font-medium break-all">{{ $contact }}</span>
+                                        <span class="text-xs font-bold break-all">{{ $contact }}</span>
                                     </div>
                                 @endforeach
                             </div>
                         @else
                             <div class="text-center py-6">
                                 <i class="fa fa-inbox text-3xl text-gray-300 mb-2"></i>
-                                <p class="text-gray-500 text-xs">{{ __('lang.no_contacts_selected') }}</p>
+                                <p class="text-gray-900 text-xs">{{ __('lang.no_contacts_selected') }}</p>
                             </div>
                         @endif
                     </div>
@@ -476,7 +476,7 @@
                 @if(!empty($company->agent))
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                     <div class="bg-gradient-to-r from-gray-600 to-gray-700 px-4 py-3">
-                        <h2 class="text-base font-semibold flex items-center gap-2">
+                        <h2 class="text-base font-bold flex items-center gap-2">
                             <i class="fa fa-user-tie"></i>
                             {{ __('lang.agent') }}
                         </h2>

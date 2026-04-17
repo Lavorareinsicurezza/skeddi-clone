@@ -7,15 +7,15 @@
 
     <div class="bg-white p-6 rounded-lg border border-gray-200">
         <div class="mb-4">
-            <span class="text-sm text-gray-500">{{ __('lang.name') }}</span>
-            <div class="text-gray-900 font-semibold">{{ $role->name }}</div>
+            <span class="text-sm text-gray-900">{{ __('lang.name') }}</span>
+            <div class="text-gray-900 font-bold">{{ $role->name }}</div>
         </div>
 
         <div class="mb-4">
-            <span class="text-sm text-gray-500">{{ __('lang.permissions') }}</span>
+            <span class="text-sm text-gray-900">{{ __('lang.permissions') }}</span>
             <div class="mt-2">
                 @foreach ($role->permissions as $permission)
-                    <span class="inline-block px-2 py-1 mr-2 mb-2 bg-blue-50 text-[#0C3183] border border-blue-100 rounded">{{ $permission->name }}</span>
+                    <span class="inline-block px-2 py-1 mr-2 mb-2 bg-blue-50 text-blue-700 border border-blue-100 rounded">{{ $permission->name }}</span>
                 @endforeach
             </div>
         </div>

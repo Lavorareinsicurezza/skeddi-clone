@@ -19,17 +19,17 @@
 
         <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden shadow-sm">
             <a href="{{ route('admin.users.export') }}"
-                class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm border-r border-gray-200 flex" title="Export Data">
-                <i class="text-gray-500 fa fa-download"></i>
+                class=" px-5 py-3 font-bold text-gray-900 hover:text-blue-700 hover:bg-blue-50 text-sm border-r border-gray-200 flex" title="Export Data">
+                <i class="text-gray-900 fa fa-download"></i>
             </a>
             <button onclick="document.getElementById('importModal').classList.remove('hidden')"
-                class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm border-r border-gray-200 flex" title="Import Data">
-                <i class="text-gray-500 fa fa-upload"></i>
+                class=" px-5 py-3 font-bold text-gray-900 hover:text-blue-700 hover:bg-blue-50 text-sm border-r border-gray-200 flex" title="Import Data">
+                <i class="text-gray-900 fa fa-upload"></i>
             </button>
             @can('create users')
             <a href="{{ route('admin.users.create') }}"
-            class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm flex" title="Create User">
-            <i class="text-gray-500 fa fa-plus"></i>
+            class=" px-5 py-3 font-bold text-gray-900 hover:text-blue-700 hover:bg-blue-50 text-sm flex" title="Create User">
+            <i class="text-gray-900 fa fa-plus"></i>
         </a>
         @endcan
         </div>
@@ -39,9 +39,9 @@
     <div id="importModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
         <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-semibold text-gray-900">{{ __('lang.import_users') }}</h3>
+                <h3 class="text-lg font-bold text-gray-900">{{ __('lang.import_users') }}</h3>
                 <button onclick="document.getElementById('importModal').classList.add('hidden')"
-                    class="text-gray-400 hover:text-gray-600">
+                    class="text-gray-900 hover:text-red-600">
                     <i class="fa fa-times"></i>
                 </button>
             </div>
@@ -49,7 +49,7 @@
             <form action="{{ route('admin.users.import') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('lang.select_excel_file') }}</label>
+                    <label class="block text-sm font-bold text-gray-900 mb-2">{{ __('lang.select_excel_file') }}</label>
                     <input type="file" name="file" accept=".xlsx,.xls,.csv" required
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
@@ -62,7 +62,7 @@
 
                 <div class="flex justify-end gap-2">
                     <button type="button" onclick="document.getElementById('importModal').classList.add('hidden')"
-                        class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">
+                        class="px-4 py-2 bg-gray-300 text-gray-900 rounded-md hover:bg-gray-400">
                         {{ __('lang.cancel') }}
                     </button>
                     <button type="submit"
@@ -75,16 +75,16 @@
     </div>
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 bg-white">
-            <thead class="text-xs text-gray-900 uppercase bg-white border-b">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-900 bg-white">
+            <thead class="text-xs text-white uppercase bg-blue-600 border-b">
                 <tr>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 font-bold">
                         {{ __('lang.email_address') }}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 font-bold">
                         {{ __('lang.role_list') }}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 font-bold">
                         {{ __('lang.actions') }}
                     </th>
                 </tr>
@@ -93,7 +93,7 @@
                 @if ($users->count() > 0)
                     @foreach ($users as $user)
                         <tr class="bg-white border-b border-gray-200">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap">
+                            <th scope="row" class="px-6 py-4 font-bold text-gray-900 whitespace-nowrap">
                                 {{ $user->email }}
                             </th>
                             <td class="px-6 py-4">
@@ -102,25 +102,25 @@
                             <td class="px-6 py-4">
                                 @can('view users')
                                 <a href="{{ route('admin.users.show', $user->id) }}"
-                                    class="font-medium text-gray-500 p-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
+                                    class="font-bold text-gray-900 p-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
                                     title="View">
                                     <i class="fa-regular fa-eye"></i>
                                 </a>
                                 @endcan
                                 @can('edit users')
                                 <a href="{{ route('admin.users.edit', $user->id) }}"
-                                    class="font-medium text-gray-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
+                                    class="font-bold text-gray-900 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
                                     title="Edit">
                                     <i class="fa fa-edit"></i>
                                 </a>
                                 @endcan
                                 <button onclick="openResetModal({{ $user->id }}, '{{ $user->name }}', '{{ $user->email }}')"
-                                    class="font-medium text-gray-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
+                                    class="font-bold text-gray-900 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
                                     title="Reset Password">
                                     <i class="fa fa-key"></i>
                                 </button>
                                 {{-- <a href="#"
-                                    class="font-medium text-red-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]">
+                                    class="font-bold text-red-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]">
                                     <i class="fa fa-trash"></i>
                                 </a> --}}
                             </td>
@@ -128,7 +128,7 @@
                     @endforeach
                 @else
                     <tr class="bg-white border-b border-gray-200">
-                        <td colspan="5" class="px-6 py-4 text-center text-gray-500">
+                        <td colspan="5" class="px-6 py-4 text-center text-gray-900">
                             {{ __('lang.no_data_available') }}
                         </td>
                     </tr>
@@ -146,15 +146,15 @@
     <div id="resetPasswordModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
         <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-semibold text-gray-900">Reset Password</h3>
-                <button onclick="closeResetModal()" class="text-gray-400 hover:text-gray-600">
+                <h3 class="text-lg font-bold text-gray-900">Reset Password</h3>
+                <button onclick="closeResetModal()" class="text-gray-900 hover:text-red-600">
                     <i class="fa fa-times"></i>
                 </button>
             </div>
 
             <div class="mb-4">
-                <p class="text-sm text-gray-600">User: <span id="resetUserName" class="font-bold"></span></p>
-                <p class="text-sm text-gray-600">Email: <span id="resetUserEmail" class="font-bold"></span></p>
+                <p class="text-sm text-gray-900">User: <span id="resetUserName" class="font-bold"></span></p>
+                <p class="text-sm text-gray-900">Email: <span id="resetUserEmail" class="font-bold"></span></p>
             </div>
 
             <div id="otpSection">
@@ -169,28 +169,28 @@
                 <input type="hidden" id="resetUserId" name="user_id">
 
                 <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">OTP Code</label>
+                    <label class="block text-sm font-bold text-gray-900 mb-2">OTP Code</label>
                     <input type="text" id="otpInput" name="otp" required maxlength="6"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Enter 6-digit OTP">
                 </div>
 
                 <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">New Password</label>
+                    <label class="block text-sm font-bold text-gray-900 mb-2">New Password</label>
                     <input type="password" id="newPassword" name="password" required minlength="8"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    {{-- <p class="text-xs text-gray-500 mt-1">Min 8 chars, letters, numbers & symbols</p> --}}
+                    {{-- <p class="text-xs text-gray-900 mt-1">Min 8 chars, letters, numbers & symbols</p> --}}
                 </div>
 
                 <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
+                    <label class="block text-sm font-bold text-gray-900 mb-2">Confirm Password</label>
                     <input type="password" id="confirmPassword" name="password_confirmation" required minlength="8"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
 
                 <div class="flex justify-end gap-2">
                     <button type="button" onclick="closeResetModal()"
-                        class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">
+                        class="px-4 py-2 bg-gray-300 text-gray-900 rounded-md hover:bg-gray-400">
                         Cancel
                     </button>
                     <button type="submit" id="submitResetBtn"

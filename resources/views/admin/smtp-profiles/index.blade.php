@@ -19,30 +19,30 @@
         @can('create smtp-profiles')
         <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden shadow-sm">
             <a href="{{ route('admin.smtp-profiles.create') }}"
-                class="px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm flex" title="Crea Profilo SMTP">
-                <i class="text-gray-500 fa fa-plus"></i>
+                class="px-5 py-3 font-bold text-gray-900 hover:text-blue-700 hover:bg-blue-50 text-sm flex" title="Crea Profilo SMTP">
+                <i class="text-gray-900 fa fa-plus"></i>
             </a>
         </div>
         @endcan
     </div>
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 bg-white">
-            <thead class="text-xs text-gray-900 uppercase bg-white border-b">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-900 bg-white">
+            <thead class="text-xs text-white uppercase bg-blue-600 border-b">
                 <tr>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 font-bold">
                         Nome
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 font-bold">
                         Host
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 font-bold">
                         Porta
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 font-bold">
                         Username
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 font-bold">
                         Azioni
                     </th>
                 </tr>
@@ -66,14 +66,14 @@
                             <td class="px-6 py-4">
                                 @can('view smtp-profiles')
                                 <a href="{{ route('admin.smtp-profiles.show', $profile->id) }}"
-                                    class="font-medium text-gray-500 p-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
+                                    class="font-bold text-gray-900 p-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
                                     title="Visualizza">
                                     <i class="fa-regular fa-eye"></i>
                                 </a>
                                 @endcan
                                 @can('edit smtp-profiles')
                                 <a href="{{ route('admin.smtp-profiles.edit', $profile->id) }}"
-                                    class="font-medium text-gray-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
+                                    class="font-bold text-gray-900 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
                                     title="Modifica">
                                     <i class="fa fa-edit"></i>
                                 </a>
@@ -83,7 +83,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
-                                        class="font-medium text-red-500 p-2 hover:bg-red-50 border border-gray-200 rounded-[10px]"
+                                        class="font-bold text-red-500 p-2 hover:bg-red-50 border border-gray-200 rounded-[10px]"
                                         title="Elimina">
                                         <i class="fa fa-trash"></i>
                                     </button>
@@ -94,7 +94,7 @@
                     @endforeach
                 @else
                     <tr class="bg-white border-b border-gray-200">
-                        <td colspan="5" class="px-6 py-4 text-center text-gray-500">
+                        <td colspan="5" class="px-6 py-4 text-center text-gray-900">
                             Nessun dato disponibile
                         </td>
                     </tr>

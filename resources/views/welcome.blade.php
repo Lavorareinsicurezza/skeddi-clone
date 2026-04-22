@@ -128,6 +128,9 @@
                         {{ __('lang.employee_name') }}
                     </th>
                     <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap font-bold">
+                        {{ __('lang.operating_location') }}
+                    </th>
+                    <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap font-bold">
                         {{ __('lang.expiry_date') }}
                     </th>
                     <th scope="col" class="px-3 md:px-6 py-3 whitespace-nowrap font-bold">
@@ -161,11 +164,11 @@
                         </td>
 
                         <td class="px-3 md:px-6 py-4">
-                            @if($plan->employee_name)
-                                {{ $plan->employee_name }}{{ $plan->location_name ? ' - ' . $plan->location_name : '' }}
-                            @else
-                                -
-                            @endif
+                            {{ $plan->employee_name ?: '-' }}
+                        </td>
+
+                        <td class="px-3 md:px-6 py-4">
+                            {{ $plan->location_name ?: '-' }}
                         </td>
 
                         <td class="px-3 md:px-6 py-4">
@@ -189,7 +192,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="text-center py-4 text-gray-600 font-medium">
+                        <td colspan="7" class="text-center py-4 text-gray-600 font-medium">
                             {{ __('lang.no_data_available') }}
                         </td>
                     </tr>

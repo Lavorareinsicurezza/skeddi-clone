@@ -26,7 +26,7 @@ class TrainingPlanController extends Controller
         $companyId = session('selectedCompanyId');
 
         // Get all active workers for this company
-        $workers = Worker::query()->company()->where('is_active', true)->get();
+        $workers = Worker::query()->company()->where('is_active', true)->with('operatingLocation')->get();
 
         // Get all company course types
         $courseTypes = CompanyCourseType::query()->company()->with('courseType')->orderBy('sort_order')->orderBy('id')->get();

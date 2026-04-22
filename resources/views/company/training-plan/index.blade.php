@@ -63,6 +63,10 @@
                             class="px-4 py-4 text-left text-xs font-bold text-white uppercase tracking-wider bg-blue-600">
                             {{ __('lang.job_title') }}
                         </th>
+                        <th scope="col"
+                            class="px-4 py-4 text-left text-xs font-bold text-white uppercase tracking-wider bg-blue-600 whitespace-nowrap">
+                            {{ __('lang.operating_location') }}
+                        </th>
 
                         <!-- Dynamic Course Type Columns -->
                         @foreach ($courseTypes as $courseType)
@@ -74,7 +78,7 @@
                         @endforeach
                     </tr>
                     <tr class="bg-blue-500 border-b">
-                        <th colspan="2"></th>
+                        <th colspan="3"></th>
                         <!-- Sub-headers for each course type -->
                         @foreach ($courseTypes as $courseType)
                             <th class="px-2 py-2 text-xs font-bold text-white uppercase">
@@ -97,6 +101,11 @@
                             <!-- Job Title -->
                             <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
                                 {{ $worker->job_title ?? '-' }}
+                            </td>
+
+                            <!-- Operating Location -->
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
+                                {{ $worker->operatingLocation?->name ?? '-' }}
                             </td>
 
                             <!-- Dynamic Course Data -->

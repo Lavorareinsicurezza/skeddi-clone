@@ -6,7 +6,7 @@
 
         <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden shadow-sm">
             <a href="{{ route('admin.chart.pdf') }}"
-                class="px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-[#EBF1FF] text-sm flex"
+                class="px-5 py-3 font-bold text-gray-900 hover:text-blue-700 hover:bg-blue-50 text-sm flex"
                 title="{{ __('lang.create') . ' ' . __('lang.worker') }}">
                 <i class="text-2xl fa fa-file"></i>
             </a>
@@ -18,8 +18,8 @@
 
         <!-- Top Center: Datore di lavoro -->
         <div class="bg-[#0C31831A] rounded-md shadow-sm px-10 py-4 text-center w-[360px]">
-            <p class="font-semibold text-lg text-gray-700">{{ __('lang.employer') }}</p>
-            <p class="text-gray-500">{{ $company->employer }}</p>
+            <p class="font-bold text-lg text-gray-900">{{ __('lang.employer') }}</p>
+            <p class="text-gray-900">{{ $company->employer }}</p>
         </div>
 
         <!-- Middle Row: RSPP & Dottore competente -->
@@ -27,14 +27,14 @@
 
             <!-- RSPP -->
             <div class="bg-[#0C31831A] rounded-md shadow-sm px-10 py-4 text-center w-[360px]">
-                <p class="font-semibold text-lg text-gray-700">RSPP</p>
-                <p class="text-gray-500">{{ $company->head_of_prevention }}</p>
+                <p class="font-bold text-lg text-gray-900">RSPP</p>
+                <p class="text-gray-900">{{ $company->head_of_prevention }}</p>
             </div>
 
             <!-- Dottore competente -->
             <div class="bg-[#0C31831A] rounded-md shadow-sm px-10 py-4 text-center w-[360px]">
-                <p class="font-semibold text-lg text-gray-700">{{ __('lang.competent_doctor') }}</p>
-                <p class="text-gray-500">{{ $company->company_doctor }}</p>
+                <p class="font-bold text-lg text-gray-900">{{ __('lang.competent_doctor') }}</p>
+                <p class="text-gray-900">{{ $company->company_doctor }}</p>
             </div>
 
         </div>
@@ -43,9 +43,9 @@
             <!-- Bottom: Addetti antincendio -->
             @if (!empty($courseTypeFireFighter) && isset($courseTypeFireFighter[0]->trainingPlanRrecords))
                 <div class="bg-[#0C31831A] rounded-md shadow-sm px-10 py-6 text-center w-[360px]">
-                    <p class="font-semibold text-lg text-gray-700">{{ __('lang.firefighting_staff') }}</p>
+                    <p class="font-bold text-lg text-gray-900">{{ __('lang.firefighting_staff') }}</p>
 
-                    <div class="flex flex-col mt-2 space-y-1 text-gray-500">
+                    <div class="flex flex-col mt-2 space-y-1 text-gray-900">
                         @foreach ($courseTypeFireFighter as $record)
                             @foreach ($record->trainingPlanRecords as $plan)
                                 <span>{{ $plan->worker->first_name }} {{ $plan->worker->surname }}</span>
@@ -57,9 +57,9 @@
             <!-- Bottom: Addetti al primo soccorso -->
             @isset($courseTypeAid->trainingPlanRecords)
                 <div class="bg-[#0C31831A] rounded-md shadow-sm px-10 py-6 text-center w-[360px]">
-                    <p class="font-semibold text-lg text-gray-700">{{ __('lang.first_aid_staff') }}</p>
+                    <p class="font-bold text-lg text-gray-900">{{ __('lang.first_aid_staff') }}</p>
 
-                    <div class="flex flex-col mt-2 space-y-1 text-gray-500">
+                    <div class="flex flex-col mt-2 space-y-1 text-gray-900">
                         @foreach ($courseTypeAid->trainingPlanRecords as $record)
                             <span>{{ $record->worker->first_name }} {{ $record->worker->surname }}</span>
                         @endforeach

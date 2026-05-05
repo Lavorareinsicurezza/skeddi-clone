@@ -1,59 +1,175 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Skeddi — Training & Certification Management
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A Laravel 12 application for managing company training plans, worker certifications, and document expiration tracking with automated email notifications. Supports multi-company management with role-based access control and per-location SMTP configuration.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Prerequisites
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+| Tool | Required Version |
+|------|-----------------|
+| PHP | ^8.2 |
+| Composer | 2.x |
+| Node.js | ^18 |
+| npm | ^9 |
+| SQLite | bundled with PHP (default) |
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Quick Start
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+```bash
+git clone https://github.com/Lavorareinsicurezza/skeddi-clone skeddi
+cd skeddi
+composer setup
+php artisan db:seed
+php artisan serve
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Open `http://localhost:8000` and log in with the default credentials below.
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Setup — Step by Step
 
-### Premium Partners
+### 1. Clone
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```bash
+git clone https://github.com/Lavorareinsicurezza/skeddi-clone skeddi
+cd skeddi
+```
 
-## Contributing
+### 2. Install & Bootstrap
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+composer setup
+```
 
-## Code of Conduct
+This runs in sequence:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+1. `composer install` — installs PHP dependencies
+2. Copies `.env.example` → `.env`
+3. `php artisan key:generate` — generates `APP_KEY`
+4. `php artisan migrate --force` — runs all database migrations
+5. `npm install` — installs JS dependencies
+6. `npm run build` — compiles frontend assets (Vite + Tailwind + Flowbite)
 
-## Security Vulnerabilities
+### 3. Configure Environment
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Open `.env` and update values for your environment:
 
-## License
+```env
+APP_NAME="Skeddi"
+APP_URL=http://localhost:8000
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# Database — MySQL
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=skeddi
+DB_USERNAME=root
+DB_PASSWORD=
+
+# Mail — "log" writes emails to storage/logs instead of sending
+MAIL_MAILER=log
+```
+
+### 4. Seed the Database
+
+```bash
+php artisan db:seed
+```
+
+Creates companies, permissions, roles, and a default superadmin account.
+
+**Default credentials:**
+
+| Field | Value |
+|-------|-------|
+| Email | `ismail@devop360.com` |
+| Password | `devop360` |
+| Role | `superadmin` |
+
+> Change these credentials before deploying to production.
+
+### 5. Start Development Server
+
+```bash
+php artisan serve
+```
+
+Starts four concurrent processes:
+
+| Process | Command | Purpose |
+|---------|---------|---------|
+| `server` | `php artisan serve` | App at `http://localhost:8000` |
+| `queue` | `php artisan queue:listen --tries=1` | Processes background jobs |
+| `logs` | `php artisan pail --timeout=0` | Streams application logs |
+| `vite` | `npm run dev` | Hot-reloads CSS/JS assets |
+
+---
+
+## Development Commands
+
+```bash
+composer test        # Run test suite
+npm run build        # Build production assets
+vendor/bin/pint      # Fix code style (Laravel Pint)
+```
+
+Individual services:
+
+```bash
+php artisan serve
+php artisan queue:listen --tries=1
+php artisan pail --timeout=0
+npm run dev
+```
+
+Background job (expiry check + email notifications):
+
+```bash
+php artisan expiry:check-and-mail
+```
+
+---
+
+## Production Deployment
+
+```bash
+npm run build
+php artisan optimize
+```
+
+Set in `.env`:
+
+```env
+APP_ENV=production
+APP_DEBUG=false
+```
+
+---
+
+## Running Tests
+
+```bash
+composer test
+```
+
+Tests use an in-memory SQLite database — no separate test database needed.
+
+---
+
+## Troubleshooting
+
+**`migrate` fails — "Access denied" or "Unknown database"**
+Make sure MySQL is running, the database exists, and `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD` in `.env` are correct.
+
+**Assets return 404**
+Assets aren't compiled. Run `npm run build` or keep `npm run dev` running.
+
+**Emails not sending**
+`MAIL_MAILER=log` (default) writes emails to `storage/logs/laravel.log`. Set `MAIL_MAILER=smtp` and configure SMTP credentials in `.env`, or configure per-company SMTP in the admin panel under **Settings**.
+
+**Queue jobs not processing**
+The queue worker must be running. Start it with `php artisan queue:listen --tries=1` or use `composer dev`.

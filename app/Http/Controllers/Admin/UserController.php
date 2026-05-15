@@ -54,9 +54,6 @@ class UserController extends Controller
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8'],
             'role' => ['required', 'string'],
-            'functions' => ['nullable', 'array'],
-            'visible_company' => ['array', 'min:1'],
-            'admin_functions' => ['required', 'array'],
         ], [
             'email.required' => 'Email address is required.',
             'email.email' => 'Please enter a valid email address.',
@@ -64,23 +61,16 @@ class UserController extends Controller
             'password.required' => 'Password is required.',
             'password.min' => 'Password must be at least 8 characters.',
             'role.required' => 'Please select a role.',
-            'visible_company.required' => 'Please select at least one visible company.',
-            'visible_company.min' => 'Please select at least one visible company.',
-            'admin_functions.required' => 'Please select at least one admin function.',
         ]);
 
         $primaryRoleName = $validatedData['role'];
 
-        // Create the user
         $user = User::create([
             'name' => explode('@', $validatedData['email'])[0],
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']),
             'company_id' => Auth::user()->company_id,
             'role' => $primaryRoleName,
-            'functions' => $validatedData['functions'] ?? [],
-            'visible_company_ids' => $validatedData['visible_company'] ?? [],
-            'admin_functions' => $validatedData['admin_functions'] ?? [],
         ]);
 
         $user->syncRoles([$primaryRoleName]);
@@ -123,27 +113,20 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'email' => ['required', 'email', 'unique:users,email,' . $id],
             'role' => ['required', 'string'],
-            'functions' => ['nullable', 'array'],
-            'visible_company' => ['array', 'min:1'],
-            'admin_functions' => ['nullable', 'array'],
         ], [
             'email.required' => 'Email address is required.',
             'email.email' => 'Please enter a valid email address.',
             'email.unique' => 'This email address is already registered.',
             'role.required' => 'Please select a role.',
-            'visible_company.required' => 'Please select at least one visible company.',
-            'visible_company.min' => 'Please select at least one visible company.',
         ]);
 
-        // Update the user
         $user->update([
             'name' => explode('@', $validatedData['email'])[0],
             'email' => $validatedData['email'],
             'role' => $validatedData['role'],
-            'functions' => $validatedData['functions'] ?? [],
-            'visible_company_ids' => $validatedData['visible_company'] ?? [],
-            'admin_functions' => $validatedData['admin_functions'] ?? [],
         ]);
+
+        $user->syncRoles([$validatedData['role']]);
 
         return redirect()->route('admin.users.index')
             ->with('success', 'User updated successfully!');

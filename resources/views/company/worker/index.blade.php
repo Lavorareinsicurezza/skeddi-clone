@@ -52,11 +52,11 @@
             @can('create company-workers')
             <!-- Action Buttons -->
             <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden shadow-sm">
-                {{-- <button onclick="document.getElementById('importModal').classList.remove('hidden')"
+                <button onclick="document.getElementById('importModal').classList.remove('hidden')"
                     class="px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-[#EBF1FF] text-sm border-r border-gray-200 flex"
                     title="{{ __('lang.import_data') }}">
                     <i class="text-gray-500 fa fa-upload"></i>
-                </button> --}}
+                </button>
                 <a href="{{ route('admin.company-workers.create') }}"
                     class="px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-[#EBF1FF] text-sm flex"
                     title="{{ __('lang.create') .' '. __('lang.worker') }}">
@@ -196,6 +196,13 @@
                         <input type="file" name="file" accept=".xlsx,.xls,.csv" required
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C3183]">
                         <p class="mt-1 text-xs text-gray-500">{{ __('lang.supported_formats') }}</p>
+                    </div>
+                    <div class="mb-4">
+                        <a href="{{ route('admin.company-workers.template') }}"
+                            class="text-sm text-[#0C3183] hover:underline flex items-center gap-1">
+                            <i class="fa fa-download text-xs"></i>
+                            {{ __('lang.download_import_template') }}
+                        </a>
                     </div>
                     <div class="flex gap-3">
                         <button type="button" onclick="document.getElementById('importModal').classList.add('hidden')"

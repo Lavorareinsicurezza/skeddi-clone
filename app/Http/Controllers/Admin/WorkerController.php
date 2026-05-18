@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\WorkersExport;
+use App\Exports\WorkersTemplateExport;
+use App\Imports\WorkersImport;
+use Maatwebsite\Excel\Validators\ValidationException;
 
 class WorkerController extends Controller
 {
@@ -178,7 +181,7 @@ class WorkerController extends Controller
     }
 
     /**
-     * Import workers from file.
+     * Import workers from Excel.
      */
     public function import(Request $request)
     {
@@ -186,8 +189,30 @@ class WorkerController extends Controller
             'file' => 'required|file|mimes:xlsx,xls,csv',
         ]);
 
-        // TODO: Implement import logic
-        return redirect()->route('admin.company-workers.index')->with('success', __('lang.workers_imported_successfully'));
+        $companyId = session('selectedCompanyId');
+
+        try {
+            Excel::import(new WorkersImport($companyId), $request->file('file'));
+
+            return redirect()->route('admin.company-workers.index')
+                ->with('success', __('lang.workers_imported_successfully'));
+        } catch (ValidationException $e) {
+            $errors = collect($e->failures())->map(fn($f) => "Row {$f->row()}: " . implode(', ', $f->errors()))->implode('<br>');
+
+            return redirect()->route('admin.company-workers.index')
+                ->with('error', 'Import errors:<br>' . $errors);
+        } catch (\Exception $e) {
+            return redirect()->route('admin.company-workers.index')
+                ->with('error', 'Import failed: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Download the workers import template.
+     */
+    public function downloadTemplate()
+    {
+        return Excel::download(new WorkersTemplateExport, 'workers-import-template.xlsx');
     }
 
     /**

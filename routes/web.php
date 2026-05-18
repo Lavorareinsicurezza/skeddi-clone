@@ -104,6 +104,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
     // Company workers routes
     Route::post('/company-workers/import', [WorkerController::class, 'import'])->middleware('ensure.permission:company-workers,create')->name('company-workers.import');
     Route::get('/company-workers/export', [WorkerController::class, 'export'])->middleware('ensure.permission:company-workers,view')->name('company-workers.export');
+    Route::get('/company-workers/template', [WorkerController::class, 'downloadTemplate'])->middleware('ensure.permission:company-workers,create')->name('company-workers.template');
     Route::resource('/company-workers', WorkerController::class)->middleware('ensure.permission:company-workers');
 
     // Operating Locations routes

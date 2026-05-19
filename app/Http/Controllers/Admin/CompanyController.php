@@ -32,8 +32,9 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companyId = Auth::user()->company_id;
-        $companies = Company::where('company_id', $companyId)->paginate(20);
+        $companies = Company::when(!auth()->user()->hasRole('superadmin'), function ($q) {
+            return $q->where('company_id', auth()->user()->company_id);
+        })->paginate(20);
 
         return view('admin.company.index', compact('companies'));
     }

@@ -688,7 +688,9 @@ class DashboardController extends Controller
         ]);
 
         $user = Auth::user();
-        $baseQuery = Company::select('id')->where('company_id', $user->company_id);
+        $baseQuery = Company::select('id')->when(!auth()->user()->hasRole('admin') , function ($q) {
+            return $q->where('company_id', auth()->user()->company_id);    
+        });
         if ($user->hasRole('superadmin') || $user->hasRole('admin') || $user->can('view companies')) {
             $allowedIds = $baseQuery->pluck('id')->toArray();
         } else {

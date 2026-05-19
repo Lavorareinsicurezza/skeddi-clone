@@ -459,7 +459,7 @@ class DashboardController extends Controller
     public function getCompanies()
     {
         $user = Auth::user();
-        $baseQuery = Company::select('id', 'name', 'phone')->when(!auth()->user()->hasRole('superadmin'), function ($q) {
+        $baseQuery = Company::select('id', 'name', 'phone')->when(!auth()->user()->hasRole('admin'), function ($q) {
             return $q->where('company_id', auth()->user()->company_id);    
         }, function ($q) use ($user) {
             $q->whereJsonContains('contacts', $user->email);

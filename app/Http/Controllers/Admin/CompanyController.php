@@ -32,7 +32,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = Company::when(!auth()->user()->hasRole('superadmin'), function ($q) {
+        $companies = Company::when(!auth()->user()->hasRole('admin'), function ($q) {
             return $q->where('company_id', auth()->user()->company_id);
         })->paginate(20);
 

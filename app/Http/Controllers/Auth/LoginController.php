@@ -38,11 +38,7 @@ class LoginController extends Controller
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
 
-            // Store company_id in session for global scope
-            $companyId = User::query()
-                ->where('id', Auth::id())
-                ->value('company_id');
-
+            $companyId = User::query()->where('id', Auth::id())->value('company_id');
             $request->session()->put('company_id', $companyId);
 
             return redirect()->intended('/');

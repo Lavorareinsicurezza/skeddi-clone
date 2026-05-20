@@ -33,6 +33,12 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
+
+        if (!$user->company_id) {
+            return redirect()->route('admin.users.edit', $user->id)
+                ->with('error', 'Your account is not assigned to a company. Please contact an administrator.');
+        }
+
         $fromDate = $request->from_date;
         $toDate = $request->to_date;
         $operatingLocationId = $request->operating_location_id;
@@ -309,6 +315,12 @@ class DashboardController extends Controller
     public function deadlines(Request $request)
     {
         $user = Auth::user();
+
+        if (!$user->company_id) {
+            return redirect()->route('admin.users.edit', $user->id)
+                ->with('error', 'Your account is not assigned to a company. Please contact an administrator.');
+        }
+
         $company = $user->company;
         $companyId = session('selectedCompanyId');
         $operatingLocationId = $request->operating_location_id;

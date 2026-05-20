@@ -107,20 +107,28 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         $validatedData = $request->validate([
-            'email' => ['required', 'email', 'unique:users,email,' . $id],
-            'role' => ['required', 'string'],
+            'email'    => ['required', 'email', 'unique:users,email,' . $id],
+            'role'     => ['required', 'string'],
+            'password' => ['nullable', 'string', 'min:8'],
         ], [
-            'email.required' => 'Email address is required.',
-            'email.email' => 'Please enter a valid email address.',
-            'email.unique' => 'This email address is already registered.',
-            'role.required' => 'Please select a role.',
+            'email.required'  => 'Email address is required.',
+            'email.email'     => 'Please enter a valid email address.',
+            'email.unique'    => 'This email address is already registered.',
+            'role.required'   => 'Please select a role.',
+            'password.min'    => 'Password must be at least 8 characters.',
         ]);
 
-        $user->update([
-            'name' => explode('@', $validatedData['email'])[0],
+        $data = [
+            'name'  => explode('@', $validatedData['email'])[0],
             'email' => $validatedData['email'],
-            'role' => $validatedData['role'],
-        ]);
+            'role'  => $validatedData['role'],
+        ];
+
+        if (!empty($validatedData['password'])) {
+            $data['password'] = Hash::make($validatedData['password']);
+        }
+
+        $user->update($data);
 
         $user->syncRoles([$validatedData['role']]);
 

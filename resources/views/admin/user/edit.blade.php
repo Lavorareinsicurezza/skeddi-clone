@@ -55,6 +55,17 @@
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
                     </div>
+
+                    <!-- New Password (optional) -->
+                    <div>
+                        <label class="block text-sm font-bold text-gray-900 mb-2">{{ __('lang.new_password') }} <span class="text-gray-400 font-normal text-xs">({{ __('lang.leave_blank_to_keep') }})</span></label>
+                        <input type="password" name="password"
+                            placeholder="{{ __('lang.enter_new_password') }}"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('password') border-red-500 @enderror">
+                        @error('password')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
                 </div>
 
                 <!-- Submit -->

@@ -85,8 +85,8 @@ Route::middleware('auth')->name('admin.')->group(function () {
     Route::resource('smtp-profiles', SmtpProfileController::class)->middleware('ensure.permission:smtp-profiles');
 
     // User OTP and Password Reset
-    Route::post('/users/send-otp', [UserController::class, 'sendOtp'])->name('users.send-otp');
-    Route::post('/users/reset-password', [UserController::class, 'resetPassword'])->name('users.reset-password');
+    Route::post('/users/send-otp', [UserController::class, 'sendOtp'])->middleware('ensure.permission:users,edit')->name('users.send-otp');
+    Route::post('/users/reset-password', [UserController::class, 'resetPassword'])->middleware('ensure.permission:users,edit')->name('users.reset-password');
 
     Route::resource('users', UserController::class)->middleware('ensure.permission:users');
 

@@ -42,11 +42,12 @@
                     <!-- Role -->
                     <div>
                         <label class="block text-sm font-bold text-gray-900 mb-2">{{ __('lang.role') }}</label>
+                        @php $currentRole = old('role', $user->getRoleNames()->first() ?? $user->role) @endphp
                         <select name="role"
                             class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('role') border-red-500 @enderror">
                             <option value="">{{ __('lang.select_role') }}</option>
                             @foreach ($roles as $roleName)
-                                <option value="{{ $roleName }}" {{ old('role', $user->role) == $roleName ? 'selected' : '' }}>
+                                <option value="{{ $roleName }}" {{ $currentRole == $roleName ? 'selected' : '' }}>
                                     {{ ucfirst($roleName) }}
                                 </option>
                             @endforeach

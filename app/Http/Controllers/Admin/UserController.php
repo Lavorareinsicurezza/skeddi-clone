@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Company;
 use App\Models\User;
 use App\Models\Setting;
 use Spatie\Permission\Models\Role;
@@ -40,9 +39,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        $companies = Company::company()->get();
         $roles = Role::pluck('name')->toArray();
-        return view('admin.user.create', compact('companies', 'roles'));
+        return view('admin.user.create', compact('roles'));
     }
 
     /**
@@ -86,10 +84,9 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        $companies = Company::company()->get();
-
         $user = User::with('company')->findOrFail($id);
-        return view('admin.user.show', compact('user', 'companies'));
+        $userPermissions = $user->getPermissionsViaRoles()->pluck('name');
+        return view('admin.user.show', compact('user', 'userPermissions'));
     }
 
     /**
@@ -98,9 +95,8 @@ class UserController extends Controller
     public function edit(string $id)
     {
         $user = User::findOrFail($id);
-        $companies = Company::company()->get();
         $roles = Role::pluck('name')->toArray();
-        return view('admin.user.edit', compact('user', 'companies', 'roles'));
+        return view('admin.user.edit', compact('user', 'roles'));
     }
 
     /**

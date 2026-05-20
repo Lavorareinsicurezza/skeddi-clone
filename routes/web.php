@@ -91,8 +91,8 @@ Route::middleware('auth')->name('admin.')->group(function () {
     Route::resource('users', UserController::class)->middleware('ensure.permission:users');
 
     // API routes for company selection
-    Route::get('/api/companies', [DashboardController::class, 'getCompanies'])->name('api.companies');
-    Route::post('/api/select-company', [DashboardController::class, 'selectCompany'])->name('api.select-company');
+    Route::get('/api/companies', [DashboardController::class, 'getCompanies'])->middleware('ensure.permission:companies,view')->name('api.companies');
+    Route::post('/api/select-company', [DashboardController::class, 'selectCompany'])->middleware('ensure.permission:selected-company')->name('api.select-company');
 
     // Selected company detail route
     Route::get('/selected-company/detail', [CompanyController::class, 'showSelectedCompany'])->middleware('ensure.permission:selected-company')->name('selected-company.detail');

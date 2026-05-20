@@ -100,7 +100,7 @@
                     </div>
                 </div>
 
-                <!-- Functions Card -->
+                <!-- Permissions Card -->
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                     <div class="bg-gradient-to-r from-[#0C3183] to-blue-700 px-6 py-4">
                         <h2 class="text-lg font-bold flex items-center gap-2">
@@ -109,13 +109,12 @@
                         </h2>
                     </div>
                     <div class="p-6">
-                        @if ($user->functions && count($user->functions) > 0)
+                        @if ($userPermissions->count() > 0)
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                @foreach ($user->functions as $function)
+                                @foreach ($userPermissions as $permission)
                                     <div class="flex items-center gap-2 bg-green-50 text-green-700 px-4 py-3 rounded-lg">
                                         <i class="fa fa-check-circle text-sm"></i>
-                                        <span
-                                            class="text-sm font-bold">{{ str_replace('_', ' ', ucfirst($function)) }}</span>
+                                        <span class="text-sm font-bold">{{ ucfirst($permission) }}</span>
                                     </div>
                                 @endforeach
                             </div>
@@ -128,56 +127,30 @@
                     </div>
                 </div>
 
-                <!-- Administration Functions Card -->
-                @if ($user->admin_functions && count($user->admin_functions) > 0)
-                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-                        <div class="bg-gradient-to-r from-orange-600 to-orange-700 px-6 py-4">
-                            <h2 class="text-lg font-bold flex items-center gap-2">
-                                <i class="fa fa-shield-alt"></i>
-                                {{ __('lang.administration_functions') }}
-                            </h2>
-                        </div>
-                        <div class="p-6">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                @foreach ($user->admin_functions as $function)
-                                    <div class="flex items-center gap-2 bg-orange-50 text-orange-700 px-4 py-3 rounded-lg">
-                                        <i class="fa fa-check-circle text-sm"></i>
-                                        <span
-                                            class="text-sm font-bold">{{ str_replace('_', ' ', ucfirst($function)) }}</span>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                @endif
-
             </div>
 
             <!-- Right Column - Additional Information -->
             <div class="space-y-6">
 
-                <!-- Visible Companies Card -->
+                <!-- Role Card -->
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                     <div class="bg-gradient-to-r from-indigo-600 to-indigo-700 px-6 py-4">
                         <h2 class="text-lg font-bold flex items-center gap-2">
-                            <i class="fa fa-eye"></i>
-                            {{ __('lang.visible_companies') }}
+                            <i class="fa fa-user-shield"></i>
+                            {{ __('lang.role') }}
                         </h2>
                     </div>
                     <div class="p-6">
-                        @if ($companies->count() > 0)
-                            <div class="space-y-2">
-                                @foreach ($companies as $company)
-                                    <div class="flex items-center gap-2 bg-indigo-50 text-indigo-700 px-4 py-3 rounded-lg">
-                                        <i class="fa fa-building text-sm"></i>
-                                        <span class="text-sm font-bold">{{ $company->name }}</span>
-                                    </div>
-                                @endforeach
+                        @foreach ($user->roles as $role)
+                            <div class="flex items-center gap-2 bg-indigo-50 text-indigo-700 px-4 py-3 rounded-lg mb-2">
+                                <i class="fa fa-id-badge text-sm"></i>
+                                <span class="text-sm font-bold">{{ ucfirst($role->name) }}</span>
                             </div>
-                        @else
+                        @endforeach
+                        @if ($user->roles->isEmpty())
                             <div class="text-center py-8">
                                 <i class="fa fa-inbox text-4xl text-gray-300 mb-3"></i>
-                                <p class="text-gray-900 text-sm">{{ __('lang.no_companies_assigned') }}</p>
+                                <p class="text-gray-900 text-sm">{{ __('lang.no_functions_assigned') }}</p>
                             </div>
                         @endif
                     </div>

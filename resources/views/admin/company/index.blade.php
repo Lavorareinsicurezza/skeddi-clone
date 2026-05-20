@@ -20,16 +20,20 @@
         <h1 class="text-3xl font-bold text-gray-900">{{ __('lang.companies') }}</h1>
 
         <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+            @can('view companies')
             <a href="{{ route('admin.companies.export') }}"
                 class=" px-5 py-3 font-bold text-gray-900 hover:text-blue-700 hover:bg-blue-50 text-sm border-r border-gray-200 flex"
                 title="{{ __('lang.export_data') }}">
                 <i class="text-gray-900 fa fa-download"></i>
             </a>
+            @endcan
+            @can('create companies')
             <button onclick="document.getElementById('importModal').classList.remove('hidden')"
                 class=" px-5 py-3 font-bold text-gray-900 hover:text-blue-700 hover:bg-blue-50 text-sm border-r border-gray-200 flex"
                 title="{{ __('lang.import_data') }}">
                 <i class="text-gray-900 fa fa-upload"></i>
             </button>
+            @endcan
             @can('create companies')
             <a href="{{ route('admin.companies.create') }}"
                 class=" px-5 py-3 font-bold text-gray-900 hover:text-blue-700 hover:bg-blue-50 text-sm flex"

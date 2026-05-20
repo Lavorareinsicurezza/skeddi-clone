@@ -44,11 +44,13 @@
                     </ul>
                 </div> --}}
             </div>
+            @can('view company-workers')
             <a href="{{ route('admin.company-workers.export') }}"
                 class="px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-[#EBF1FF] text-sm border border-gray-200 rounded-lg"
                 title="{{ __('lang.export') }}">
                 <i class="text-gray-500 fa fa-download"></i>
             </a>
+            @endcan
             @can('create company-workers')
             <!-- Action Buttons -->
             <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden shadow-sm">

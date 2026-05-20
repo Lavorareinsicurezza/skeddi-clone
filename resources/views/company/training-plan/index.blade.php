@@ -20,11 +20,14 @@
         <h1 class="text-3xl font-bold text-gray-900">{{ __('lang.training_plan') }}</h1>
 
         <div class="flex items-center gap-3">
+            @can('view training-plan')
             <a href="{{ route('admin.training-plan.export') }}"
                 class="px-6 py-3 border border-gray-300 rounded-lg text-gray-900 hover:bg-gray-50 font-medium">
                 <i class="fa fa-download mr-2"></i>
                 {{ __('lang.export') }}
             </a>
+            @endcan
+            @can('view training-plan-edit')
             <!-- Edit Button (Hidden in edit mode) -->
             <button type="button" id="editButton" onclick="toggleEditMode()"
                 class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium">
@@ -44,6 +47,7 @@
                     {{ __('lang.save') }}
                 </button>
             </div>
+            @endcan
         </div>
     </div>
 

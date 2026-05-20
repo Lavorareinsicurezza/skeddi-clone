@@ -46,6 +46,7 @@
                 </div>
 
                 <!-- Export -->
+                @can('view deadlines')
                 <div class="px-3 py-2 flex items-center sm:border-r border-b sm:border-b-0 border-gray-200 text-xs">
                     <a href="{{ route('admin.deadlines.export', ['operating_location_id' => $selectedOperatingLocationId]) }}"
                        class="font-bold text-blue-600 hover:text-blue-800 flex items-center gap-2">
@@ -53,6 +54,7 @@
                         <span>{{ __('lang.export') }}</span>
                     </a>
                 </div>
+                @endcan
 
                 <!-- Reset Filter -->
                 <div class="px-3 py-2 flex justify-center sm:justify-start">
@@ -134,11 +136,13 @@
 
                         <td class="px-3 md:px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center space-x-2">
+                                @can('view training-plan-edit')
                                 <a href="javascript:void(0)"
                                     onclick="openRenewalModal({{ $plan->id }}, '{{ $currentCompany->name }}', '{{ $plan->name }}', '{{ $plan->first_name ?? '' }}', '{{ $plan->surname ?? '' }}', '{{ $plan->deadline_type }}')"
                                     class="font-bold text-blue-600 p-2 cursor-pointer hover:text-blue-800 hover:underline">
                                     {{ __('lang.renew') }}
                                 </a>
+                                @endcan
                             </div>
                         </td>
 

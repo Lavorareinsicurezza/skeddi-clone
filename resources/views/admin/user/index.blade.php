@@ -18,14 +18,18 @@
         <h1 class="text-3xl font-bold text-gray-900">{{ __('lang.users') }}</h1>
 
         <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+            @can('view users')
             <a href="{{ route('admin.users.export') }}"
                 class=" px-5 py-3 font-bold text-gray-900 hover:text-blue-700 hover:bg-blue-50 text-sm border-r border-gray-200 flex" title="Export Data">
                 <i class="text-gray-900 fa fa-download"></i>
             </a>
+            @endcan
+            @can('create users')
             <button onclick="document.getElementById('importModal').classList.remove('hidden')"
                 class=" px-5 py-3 font-bold text-gray-900 hover:text-blue-700 hover:bg-blue-50 text-sm border-r border-gray-200 flex" title="Import Data">
                 <i class="text-gray-900 fa fa-upload"></i>
             </button>
+            @endcan
             @can('create users')
             <a href="{{ route('admin.users.create') }}"
             class=" px-5 py-3 font-bold text-gray-900 hover:text-blue-700 hover:bg-blue-50 text-sm flex" title="Create User">
@@ -114,11 +118,13 @@
                                     <i class="fa fa-edit"></i>
                                 </a>
                                 @endcan
+                                @can('edit users')
                                 <button onclick="openResetModal({{ $user->id }}, '{{ $user->name }}', '{{ $user->email }}')"
                                     class="font-bold text-gray-900 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]"
                                     title="Reset Password">
                                     <i class="fa fa-key"></i>
                                 </button>
+                                @endcan
                                 {{-- <a href="#"
                                     class="font-bold text-red-500 p-2 ml-2 hover:bg-blue-50 border border-gray-200 rounded-[10px]">
                                     <i class="fa fa-trash"></i>

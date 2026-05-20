@@ -29,11 +29,13 @@
         <h1 class="text-3xl font-bold text-gray-900">{{ __('lang.documents') }}</h1>
 
         <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+            @can('view company-documents')
             <a href="{{ route('admin.company-documents.export') }}"
                 class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-[#EBF1FF] text-sm border-r border-gray-200 flex"
                 title="{{ __('lang.export_data') }}">
                 <i class="text-gray-500 fa fa-download"></i>
             </a>
+            @endcan
             {{-- <button onclick="document.getElementById('importModal').classList.remove('hidden')"
                 class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-[#EBF1FF] text-sm border-r border-gray-200 flex"
                 title="{{ __('lang.import_data') }}">

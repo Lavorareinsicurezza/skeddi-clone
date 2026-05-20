@@ -44,7 +44,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        $userEmails = User::select('email')->company()->where('role', '!=', 'superadmin')->get();
+        $userEmails = User::select('email')->where('role', '!=', 'superadmin')->get();
         $smtpProfiles = SmtpProfile::orderBy('name')->get();
         // return $userEmails;
         return view('admin.company.create', compact('userEmails', 'smtpProfiles'));
@@ -159,7 +159,7 @@ class CompanyController extends Controller
     public function edit(string $id)
     {
         $company = Company::findOrFail($id);
-        $userEmails = User::select('email')->company()->where('role', '!=', 'superadmin')->get();
+        $userEmails = User::select('email')->where('role', '!=', 'superadmin')->get();
         $userEmails = $userEmails->map(function ($u) {
             return $u->email;
         });

@@ -30,15 +30,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $authUser = Auth::user();
-
-        $users = User::query()
-            ->where(function ($q) use ($authUser) {
-                $q->where('company_id', $authUser->company_id)
-                  ->orWhereNull('company_id');
-            })
-            ->paginate(20);
-
+        $users = User::paginate(20);
         return view('admin.user.index', compact('users'));
     }
 

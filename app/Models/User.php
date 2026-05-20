@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -60,11 +59,6 @@ class User extends Authenticatable
     /**
      * Get the company that the user belongs to.
      */
-
-    public function scopeCompany($query)
-    {
-        return $query->where('company_id', Auth::user()->company_id);
-    }
 
     public function company(): BelongsTo
     {

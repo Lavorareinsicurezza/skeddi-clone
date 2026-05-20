@@ -19,7 +19,6 @@ class UsersExport implements FromCollection, WithHeadings, WithMapping, WithStyl
     public function collection()
     {
         return User::with('company')
-            ->company()
             ->where('role', '!=', 'superadmin')
             ->get();
     }

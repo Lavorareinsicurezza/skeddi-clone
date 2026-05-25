@@ -20,9 +20,14 @@
             <label class="block text-sm font-bold text-gray-900 mb-2">{{ __('lang.permissions') }}</label>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                 @foreach ($permissions as $permission)
+                    @php
+                        $key = str_replace([' ', '-'], '_', $permission->name);
+                        $label = __('lang.permission_labels.' . $key);
+                        $label = $label === 'lang.permission_labels.' . $key ? $permission->name : $label;
+                    @endphp
                     <label class="flex items-center space-x-2">
                         <input type="checkbox" name="permissions[]" value="{{ $permission->id }}" class="rounded" {{ in_array($permission->id, $assigned) ? 'checked' : '' }}>
-                        <span class="text-gray-900 text-sm">{{ $permission->name }}</span>
+                        <span class="text-gray-900 text-sm" title="{{ $permission->name }}">{{ $label }}</span>
                     </label>
                 @endforeach
             </div>
